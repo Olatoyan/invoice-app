@@ -1,6 +1,6 @@
 function NavBar() {
   return (
-    <aside className="flex w-[10rem] flex-col justify-between rounded-r-[2rem] bg-[#373b53]">
+    <aside className="z-10 flex w-[10rem] flex-col justify-between rounded-r-[2rem] bg-[#373b53]">
       <div className="flex h-[10rem] items-center justify-center rounded-r-[2rem] bg-[#7c5dfa]">
         <img
           src="./logo.svg"

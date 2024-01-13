@@ -1,3 +1,4 @@
+import DeleteInvoice from "../../ui/DeleteInvoice";
 import NavBar from "../../ui/NavBar";
 import EditInvoice from "./EditInvoice";
 import InvoiceSection from "./InvoiceSection";
@@ -8,9 +9,9 @@ function InvoiceDetails() {
       <NavBar />
       <InvoiceSection />
 
-      <EditInvoice />
-
+      {/* <EditInvoice /> */}
       <div className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"></div>
+      <DeleteInvoice />
     </main>
   );
 }

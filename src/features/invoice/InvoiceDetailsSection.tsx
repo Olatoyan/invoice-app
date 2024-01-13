@@ -2,7 +2,7 @@ import InVoicePriceItems from "./InVoicePriceItems";
 
 function InvoiceDetailsSection() {
   return (
-    <section className="shadow-invoiceSh rounded-[0.8rem] bg-white p-20">
+    <section className="shadow-invoiceSh rounded-[0.8rem] bg-white p-20 pb-[4.8rem]">
       <div>
         <div>
           <h2 className="pb-3 text-[1.5rem] font-bold leading-[2.4rem] tracking-[-0.025rem] text-[#888eb0]">
