@@ -14,7 +14,7 @@ function HomeInvoiceItem({
   dueDate,
 }: HomeInvoiceItemProps) {
   return (
-    <div className="shadow-invoiceSh flex items-center justify-between rounded-[0.8rem] bg-white px-12 py-6">
+    <div className="flex cursor-pointer items-center justify-between rounded-[0.8rem] border border-transparent bg-white px-12 py-6 shadow-invoiceSh transition-all duration-300 hover:border-[#7c5dfa]">
       <div className="flex items-center gap-20">
         <h3 className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]">
           <span className="text-[#7e88c3]">#</span>
@@ -32,7 +32,7 @@ function HomeInvoiceItem({
 
       <div className=" grid grid-cols-[1fr_14rem_auto] items-center gap-20">
         <h3 className="justify-self-end text-end text-[1.5rem] font-bold leading-[2.4rem] tracking-[-0.025rem] text-[#0c0e16]">
-          £ {amount}
+          £ {(+amount).toFixed(2)}
         </h3>
 
         <div

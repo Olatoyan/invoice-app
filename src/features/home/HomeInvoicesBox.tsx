@@ -1,29 +1,20 @@
 import HomeInvoiceItem from "./HomeInvoiceItem";
+import { AllInvoiceDataProps } from "./useInvoice";
 
-function HomeInvoicesBox() {
+function HomeInvoicesBox({ data }: { data: AllInvoiceDataProps[] | null }) {
+  console.log(data);
   return (
     <section className="flex flex-col gap-[1.6rem]">
-      <HomeInvoiceItem
-        id="RT3080"
-        name="Jensen Huang"
-        status="paid"
-        amount="14,002.33"
-        dueDate="19 Aug 2021"
-      />
-      <HomeInvoiceItem
-        id="RT2080"
-        name="Alysa Werner"
-        status="pending"
-        amount="102.04"
-        dueDate="12 Oct 2021"
-      />
-      <HomeInvoiceItem
-        id="RT2080"
-        name="Alysa Werner"
-        status="draft"
-        amount="102.04"
-        dueDate="12 Oct 2021"
-      />
+      {data?.map((info) => (
+        <HomeInvoiceItem
+          id={info.id}
+          key={info.id}
+          name={info.clientName}
+          dueDate={info.paymentDue}
+          status={info.status}
+          amount={info.total}
+        />
+      ))}
     </section>
   );
 }
