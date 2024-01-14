@@ -3,6 +3,7 @@ import HomeEmptyInvoice from "./HomeEmptyInvoice";
 import HomeInvoiceHeading from "./HomeInvoiceHeading";
 import { AllInvoiceDataProps, useInvoice } from "./useInvoice";
 import HomeInvoicesBox from "./HomeInvoicesBox";
+import Loader from "../../ui/Loader";
 // import HomeInvoicesBox from "./HomeInvoicesBox";
 
 function HomeInvoiceSection() {
@@ -16,21 +17,20 @@ function HomeInvoiceSection() {
         const result = await invoiceQuery;
         console.log(result);
         setData(result.allInvoices);
-        setIsLoading(false);
+        setIsLoading(result.isLoading);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [invoiceQuery]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
 
   return (
     <section className="mx-auto w-full max-w-[80rem]">
-      <HomeInvoiceHeading />
+      <HomeInvoiceHeading numInvoices={data?.length} />
 
       {data?.length === 0 ? (
         <HomeEmptyInvoice />

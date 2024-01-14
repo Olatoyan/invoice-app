@@ -1,15 +1,41 @@
 import InVoicePriceItems from "./InVoicePriceItems";
+import { AllInvoiceDataProps } from "../home/useInvoice";
 
-function InvoiceDetailsSection() {
+function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
+  console.log(data);
+
+  const {
+    id,
+    createdAt,
+    paymentDue,
+    description,
+    paymentTerms,
+    clientName,
+    clientEmail,
+    status,
+    senderAddress,
+    clientAddress,
+    items,
+    total,
+  } = data || {};
+
+  console.log(clientAddress);
+
+  const {
+    street: clientStreet,
+    city: clientCity,
+    postCode: clientPostCode,
+    country: clientCountry,
+  } = clientAddress || {};
   return (
-    <section className="shadow-invoiceSh rounded-[0.8rem] bg-white p-20 pb-[4.8rem]">
+    <section className="rounded-[0.8rem] bg-white p-20 pb-[4.8rem] shadow-invoiceSh">
       <div>
         <div>
           <h2 className="pb-3 text-[1.5rem] font-bold leading-[2.4rem] tracking-[-0.025rem] text-[#888eb0]">
-            #<span className="text-[#0c0e16]">XM9141</span>
+            #<span className="text-[#0c0e16]">{id}</span>
           </h2>
           <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
-            Graphic Design
+            {description}
           </p>
         </div>
 
@@ -28,7 +54,7 @@ function InvoiceDetailsSection() {
               Invoice Date
             </h3>
             <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
-              21 Aug 2021
+              {createdAt}
             </p>
           </div>
           <div>
@@ -36,7 +62,7 @@ function InvoiceDetailsSection() {
               Payment Due
             </h3>
             <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
-              20 Sep 2021
+              {paymentDue}
             </p>
           </div>
         </div>
@@ -46,13 +72,13 @@ function InvoiceDetailsSection() {
             Bill To
           </h3>
           <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
-            Alex Grim
+            {clientName}
           </p>
           <address className="flex flex-col items-start text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] text-[#7e88ce]">
-            <span>84 Church Way</span>
-            <span>Bradford</span>
-            <span>BD1 9PB</span>
-            <span>United Kingdom</span>
+            <span>{clientStreet}</span>
+            <span>{clientCity}</span>
+            <span>{clientPostCode}</span>
+            <span>{clientCountry}</span>
           </address>
         </div>
 
@@ -61,7 +87,7 @@ function InvoiceDetailsSection() {
             Send to
           </h3>
           <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
-            alexgrim@mail.com
+            {clientEmail}
           </p>
         </div>
       </div>

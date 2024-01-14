@@ -1,3 +1,5 @@
+import { Link, useNavigate } from "react-router-dom";
+
 type HomeInvoiceItemProps = {
   id: string;
   name: string;
@@ -13,8 +15,18 @@ function HomeInvoiceItem({
   status,
   dueDate,
 }: HomeInvoiceItemProps) {
+  const navigate = useNavigate();
+
+  function handleClick(id: string) {
+    navigate(`/invoice/${id}`);
+  }
+
   return (
-    <div className="flex cursor-pointer items-center justify-between rounded-[0.8rem] border border-transparent bg-white px-12 py-6 shadow-invoiceSh transition-all duration-300 hover:border-[#7c5dfa]">
+    <Link
+      className="flex cursor-pointer items-center justify-between rounded-[0.8rem] border border-transparent bg-white px-12 py-6 shadow-invoiceSh transition-all duration-300 hover:border-[#7c5dfa]"
+      onClick={() => handleClick(id)}
+      to={`/invoice/${id}`}
+    >
       <div className="flex items-center gap-20">
         <h3 className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]">
           <span className="text-[#7e88c3]">#</span>
@@ -51,7 +63,7 @@ function HomeInvoiceItem({
 
         <img src="./icon-arrow-right.svg" alt="arrow icon" />
       </div>
-    </div>
+    </Link>
   );
 }
 

@@ -54,9 +54,6 @@ export async function useInvoice() {
     queryKey: ["invoice"],
     queryFn: getAllInvoices,
   });
-  // console.log(data);
-  const allInvoices = data?.invoice || null;
-  // console.log(allInvoices);
-  // console.log(isLoading);
+  const allInvoices = data?.data || null;
   return { allInvoices, isLoading };
 }

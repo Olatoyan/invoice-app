@@ -10,8 +10,8 @@ function InvoiceDetails() {
       <InvoiceSection />
 
       {/* <EditInvoice /> */}
-      <div className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"></div>
-      <DeleteInvoice />
+      {/* <div className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"></div>
+      <DeleteInvoice /> */}
     </main>
   );
 }

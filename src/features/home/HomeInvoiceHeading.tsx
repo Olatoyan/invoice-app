@@ -1,4 +1,10 @@
-function HomeInvoiceHeading() {
+function HomeInvoiceHeading({
+  numInvoices,
+}: {
+  numInvoices: number | undefined;
+}) {
+  function filterStatus() {}
+
   return (
     <section className="flex justify-between pb-28 pt-32">
       <div className="">
@@ -6,7 +12,7 @@ function HomeInvoiceHeading() {
           Invoices
         </h1>
         <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0]">
-          There are 7 total invoices
+          There are {numInvoices} total invoices
         </p>
       </div>
 
@@ -26,7 +32,7 @@ function HomeInvoiceHeading() {
           </span>
         </button>
 
-        <div className="shadow-bigSh absolute left-[-4rem] top-[7rem] flex w-full max-w-[19.2rem] flex-col gap-6 rounded-[0.8rem] bg-white p-10">
+        <div className="absolute left-[-4rem] top-[7rem] flex hidden w-full max-w-[19.2rem] flex-col gap-6 rounded-[0.8rem] bg-white p-10 shadow-bigSh">
           <div className="flex cursor-pointer items-center gap-5">
             <input
               type="checkbox"

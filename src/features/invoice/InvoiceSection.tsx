@@ -1,7 +1,37 @@
+import { useParams } from "react-router-dom";
 import InvoiceDetailsSection from "./InvoiceDetailsSection";
 import InvoiceStatusBox from "./InvoiceStatusBox";
+import { useInvoiceById } from "./useInvoiceById";
+import { useEffect, useState } from "react";
+import { AllInvoiceDataProps } from "../home/useInvoice";
+import Loader from "../../ui/Loader";
 
 function InvoiceSection() {
+  const { id } = useParams();
+  const invoiceQuery = useInvoiceById(id);
+  console.log(invoiceQuery);
+
+  const [data, setData] = useState<AllInvoiceDataProps | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, isLoading } = await invoiceQuery;
+        setData(data?.data?.[0]);
+        console.log(isLoading);
+        // setData(result.allInvoices)
+        setIsLoading(isLoading);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [invoiceQuery]);
+
+  if (isLoading) return <Loader />;
+
   return (
     <section className="mx-auto w-full max-w-[80rem] pt-24">
       <div className="flex items-center gap-12 pb-12">
@@ -10,8 +40,8 @@ function InvoiceSection() {
           Go back
         </p>
       </div>
-      <InvoiceStatusBox />
-      <InvoiceDetailsSection />
+      <InvoiceStatusBox data={data} />
+      <InvoiceDetailsSection data={data} />
     </section>
   );
 }

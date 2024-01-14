@@ -1,21 +1,23 @@
-function InvoiceStatusBox() {
+import { AllInvoiceDataProps } from "../home/useInvoice";
+
+function InvoiceStatusBox({ data }: { data: AllInvoiceDataProps | null }) {
   return (
-    <div className="shadow-invoiceSh mb-10 flex items-center justify-between rounded-[0.8rem] bg-white px-12 py-8">
+    <div className="mb-10 flex items-center justify-between rounded-[0.8rem] bg-white px-12 py-8 shadow-invoiceSh">
       <div className="flex items-center gap-8">
         <h3 className="text-[1.5rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#858bb2]">
           Status
         </h3>
         <div
-          className={`flex items-center justify-center gap-4 rounded-[0.6rem] bg-[#ff8f00] bg-opacity-[0.0571] px-12 py-6 `}
+          className={`flex items-center justify-center gap-4 rounded-[0.6rem] bg-[#33d69f] bg-opacity-[0.0571] px-12 py-6 ${data?.status === "paid" ? "bg-[#33d69f]" : data?.status === "pending" ? "bg-[#ff8f00]" : "bg-[#373b53]"} `}
         >
           <span
-            className={`h-[0.8rem] w-[0.8rem] rounded-full bg-[#ff8f00]`}
+            className={`h-[0.8rem] w-[0.8rem] rounded-full ${data?.status === "paid" ? "bg-[#33d69f]" : data?.status === "pending" ? "bg-[#ff8f00]" : "bg-[#373b53]"}`}
           ></span>
           <span
-            className={`$ text-[1.5rem] font-bold capitalize leading-[1.5rem] tracking-[-0.025rem] text-[#ff8f00]
+            className={`text-[1.5rem] font-bold capitalize leading-[1.5rem] tracking-[-0.025rem] ${data?.status === "paid" ? "text-[#33d69f]" : data?.status === "pending" ? "text-[#ff8f00]" : "text-[#373b53]"}
           `}
           >
-            Pending
+            {data?.status}
           </span>
         </div>
       </div>
@@ -36,19 +38,3 @@ function InvoiceStatusBox() {
 }
 
 export default InvoiceStatusBox;
-
-{
-  /* <div
-          className={`flex items-center justify-center gap-4 rounded-[0.6rem] bg-[#33d69f] bg-opacity-[0.0571] px-12 py-6 ${status === "paid" ? "bg-[#33d69f]" : status === "pending" ? "bg-[#ff8f00]" : "bg-[#373b53]"} `}
-        >
-          <span
-            className={`h-[0.8rem] w-[0.8rem] rounded-full ${status === "paid" ? "bg-[#33d69f]" : status === "pending" ? "bg-[#ff8f00]" : "bg-[#373b53]"}`}
-          ></span>
-          <span
-            className={`text-[1.5rem] font-bold capitalize leading-[1.5rem] tracking-[-0.025rem] ${status === "paid" ? "text-[#33d69f]" : status === "pending" ? "text-[#ff8f00]" : "text-[#373b53]"}
-          `}
-          >
-            {status}
-          </span>
-        </div> */
-}
