@@ -22,11 +22,11 @@ function InVoicePriceItems({
       </p>
 
       <p className="justify-self-end text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#7e88c3]">
-        £ {price}
+        £ {(+price).toFixed(2)}
       </p>
 
       <p className="justify-self-end text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
-        £ {total}
+        £ {(+total).toFixed(2)}
       </p>
     </div>
   );

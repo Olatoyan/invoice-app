@@ -2,7 +2,7 @@ import InVoicePriceItems from "./InVoicePriceItems";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 
 function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
-  console.log(data);
+  // console.log(data);
 
   const {
     id,
@@ -19,14 +19,14 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
     total,
   } = data || {};
 
-  console.log(clientAddress);
+  // console.log(items);
 
   const {
     street: clientStreet,
     city: clientCity,
     postCode: clientPostCode,
     country: clientCountry,
-  } = clientAddress || {};
+  } = clientAddress?.[0] || {};
   return (
     <section className="rounded-[0.8rem] bg-white p-20 pb-[4.8rem] shadow-invoiceSh">
       <div>
@@ -111,7 +111,17 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
               Total
             </h3>
           </div>
-          <InVoicePriceItems
+
+          {items?.map((item) => (
+            <InVoicePriceItems
+              key={item.id}
+              name={item.name}
+              qty={item.quantity}
+              price={item.price}
+              total={item.total}
+            />
+          ))}
+          {/* <InVoicePriceItems
             name="Banner Design"
             qty="1"
             price="164.00"
@@ -122,7 +132,7 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
             qty="2"
             price="200.00"
             total="400.00"
-          />
+          /> */}
         </div>
 
         <div className="flex items-center justify-between rounded-[0_0_0.8rem_0.8rem] bg-[#373b53] p-[3.3rem] pb-10">
@@ -130,7 +140,7 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
             Amount Due
           </p>
           <p className="text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] text-white">
-            £ 564.00
+            £ {(+total!).toFixed(2)}
           </p>
         </div>
       </div>

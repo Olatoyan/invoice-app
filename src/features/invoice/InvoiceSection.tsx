@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InvoiceDetailsSection from "./InvoiceDetailsSection";
 import InvoiceStatusBox from "./InvoiceStatusBox";
 import { useInvoiceById } from "./useInvoiceById";
@@ -9,17 +9,23 @@ import Loader from "../../ui/Loader";
 function InvoiceSection() {
   const { id } = useParams();
   const invoiceQuery = useInvoiceById(id);
-  console.log(invoiceQuery);
+  // console.log(invoiceQuery);
 
   const [data, setData] = useState<AllInvoiceDataProps | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const navigate = useNavigate();
+
+  function handleMoveBack() {
+    navigate(-1);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data, isLoading } = await invoiceQuery;
-        setData(data?.data?.[0]);
-        console.log(isLoading);
+        setData(data?.data?.[0] || null);
+        // console.log(isLoading);
         // setData(result.allInvoices)
         setIsLoading(isLoading);
       } catch (error) {
@@ -34,8 +40,11 @@ function InvoiceSection() {
 
   return (
     <section className="mx-auto w-full max-w-[80rem] pt-24">
-      <div className="flex items-center gap-12 pb-12">
-        <img src="./icon-arrow-left.svg" alt="arrow left" />
+      <div
+        onClick={() => navigate(-1)}
+        className="flex cursor-pointer items-center gap-12 pb-12"
+      >
+        <img src="/icon-arrow-left.svg" alt="arrow left" />
         <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]">
           Go back
         </p>

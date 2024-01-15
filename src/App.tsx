@@ -18,9 +18,7 @@ function App() {
       <ReactQueryDevtools initialIsOpen={false} />
       <Routes>
         <Route path="/" element={<HomeDetails />} />
-        <Route path="/invoice" element={<InvoiceDetails />}>
-          <Route path=":id" element={<InvoiceDetails />} />
-        </Route>
+        <Route path="invoice/:id" element={<InvoiceDetails />} />
       </Routes>
     </QueryClientProvider>
   );

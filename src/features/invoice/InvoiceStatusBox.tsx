@@ -29,8 +29,11 @@ function InvoiceStatusBox({ data }: { data: AllInvoiceDataProps | null }) {
         <button className="rounded-[2.4rem] bg-[#ec5757] px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white">
           Delete
         </button>
-        <button className="rounded-[2.4rem] bg-[#7c5dfa] px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white">
-          Mark as Paid
+        <button
+          className={`rounded-[2.4rem] bg-[#7c5dfa] px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white ${data?.status === "paid" ? "cursor-not-allowed opacity-35" : ""}`}
+          disabled={data?.status === "paid"}
+        >
+          {data?.status === "paid" ? "Has Paid" : "Mark as Paid"}
         </button>
       </div>
     </div>
