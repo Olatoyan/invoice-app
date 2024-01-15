@@ -1,47 +1,27 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import InvoiceDetailsSection from "./InvoiceDetailsSection";
 import InvoiceStatusBox from "./InvoiceStatusBox";
-import { useInvoiceById } from "./useInvoiceById";
-import { useEffect, useState } from "react";
+// import { useInvoiceById } from "./useInvoiceById";
+// import { useEffect, useState } from "react";
 import { AllInvoiceDataProps } from "../home/useInvoice";
-import Loader from "../../ui/Loader";
+// import Loader from "../../ui/Loader";
 
-function InvoiceSection() {
-  const { id } = useParams();
-  const invoiceQuery = useInvoiceById(id);
-  // console.log(invoiceQuery);
+type InvoiceSectionProps = {
+  data: AllInvoiceDataProps | null;
+  handleEdit: () => void;
+};
 
-  const [data, setData] = useState<AllInvoiceDataProps | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
+function InvoiceSection({ data, handleEdit }: InvoiceSectionProps) {
   const navigate = useNavigate();
 
   function handleMoveBack() {
     navigate(-1);
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, isLoading } = await invoiceQuery;
-        setData(data?.data?.[0] || null);
-        // console.log(isLoading);
-        // setData(result.allInvoices)
-        setIsLoading(isLoading);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [invoiceQuery]);
-
-  if (isLoading) return <Loader />;
-
   return (
     <section className="mx-auto w-full max-w-[80rem] pt-24">
       <div
-        onClick={() => navigate(-1)}
+        onClick={handleMoveBack}
         className="flex cursor-pointer items-center gap-12 pb-12"
       >
         <img src="/icon-arrow-left.svg" alt="arrow left" />
@@ -49,7 +29,7 @@ function InvoiceSection() {
           Go back
         </p>
       </div>
-      <InvoiceStatusBox data={data} />
+      <InvoiceStatusBox data={data} handleEdit={handleEdit} />
       <InvoiceDetailsSection data={data} />
     </section>
   );

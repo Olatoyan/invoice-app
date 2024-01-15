@@ -9,11 +9,8 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
     createdAt,
     paymentDue,
     description,
-    paymentTerms,
     clientName,
     clientEmail,
-    status,
-    senderAddress,
     clientAddress,
     items,
     total,
@@ -121,18 +118,6 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
               total={item.total}
             />
           ))}
-          {/* <InVoicePriceItems
-            name="Banner Design"
-            qty="1"
-            price="164.00"
-            total="164.00"
-          />
-          <InVoicePriceItems
-            name="Email Design"
-            qty="2"
-            price="200.00"
-            total="400.00"
-          /> */}
         </div>
 
         <div className="flex items-center justify-between rounded-[0_0_0.8rem_0.8rem] bg-[#373b53] p-[3.3rem] pb-10">
