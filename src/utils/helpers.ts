@@ -1,4 +1,7 @@
-import { AllInvoiceDataProps } from "../features/home/useInvoice";
+import {
+  AllInvoiceDataProps,
+  ItemInvoiceProps,
+} from "../features/home/useInvoice";
 import supabase from "../services/supabase";
 
 type InvoiceResponse = {
@@ -40,6 +43,17 @@ export async function getInvoiceById(
   if (error) {
     console.log(error);
     throw new Error(`Could not get Invoice ${id}`);
+  }
+
+  return { data, error };
+}
+
+export async function createItemRow(item: ItemInvoiceProps) {
+  const { data, error } = await supabase.from("items").insert([item]).select();
+
+  if (error) {
+    console.log(error);
+    throw new Error(`Could not create item ${item.name}`);
   }
 
   return { data, error };

@@ -1,6 +1,6 @@
 // import NavBar from "../../ui/NavBar";
 import { useForm } from "react-hook-form";
-import { AllInvoiceDataProps } from "../home/useInvoice";
+import { AllInvoiceDataProps, ItemInvoiceProps } from "../home/useInvoice";
 import CreateEditInvoiceItem from "./CreateEditInvoiceItem";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -9,6 +9,7 @@ type CreditEditInvoiceProps = {
   type: "edit" | "create";
   data: AllInvoiceDataProps | null;
 };
+
 function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   console.log(type, data);
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
@@ -39,6 +40,9 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   } = clientAddress?.[0] || {};
 
   const [payment, setPayment] = useState(paymentTerms);
+  const [itemList, setItemList] = useState<ItemInvoiceProps[] | undefined>(
+    items,
+  );
 
   const { register, handleSubmit, formState, getValues } =
     useForm<AllInvoiceDataProps>();
@@ -49,6 +53,13 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   function onSubmit(data: AllInvoiceDataProps) {
     console.log(data);
   }
+
+  const handleAddNewItem = () => {
+    setItemList((prevItems) => [
+      ...prevItems,
+      { name: "", qty: "", price: "", total: "" },
+    ]);
+  };
 
   return (
     <form
@@ -426,7 +437,7 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
         </h3>
 
         <div>
-          <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
+          <div className="grid grid-cols-[4fr_8rem_2fr_2fr_1fr] items-start gap-6 pb-6">
             <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
               Item Name
             </p>
@@ -441,7 +452,7 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
             </p>
           </div>
 
-          {items?.map((item) => (
+          {/* {items?.map((item, index) => (
             <CreateEditInvoiceItem
               key={item.id}
               name={item.name}
@@ -449,11 +460,26 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
               price={item.price}
               total={item.total}
               register={register}
-              getValue={getValues}
+              getValues={getValues}
+              index={index}
+            />
+          ))} */}
+          {itemList?.map((item, index) => (
+            <CreateEditInvoiceItem
+              key={index}
+              name={item.name}
+              qty={item.quantity}
+              price={item.price}
+              total={item.total}
+              register={register}
+              getValues={getValues}
+              index={index}
             />
           ))}
-          {/* <CreateEditInvoiceItem /> */}
-          <button className="mt-7 flex w-full items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]">
+          <button
+            className="mt-7 flex w-full items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
+            onClick={handleAddNewItem}
+          >
             <img src="/icon-plus.svg" alt="plus icon" />
             <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
               Add New Item

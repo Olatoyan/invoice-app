@@ -31,7 +31,7 @@ type SenderAddressProps = {
   postCode: string;
 };
 
-type ItemInvoiceProps = {
+export type ItemInvoiceProps = {
   id: string;
   name: string;
   quantity: string;
