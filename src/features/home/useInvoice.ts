@@ -49,7 +49,7 @@ export type ItemInvoiceProps = {
 //   isLoading: boolean;
 // };
 
-export async function useInvoice() {
+export function useInvoice() {
   const { data, isLoading } = useQuery({
     queryKey: ["invoice"],
     queryFn: getAllInvoices,
