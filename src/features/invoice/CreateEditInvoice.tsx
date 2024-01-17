@@ -4,6 +4,7 @@ import { AllInvoiceDataProps, ItemInvoiceProps } from "../home/useInvoice";
 import CreateEditInvoiceItem from "./CreateEditInvoiceItem";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { addDays, format } from "date-fns";
 
 type CreditEditInvoiceProps = {
   type: "edit" | "create";
@@ -19,6 +20,7 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   }
 
   const {
+    idd,
     id,
     createdAt,
     paymentDue,
@@ -60,6 +62,24 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
       { name: "", qty: "", price: "", total: "" },
     ]);
   };
+
+  const paymentDueDate = addDays(createdAt!, +payment!);
+  const formattedPaymentDueDate = format(paymentDueDate, "yyyy-MM-dd");
+  // console.log(formattedPaymentDueDate);
+
+  console.log({
+    idd,
+    id,
+    createdAt,
+    paymentDue: formattedPaymentDueDate,
+    description: getValues().description,
+    clientName: getValues().clientName,
+    clientEmail: getValues().clientEmail,
+    clientAddress: getValues().clientAddress,
+    items: getValues().items,
+    paymentTerms: payment,
+  });
+  console.log(getValues());
 
   return (
     <form
@@ -437,7 +457,7 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
         </h3>
 
         <div>
-          <div className="grid grid-cols-[4fr_8rem_2fr_2fr_1fr] items-start gap-6 pb-6">
+          <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
             <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
               Item Name
             </p>
@@ -470,21 +490,23 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
               name={item.name}
               qty={item.quantity}
               price={item.price}
-              total={item.total}
+              total={String(item.total)}
               register={register}
               getValues={getValues}
               index={index}
+              id={idd}
+              errors={errors}
             />
           ))}
-          <button
-            className="mt-7 flex w-full items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
+          <div
+            className="mt-7 flex w-full cursor-pointer items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
             onClick={handleAddNewItem}
           >
             <img src="/icon-plus.svg" alt="plus icon" />
             <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
               Add New Item
             </p>
-          </button>
+          </div>
         </div>
       </div>
 

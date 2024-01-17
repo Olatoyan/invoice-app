@@ -32,12 +32,12 @@ type SenderAddressProps = {
 };
 
 export type ItemInvoiceProps = {
-  id: string;
-  name: string;
-  quantity: string;
-  price: string;
-  total: string;
-  invoiceId: string;
+  id: string | number | undefined;
+  name: string | undefined;
+  quantity: string | undefined;
+  price: string | undefined;
+  total: string | undefined| number;
+  invoiceId: string | number | undefined;
 };
 
 // type InvoiceData = {
