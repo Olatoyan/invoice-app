@@ -7,5 +7,5 @@ export function useInvoiceById(id: string | undefined) {
     queryFn: () => getInvoiceById(id),
   });
 
-  return { data: invoiceId, isLoading };
+  return { invoiceId, isLoading };
 }

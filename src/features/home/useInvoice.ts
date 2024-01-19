@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllInvoices } from "../../utils/helpers";
 
 export type AllInvoiceDataProps = {
+  idd: string;
   id: string;
   createdAt: string;
   paymentDue: string;
@@ -36,7 +37,7 @@ export type ItemInvoiceProps = {
   name: string | undefined;
   quantity: string | undefined;
   price: string | undefined;
-  total: string | undefined| number;
+  total: string | undefined | number;
   invoiceId: string | number | undefined;
 };
 

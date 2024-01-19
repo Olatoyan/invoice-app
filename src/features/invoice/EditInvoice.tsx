@@ -12,8 +12,7 @@ type CreditEditInvoiceProps = {
   data: AllInvoiceDataProps | null;
 };
 
-function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
-  console.log(type, data);
+function EditInvoice({ type, data }: CreditEditInvoiceProps) {
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
 
   function togglePaymentDisplay() {
@@ -33,8 +32,6 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
     paymentTerms,
   } = data || {};
 
-  // console.log(items);
-
   const {
     street: clientStreet,
     city: clientCity,
@@ -43,9 +40,7 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   } = clientAddress?.[0] || {};
 
   const [payment, setPayment] = useState(paymentTerms);
-  const [itemList, setItemList] = useState<ItemInvoiceProps[] | undefined>(
-    items,
-  );
+  const [itemList, setItemList] = useState(items);
 
   const { createItem } = useCreateItemRow(idd);
 
@@ -54,35 +49,15 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
 
   const { errors } = formState;
 
-  // console.log(errors);
-  function onSubmit(data: AllInvoiceDataProps) {
-    console.log(data);
-    console.log(
-      createItem({
-        idd,
-        id,
-        createdAt: createdAt,
-        paymentDue: formattedPaymentDueDate,
-        description: getValues().description,
-        clientName: getValues().clientName,
-        clientEmail: getValues().clientEmail,
-        clientAddress: getValues().clientAddress,
-        items: getValues().items,
-        paymentTerms: payment,
-      }),
-    );
-  }
-
   const handleAddNewItem = () => {
     setItemList((prevItems) => [
       ...prevItems,
-      { name: "", qty: "", price: "", total: "" },
+      { name: "", qty: "", price: "", total: "", invoiceId: idd },
     ]);
   };
 
   const paymentDueDate = addDays(createdAt!, +payment!);
   const formattedPaymentDueDate = format(paymentDueDate, "yyyy-MM-dd");
-  // console.log(formattedPaymentDueDate);
 
   // console.log({
   //   idd,
@@ -97,22 +72,32 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   //   paymentTerms: payment,
   // });
   // console.log(getValues());
-
+  function onSubmit(data: AllInvoiceDataProps) {
+    console.log(data);
+    // console.log(
+    //   createItem({
+    //     idd,
+    //     id,
+    //     createdAt: createdAt,
+    //     paymentDue: formattedPaymentDueDate,
+    //     description: getValues().description,
+    //     clientName: getValues().clientName,
+    //     clientEmail: getValues().clientEmail,
+    //     clientAddress: getValues().clientAddress,
+    //     items: getValues().items,
+    //     paymentTerms: payment,
+    //   }),
+    // );
+  }
   return (
     <form
       className="absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto bg-white py-20 pl-28 pr-20"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {type === "edit" ? (
-        <h2 className="pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] text-[#0c0e16]">
-          Edit <span className="text-[#888eb0]">#</span>
-          <span>{id}</span>
-        </h2>
-      ) : (
-        <h2 className="pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] text-[#0c0e16]">
-          New Invoice
-        </h2>
-      )}
+      <h2 className="pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] text-[#0c0e16]">
+        Edit <span className="text-[#888eb0]">#</span>
+        <span>{id}</span>
+      </h2>
 
       <div>
         <h3 className="pb-[2.4rem] text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7c5dfa]">
@@ -127,9 +112,6 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
             >
               Street Address
             </label>
-            {/* <p className=" text-[1rem] font-semibold leading-[1.5rem] tracking-[-0.0208rem] text-[#ec5757]">
-              can’t be empty
-            </p> */}
           </div>
           <input
             type="text"
@@ -149,9 +131,6 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
               >
                 City
               </label>
-              {/* <p className=" text-[1rem] font-semibold leading-[1.5rem] tracking-[-0.0208rem] text-[#ec5757]">
-                can’t be empty
-              </p> */}
             </div>
             <input
               type="text"
@@ -169,9 +148,6 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
               >
                 Post Code
               </label>
-              {/* <p className=" text-[1rem] font-semibold leading-[1.5rem] tracking-[-0.0208rem] text-[#ec5757]">
-                can’t be empty
-              </p> */}
             </div>
             <input
               type="text"
@@ -189,9 +165,6 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
               >
                 Country
               </label>
-              {/* <p className=" text-[1rem] font-semibold leading-[1.5rem] tracking-[-0.0208rem] text-[#ec5757]">
-                can’t be empty
-              </p> */}
             </div>
             <input
               type="text"
@@ -364,25 +337,12 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
       <div>
         <div className="grid grid-cols-2 gap-10 pb-10 pt-20">
           <div>
-            {/* <div className="flex items-center justify-between"> */}
             <label
               className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
               htmlFor="clientCity"
             >
               Invoice Date
             </label>
-            {/* <p className=" text-[1rem] font-semibold leading-[1.5rem] tracking-[-0.0208rem] text-[#ec5757]">
-                can’t be empty
-              </p> */}
-            {/* </div> */}
-
-            {/* <div className="flex items-center justify-between rounded-[0.4rem] border border-solid border-[#dfe3fa] px-8 py-6">
-              <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
-                {paymentDue}
-              </p>
-
-              <img src="/icon-calendar.svg" alt="calendar icon" />
-            </div> */}
             <input
               type="date"
               id="clientCity"
@@ -489,32 +449,22 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
             </p>
           </div>
 
-          {/* {items?.map((item, index) => (
-            <CreateEditInvoiceItem
-              key={item.id}
-              name={item.name}
-              qty={item.quantity}
-              price={item.price}
-              total={item.total}
-              register={register}
-              getValues={getValues}
-              index={index}
-            />
-          ))} */}
-          {itemList?.map((item, index) => (
-            <CreateEditInvoiceItem
-              key={index}
-              name={item.name}
-              qty={item.quantity}
-              price={item.price}
-              total={String(item.total)}
-              register={register}
-              getValues={getValues}
-              index={index}
-              id={idd}
-              errors={errors}
-            />
-          ))}
+          {(itemList &&
+            itemList.map((item, index) => (
+              <CreateEditInvoiceItem
+                key={index}
+                name={item.name}
+                qty={item.quantity}
+                price={item.price}
+                total={String(item.total)}
+                register={register}
+                getValues={getValues}
+                index={index}
+                id={idd}
+                errors={errors}
+              />
+            ))) ??
+            []}
           <div
             className="mt-7 flex w-full cursor-pointer items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
             onClick={handleAddNewItem}
@@ -539,4 +489,4 @@ function CreateEditInvoice({ type, data }: CreditEditInvoiceProps) {
   );
 }
 
-export default CreateEditInvoice;
+export default EditInvoice;

@@ -1,8 +1,8 @@
 type InVoicePriceItemsProps = {
-  name: string;
-  qty: string;
-  price: string;
-  total: string;
+  name: string | undefined;
+  qty: string | undefined;
+  price: string | undefined;
+  total: string | undefined | number;
 };
 
 function InVoicePriceItems({
@@ -22,11 +22,11 @@ function InVoicePriceItems({
       </p>
 
       <p className="justify-self-end text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#7e88c3]">
-        £ {(+price).toFixed(2)}
+        £ {(+price!).toFixed(2)}
       </p>
 
       <p className="justify-self-end text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
-        £ {(+total).toFixed(2)}
+        £ {(+total!).toFixed(2)}
       </p>
     </div>
   );
