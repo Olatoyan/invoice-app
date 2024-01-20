@@ -1,4 +1,9 @@
-import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
 import { useEffect, useState } from "react";
@@ -10,6 +15,7 @@ type CreateInvoiceItemProps = {
   errors: FieldErrors<AllInvoiceDataProps>;
   onDelete: (id: number) => void;
   setValue: UseFormSetValue<InvoiceDataProps>;
+  getValues: UseFormGetValues<InvoiceDataProps>;
 };
 
 function CreateInvoiceItem({
@@ -19,6 +25,7 @@ function CreateInvoiceItem({
   onDelete,
   id,
   setValue,
+  getValues,
 }: CreateInvoiceItemProps) {
   const [totalQty, setTotalQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -111,7 +118,7 @@ function CreateInvoiceItem({
 
       <svg
         className="h-[1.6rem] w-[1.3rem] cursor-pointer fill-[#888EB0] hover:fill-[#ec5757]"
-        onClick={() => onDelete(id)}
+        onClick={() => onDelete(index)}
       >
         <use xlinkHref="/icon-delete.svg#delete" />
       </svg>

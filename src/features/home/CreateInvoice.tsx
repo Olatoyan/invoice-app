@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { InvoiceDataProps } from "../../types/Types";
+import { InvoiceDataProps, ItemProps } from "../../types/Types";
 import { motion } from "framer-motion";
 import CreateInvoiceItem from "./CreateInvoiceItem";
 import { useCreateInvoice } from "./useCreateInvoice";
@@ -26,6 +26,10 @@ function CreateInvoice() {
 
   const { register, handleSubmit, formState, getValues, setValue } =
     useForm<InvoiceDataProps>();
+
+  useEffect(() => {
+    console.log("itemsList changed:", itemsList);
+  }, [itemsList]);
 
   const { errors } = formState;
 
@@ -141,8 +145,15 @@ function CreateInvoice() {
   }
 
   function handleDeleteItem(id: number) {
+    console.log(getValues().items);
     console.log(id);
-    setItemsList((prev) => prev.filter((item) => item.id !== id));
+    setItemsList(itemsList.filter((_, index) => index !== id));
+    const updatedItemsList = getValues().items.filter(
+      (_, index) => index !== id,
+    );
+    console.log(updatedItemsList);
+    setValue("items", updatedItemsList);
+    console.log(getValues().items);
   }
 
   return (
@@ -537,6 +548,7 @@ function CreateInvoice() {
                 errors={errors}
                 onDelete={handleDeleteItem}
                 setValue={setValue}
+                getValues={getValues}
               />
             ))}
           <div
