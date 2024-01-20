@@ -1,20 +1,10 @@
-import {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
 import { useEffect, useState } from "react";
 
 type CreateInvoiceItemProps = {
-  name: string;
-  qty: number;
-  price: number;
-  total: number;
   register: UseFormRegister<InvoiceDataProps>;
-  getValues: UseFormGetValues<InvoiceDataProps>;
   index: number;
   id: number;
   errors: FieldErrors<AllInvoiceDataProps>;
@@ -23,12 +13,7 @@ type CreateInvoiceItemProps = {
 };
 
 function CreateInvoiceItem({
-  name,
-  qty,
-  price,
-  total,
   register,
-  getValues,
   index,
   errors,
   onDelete,
@@ -62,7 +47,8 @@ function CreateInvoiceItem({
 
   useEffect(() => {
     setTotalPriceItem(totalQty * totalPrice);
-  }, [totalQty, totalPrice]);
+    setValue(`items.${index}.id`, Date.now());
+  }, [totalQty, totalPrice, index, setValue]);
 
   return (
     <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6">

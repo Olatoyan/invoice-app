@@ -16,7 +16,6 @@ type InitialItems = {
 };
 
 function CreateInvoice() {
-  const invoiceId = Date.now();
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
   const [payment, setPayment] = useState(1);
   const [status, setStatus] = useState("pending");
@@ -27,14 +26,22 @@ function CreateInvoice() {
 
   const { errors } = formState;
 
-  const { isCreating } = useCreateInvoice();
+  const { createInvoice } = useCreateInvoice();
 
-  function onSubmit(data: any) {
+  function onSubmit(data: InvoiceDataProps) {
+    const invoiceId = Date.now();
+    console.log(invoiceId);
+
+    setValue(`clientAddress.${0}.invoiceId`, invoiceId);
+
+    setValue(`senderAdd.${0}.invoiceId`, invoiceId);
     console.log(data);
     const randomId = generateRandomId();
     const paymentDueDate = getPaymentDue(data.createdAt, payment);
+    // Set invoiceId on clientAddress
+
     const newData = {
-      idd: Date.now(),
+      idd: invoiceId,
       id: randomId,
       createdAt: data.createdAt,
       paymentDue: paymentDueDate,
@@ -43,13 +50,17 @@ function CreateInvoice() {
       clientName: data.clientName,
       clientEmail: data.clientEmail,
       status: status,
-      senderAdd: data.senderAdd,
-      clientAddress: data.clientAddress,
+      senderAdd: getValues().senderAdd,
+      clientAddress: getValues().clientAddress,
       items: data.items,
       total: itemsList.reduce((acc, item) => acc + item.total, 0),
     };
 
     console.log(newData);
+    console.log(invoiceId);
+    console.log(getValues());
+
+    createInvoice(newData);
   }
 
   function togglePaymentDisplay() {
@@ -65,7 +76,7 @@ function CreateInvoice() {
         quantity: 0,
         price: 0,
         total: 0,
-        invoiceId: invoiceId,
+        invoiceId: Date.now(),
       },
     ]);
   }
@@ -461,12 +472,7 @@ function CreateInvoice() {
             itemsList.map((item, index) => (
               <CreateInvoiceItem
                 key={index}
-                name={item.name}
-                qty={+item.quantity}
-                price={+item.price}
-                total={+item.total}
                 register={register}
-                getValues={getValues}
                 index={index}
                 id={item.id}
                 errors={errors}
