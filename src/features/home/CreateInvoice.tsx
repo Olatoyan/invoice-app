@@ -3,25 +3,53 @@ import { useForm } from "react-hook-form";
 import { InvoiceDataProps } from "../../types/Types";
 import { motion } from "framer-motion";
 import CreateInvoiceItem from "./CreateInvoiceItem";
+import { useCreateInvoice } from "./useCreateInvoice";
+import { generateRandomId, getPaymentDue } from "../../utils/helpers";
 
-// const initialItems = { name: "", qty: "", price: "", total: "", invoiceId: idd },
+type InitialItems = {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+  invoiceId: number;
+};
 
 function CreateInvoice() {
+  const invoiceId = Date.now();
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
   const [payment, setPayment] = useState(1);
-  const [itemsList, setItemsList] = useState([
-    { name: "", quantity: "", price: "", total: "" },
-  ]);
+  const [status, setStatus] = useState("pending");
+  const [itemsList, setItemsList] = useState<InitialItems[]>([]);
 
-  const invoiceId = Date.now();
-
-  const { register, handleSubmit, formState, getValues } =
+  const { register, handleSubmit, formState, getValues, setValue } =
     useForm<InvoiceDataProps>();
 
   const { errors } = formState;
 
+  const { isCreating } = useCreateInvoice();
+
   function onSubmit(data: any) {
     console.log(data);
+    const randomId = generateRandomId();
+    const paymentDueDate = getPaymentDue(data.createdAt, payment);
+    const newData = {
+      idd: Date.now(),
+      id: randomId,
+      createdAt: data.createdAt,
+      paymentDue: paymentDueDate,
+      description: data.description,
+      paymentTerms: payment,
+      clientName: data.clientName,
+      clientEmail: data.clientEmail,
+      status: status,
+      senderAdd: data.senderAdd,
+      clientAddress: data.clientAddress,
+      items: data.items,
+      total: itemsList.reduce((acc, item) => acc + item.total, 0),
+    };
+
+    console.log(newData);
   }
 
   function togglePaymentDisplay() {
@@ -34,15 +62,16 @@ function CreateInvoice() {
       {
         id: Date.now(),
         name: "",
-        quantity: "",
-        price: "",
-        total: "",
+        quantity: 0,
+        price: 0,
+        total: 0,
         invoiceId: invoiceId,
       },
     ]);
   }
 
   function handleDeleteItem(id: number) {
+    console.log(id);
     setItemsList((prev) => prev.filter((item) => item.id !== id));
   }
 
@@ -439,9 +468,10 @@ function CreateInvoice() {
                 register={register}
                 getValues={getValues}
                 index={index}
-                // id={idd}
+                id={item.id}
                 errors={errors}
-                onDelete={() => handleDeleteItem(index)}
+                onDelete={handleDeleteItem}
+                setValue={setValue}
               />
             ))}
           <div
@@ -456,13 +486,24 @@ function CreateInvoice() {
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-6 pt-16">
+      <div className="flex items-center justify-between pt-16">
         <button className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
-          Cancel
+          Discard
         </button>
-        <button className="rounded-[2.4rem] bg-[#7c5dfa] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white">
-          Save Changes
-        </button>
+        <div className="flex items-center justify-end gap-6">
+          <button
+            className={`] rounded-[2.4rem] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3] ${status === "draft" ? "bg-[#080911]" : "hover:bg-[#0c0e16 bg-[#7388c380]"}`}
+            onClick={(e) => {
+              e.preventDefault();
+              setStatus("draft");
+            }}
+          >
+            {status === "pending" ? "Save as draft" : "Saved as draft"}
+          </button>
+          <button className="rounded-[2.4rem] bg-[#7c5dfa] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#9277ff]">
+            Save & Send
+          </button>
+        </div>
       </div>
     </form>
   );

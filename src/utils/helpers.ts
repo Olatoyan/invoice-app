@@ -1,3 +1,4 @@
+import { addDays, format } from "date-fns";
 import {
   AllInvoiceDataProps,
   ItemInvoiceProps,
@@ -86,4 +87,40 @@ export async function updateInvoiceItems(
   }
 
   return { data, createError };
+}
+
+export async function createInvoiceRow(invoice: InvoiceDataProps) {
+  const { data, error } = await supabase
+    .from("invoice")
+    .insert([invoice])
+    .select();
+
+  if (error) {
+    console.log(error);
+    throw new Error(`Could not create Invoice ${invoice.clientName}`);
+  }
+
+  return { data, error };
+}
+
+export function generateRandomId() {
+  const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number
+  const randomUppercaseLetter1 = uppercaseLetters.charAt(
+    Math.floor(Math.random() * uppercaseLetters.length),
+  );
+  const randomUppercaseLetter2 = uppercaseLetters.charAt(
+    Math.floor(Math.random() * uppercaseLetters.length),
+  );
+
+  const randomId = `${randomUppercaseLetter1}${randomUppercaseLetter2}${randomNumber}`;
+
+  console.log(randomId);
+  return randomId;
+}
+
+export function getPaymentDue(createdAt: string, paymentTerms: number) {
+  const paymentDueDate = addDays(createdAt, paymentTerms);
+  const formattedPaymentDueDate = format(paymentDueDate, "yyyy-MM-dd");
+  return formattedPaymentDueDate;
 }

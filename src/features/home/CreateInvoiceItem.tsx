@@ -2,6 +2,7 @@ import {
   FieldErrors,
   UseFormGetValues,
   UseFormRegister,
+  UseFormSetValue,
 } from "react-hook-form";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
@@ -15,9 +16,10 @@ type CreateInvoiceItemProps = {
   register: UseFormRegister<InvoiceDataProps>;
   getValues: UseFormGetValues<InvoiceDataProps>;
   index: number;
-  // id?: number;
+  id: number;
   errors: FieldErrors<AllInvoiceDataProps>;
-  onDelete: () => void;
+  onDelete: (id: number) => void;
+  setValue: UseFormSetValue<InvoiceDataProps>;
 };
 
 function CreateInvoiceItem({
@@ -30,18 +32,32 @@ function CreateInvoiceItem({
   index,
   errors,
   onDelete,
-  // id,
+  id,
+  setValue,
 }: CreateInvoiceItemProps) {
   const [totalQty, setTotalQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalPriceItem, setTotalPriceItem] = useState(0);
 
   function handleQtyChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setTotalQty(Number(e.target.value));
+    const newQty = Number(e.target.value);
+    setTotalQty(newQty);
+
+    // Calculate and set the total value
+    const newTotal = newQty * totalPrice;
+    setTotalPriceItem(newTotal);
+    setValue(`items.${index}.total`, newTotal);
   }
 
   function handlePriceChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setTotalPrice(Number(e.target.value));
+    const newPrice = Number(e.target.value);
+
+    setTotalPrice(newPrice);
+
+    // Calculate and set the total value
+    const newTotal = totalQty * newPrice;
+    setTotalPriceItem(newTotal);
+    setValue(`items.${index}.total`, newTotal);
   }
 
   useEffect(() => {
@@ -92,12 +108,16 @@ function CreateInvoiceItem({
         })}
         onChange={(e) => handlePriceChange(e)}
       />
-      <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0] ">
+      <p
+        className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]"
+        // {...setValue(`items.${index}.total`, totalPriceItem)}
+      >
         {totalPriceItem.toFixed(2)}
       </p>
       {/* <input
         className="border-none text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0] outline-none"
         // {...register(`items.${index}.total`)}
+        {...setValue(`items.${index}.total`, totalPriceItem)}
         // defaultValue={total}
         defaultValue={totalPriceItem}
         readOnly
@@ -105,7 +125,7 @@ function CreateInvoiceItem({
 
       <svg
         className="h-[1.6rem] w-[1.3rem] cursor-pointer fill-[#888EB0] hover:fill-[#ec5757]"
-        onClick={onDelete}
+        onClick={() => onDelete(id)}
       >
         <use xlinkHref="/icon-delete.svg#delete" />
       </svg>
