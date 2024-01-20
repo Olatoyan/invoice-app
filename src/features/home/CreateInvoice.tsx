@@ -2,11 +2,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { InvoiceDataProps } from "../../types/Types";
 import { motion } from "framer-motion";
+import CreateInvoiceItem from "./CreateInvoiceItem";
+
+// const initialItems = { name: "", qty: "", price: "", total: "", invoiceId: idd },
 
 function CreateInvoice() {
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
   const [payment, setPayment] = useState(1);
-  const { register, handleSubmit, formState } = useForm<InvoiceDataProps>();
+  const [itemsList, setItemsList] = useState([
+    { name: "", quantity: "", price: "", total: "" },
+  ]);
+
+  const invoiceId = Date.now();
+
+  const { register, handleSubmit, formState, getValues } =
+    useForm<InvoiceDataProps>();
 
   const { errors } = formState;
 
@@ -16,6 +26,24 @@ function CreateInvoice() {
 
   function togglePaymentDisplay() {
     setIsPaymentDisplayed((prev) => !prev);
+  }
+
+  function toggleItemsList() {
+    setItemsList((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: "",
+        quantity: "",
+        price: "",
+        total: "",
+        invoiceId: invoiceId,
+      },
+    ]);
+  }
+
+  function handleDeleteItem(id: number) {
+    setItemsList((prev) => prev.filter((item) => item.id !== id));
   }
 
   return (
@@ -400,25 +428,25 @@ function CreateInvoice() {
             </p>
           </div>
 
-          {/* {(itemList &&
-            itemList.map((item, index) => (
-              <CreateEditInvoiceItem
+          {itemsList &&
+            itemsList.map((item, index) => (
+              <CreateInvoiceItem
                 key={index}
                 name={item.name}
-                qty={item.quantity}
-                price={item.price}
-                total={String(item.total)}
+                qty={+item.quantity}
+                price={+item.price}
+                total={+item.total}
                 register={register}
                 getValues={getValues}
                 index={index}
-                id={idd}
+                // id={idd}
                 errors={errors}
+                onDelete={() => handleDeleteItem(index)}
               />
-            ))) ??
-            []} */}
+            ))}
           <div
             className="mt-7 flex w-full cursor-pointer items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
-            // onClick={handleAddNewItem}
+            onClick={toggleItemsList}
           >
             <img src="/icon-plus.svg" alt="plus icon" />
             <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
