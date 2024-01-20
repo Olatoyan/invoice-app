@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 type HomeInvoiceItemProps = {
   id: string;
   name: string;
-  amount: string;
+  amount: number;
   status: string;
   dueDate: string;
 };

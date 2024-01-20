@@ -3,13 +3,18 @@ import {
   ItemInvoiceProps,
 } from "../features/home/useInvoice";
 import supabase from "../services/supabase";
+import { InvoiceDataProps } from "../types/Types";
 
 type InvoiceResponse = {
   data: AllInvoiceDataProps[] | null;
   error: any;
 };
+type InvoiceResponse2 = {
+  data: InvoiceDataProps[] | null;
+  error: any;
+};
 
-export async function getAllInvoices(): Promise<InvoiceResponse> {
+export async function getAllInvoices(): Promise<InvoiceResponse2> {
   const { data, error } = await supabase.from("invoice").select(`
   *,
   senderAdd (*),
