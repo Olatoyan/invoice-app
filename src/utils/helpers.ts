@@ -12,7 +12,7 @@ type InvoiceResponse = {
 export async function getAllInvoices(): Promise<InvoiceResponse> {
   const { data, error } = await supabase.from("invoice").select(`
   *,
-  senderAddress (*),
+  senderAdd (*),
   clientAddress (*),
   items (*)
   `);
@@ -33,7 +33,7 @@ export async function getInvoiceById(
     .select(
       `
   *,
-  senderAddress (*),
+  senderAdd (*),
   clientAddress (*),
   items (*)
   `,

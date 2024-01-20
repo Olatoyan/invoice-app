@@ -11,7 +11,7 @@ export type AllInvoiceDataProps = {
   clientName: string;
   clientEmail: string;
   status: string;
-  senderAddress: SenderAddressProps[];
+  senderAdd: SenderAddressProps[];
   clientAddress: ClientAddressProps[];
   items: ItemInvoiceProps[];
   total: string;
@@ -25,7 +25,8 @@ type ClientAddressProps = {
   postCode: string;
 };
 type SenderAddressProps = {
-  id: string;
+  id: number;
+  invoiceId: number;
   street: string;
   city: string;
   country: string;
