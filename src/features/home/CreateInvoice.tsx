@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { InvoiceDataProps, ItemProps } from "../../types/Types";
+import { InvoiceDataProps } from "../../types/Types";
 import { motion } from "framer-motion";
 import CreateInvoiceItem from "./CreateInvoiceItem";
 import { useCreateInvoice } from "./useCreateInvoice";
@@ -539,16 +539,14 @@ function CreateInvoice() {
           </div>
 
           {itemsList &&
-            itemsList.map((item, index) => (
+            itemsList.map((_, index) => (
               <CreateInvoiceItem
                 key={index}
                 register={register}
                 index={index}
-                id={item.id}
                 errors={errors}
                 onDelete={handleDeleteItem}
                 setValue={setValue}
-                getValues={getValues}
               />
             ))}
           <div

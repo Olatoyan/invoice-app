@@ -1,9 +1,4 @@
-import {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
 import { useEffect, useState } from "react";
@@ -11,11 +6,9 @@ import { useEffect, useState } from "react";
 type CreateInvoiceItemProps = {
   register: UseFormRegister<InvoiceDataProps>;
   index: number;
-  id: number;
   errors: FieldErrors<AllInvoiceDataProps>;
   onDelete: (id: number) => void;
   setValue: UseFormSetValue<InvoiceDataProps>;
-  getValues: UseFormGetValues<InvoiceDataProps>;
 };
 
 function CreateInvoiceItem({
@@ -23,9 +16,7 @@ function CreateInvoiceItem({
   index,
   errors,
   onDelete,
-  id,
   setValue,
-  getValues,
 }: CreateInvoiceItemProps) {
   const [totalQty, setTotalQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
