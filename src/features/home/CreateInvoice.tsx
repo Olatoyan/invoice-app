@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import CreateInvoiceItem from "./CreateInvoiceItem";
 import { useCreateInvoice } from "./useCreateInvoice";
 import { generateRandomId, getPaymentDue } from "../../utils/helpers";
+import { useCreateSenderAdd } from "./useCreateSenderAdd";
+import { useCreateClientAdd } from "./useCreateClientAdd";
+import { useCreateItems } from "./useCreateItems";
 
 type InitialItems = {
   id: number;
@@ -27,20 +30,21 @@ function CreateInvoice() {
   const { errors } = formState;
 
   const { createInvoice } = useCreateInvoice();
+  const { createSAddress } = useCreateSenderAdd();
+  const { createClAddress } = useCreateClientAdd();
+  const { createItems } = useCreateItems();
 
   function onSubmit(data: InvoiceDataProps) {
     const invoiceId = Date.now();
-    console.log(invoiceId);
 
     setValue(`clientAddress.${0}.invoiceId`, invoiceId);
 
     setValue(`senderAdd.${0}.invoiceId`, invoiceId);
-    console.log(data);
     const randomId = generateRandomId();
     const paymentDueDate = getPaymentDue(data.createdAt, payment);
     // Set invoiceId on clientAddress
 
-    const newData = {
+    const invoiceData = {
       idd: invoiceId,
       id: randomId,
       createdAt: data.createdAt,
@@ -50,17 +54,72 @@ function CreateInvoice() {
       clientName: data.clientName,
       clientEmail: data.clientEmail,
       status: status,
-      senderAdd: getValues().senderAdd,
-      clientAddress: getValues().clientAddress,
-      items: data.items,
-      total: itemsList.reduce((acc, item) => acc + item.total, 0),
+      total: getValues()?.items?.reduce((acc, item) => acc + item.total, 0),
+    };
+    // const itemsList = getValues()?.items;
+    // console.log(itemsList);
+
+    const clientData = {
+      id: Date.now(),
+      street: getValues().clientAddress[0].street,
+      city: getValues().clientAddress[0].city,
+      postCode: getValues().clientAddress[0].postCode,
+      country: getValues().clientAddress[0].country,
+      invoiceId: invoiceId,
     };
 
-    console.log(newData);
-    console.log(invoiceId);
-    console.log(getValues());
+    const senderData = {
+      id: Date.now(),
+      street: getValues().senderAdd[0].street,
+      city: getValues().senderAdd[0].city,
+      postCode: getValues().senderAdd[0].postCode,
+      country: getValues().senderAdd[0].country,
+      invoiceId: invoiceId,
+    };
 
-    createInvoice(newData);
+    // const itemsData = {
+    //   id: Date.now(),
+    //   name: getValues()?.items?.[0]?.name,
+    //   quantity: getValues()?.items?.[0]?.quantity,
+    //   price: getValues()?.items?.[0]?.price,
+    //   total: getValues()?.items?.[0]?.total,
+    //   invoiceId: invoiceId,
+    // };
+
+    // console.log(data);
+    console.log(invoiceData);
+    console.log(clientData);
+    console.log(senderData);
+    // console.log(itemsData);
+    // console.log(getValues());
+
+    createInvoice(invoiceData, {
+      onSuccess: () => {
+        // Once the invoice is created successfully, create the rest of the data
+        const itemsList = getValues()?.items;
+
+        itemsList.forEach((item) => {
+          const itemsData = {
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+            total: item.total,
+            invoiceId: invoiceId,
+          };
+
+          createItems(itemsData);
+        });
+
+        createClAddress(clientData);
+        createSAddress(senderData);
+        // createItems(itemsData);
+      },
+      onError: (error) => {
+        console.error("Error creating invoice:", error);
+        // Handle error if needed
+      },
+    });
   }
 
   function togglePaymentDisplay() {

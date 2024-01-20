@@ -4,7 +4,13 @@ import {
   ItemInvoiceProps,
 } from "../features/home/useInvoice";
 import supabase from "../services/supabase";
-import { InvoiceDataProps } from "../types/Types";
+import {
+  ClientAddressProps,
+  CreateInvoiceProps,
+  InvoiceDataProps,
+  ItemProps,
+  SenderAddressProps,
+} from "../types/Types";
 
 type InvoiceResponse = {
   data: AllInvoiceDataProps[] | null;
@@ -89,7 +95,8 @@ export async function updateInvoiceItems(
   return { data, createError };
 }
 
-export async function createInvoiceRow(invoice: InvoiceDataProps) {
+export async function createInvoiceRow(invoice: CreateInvoiceProps) {
+  console.log(invoice);
   const { data, error } = await supabase
     .from("invoice")
     .insert([invoice])
@@ -98,6 +105,67 @@ export async function createInvoiceRow(invoice: InvoiceDataProps) {
   if (error) {
     console.log(error);
     throw new Error(`Could not create Invoice ${invoice.clientName}`);
+  }
+
+  return { data, error };
+}
+// export async function createInvoiceRow(
+//   invoiceData: InvoiceDataProps,
+//   clientData: ClientAddressProps,
+//   senderData: SenderAddressProps,
+//   itemsData: ItemProps,
+// ) {
+//   const { data: invoiceResult, error: invoiceError } = await supabase
+//     .from("invoice")
+//     .upsert([invoiceData], { onConflict: ["idd"] })
+//     .select();
+
+//   if (invoiceError) {
+//     console.error(invoiceError);
+//     throw new Error(`Could not create Invoice ${invoiceData.clientName}`);
+//   }
+
+//   await supabase.()
+//     .insert("clientAddress", [clientData])
+//     .insert("senderAdd", [senderData])
+//     .insert("items", [itemsData])
+//     .upsert("invoice", [invoiceData], { onConflict: ["idd"] });
+// }
+
+export async function createClientAddressRow(address: ClientAddressProps) {
+  const { data, error } = await supabase
+    .from("clientAddress")
+    .insert([address])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not create clientAddress`);
+  }
+
+  return { data, error };
+}
+
+export async function createSenderAddressRow(address: SenderAddressProps) {
+  const { data, error } = await supabase
+    .from("senderAdd")
+    .insert([address])
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not create senderAddress`);
+  }
+
+  return { data, error };
+}
+
+export async function createItemsRow(items: ItemProps) {
+  const { data, error } = await supabase.from("items").insert([items]).select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not create items`);
   }
 
   return { data, error };

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createInvoiceRow } from "../../utils/helpers";
-import { InvoiceDataProps } from "../../types/Types";
+import { CreateInvoiceProps } from "../../types/Types";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,8 @@ export function useCreateInvoice() {
   const navigate = useNavigate();
 
   const { mutate: createInvoice } = useMutation({
-    mutationFn: (newInvoice: InvoiceDataProps) => createInvoiceRow(newInvoice),
+    mutationFn: (newInvoice: CreateInvoiceProps) =>
+      createInvoiceRow(newInvoice),
     onSuccess: () => {
       toast.success("New Invoice created");
       queryClient.invalidateQueries({ queryKey: ["invoice"] });
