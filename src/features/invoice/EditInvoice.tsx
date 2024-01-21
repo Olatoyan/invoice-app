@@ -1,18 +1,29 @@
 // import NavBar from "../../ui/NavBar";
 import { useForm } from "react-hook-form";
-import { AllInvoiceDataProps, ItemInvoiceProps } from "../home/useInvoice";
-import CreateEditInvoiceItem from "./CreateEditInvoiceItem";
-import { useState } from "react";
+// import { AllInvoiceDataProps, ItemInvoiceProps } from "../home/useInvoice";
+// import CreateEditInvoiceItem from "./CreateEditInvoiceItem";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { addDays, format } from "date-fns";
-import { useCreateItemRow } from "./useCreateItemRow";
+// import { addDays, format } from "date-fns";
+// import { useCreateItemRow } from "./useCreateItemRow";
+import { InvoiceDataProps } from "../../types/Types";
+import EditInvoiceItem from "./EditInvoiceItem";
 
 type CreditEditInvoiceProps = {
-  type: "edit" | "create";
-  data: AllInvoiceDataProps | null;
+  data: InvoiceDataProps;
 };
 
-function EditInvoice({ type, data }: CreditEditInvoiceProps) {
+type InitialItems = {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+  total: number;
+  invoiceId: number;
+};
+
+function EditInvoice({ data }: CreditEditInvoiceProps) {
+  console.log(data);
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
 
   function togglePaymentDisplay() {
@@ -28,51 +39,84 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
     clientName,
     clientEmail,
     clientAddress,
+    senderAdd,
     items,
     paymentTerms,
-  } = data || {};
+  } = data;
+
+  const {
+    street: senderStreet,
+    city: senderCity,
+    postCode: senderPostCode,
+    country: senderCountry,
+  } = senderAdd[0];
 
   const {
     street: clientStreet,
     city: clientCity,
     postCode: clientPostCode,
     country: clientCountry,
-  } = clientAddress?.[0] || {};
-
+  } = clientAddress[0];
+  console.log(items);
   const [payment, setPayment] = useState(paymentTerms);
-  const [itemList, setItemList] = useState(items);
 
-  const { createItem } = useCreateItemRow(idd);
+  // console.log(itemList);
 
-  const { register, handleSubmit, formState, getValues } =
-    useForm<AllInvoiceDataProps>();
+  // const { createItem } = useCreateItemRow(idd);
+
+  const { register, handleSubmit, formState, getValues, setValue } =
+    useForm<InvoiceDataProps>();
 
   const { errors } = formState;
 
+  const [itemList, setItemList] = useState<InitialItems[]>(
+    getValues()?.items || items,
+  );
+
+  useEffect(() => {
+    setValue("createdAt", createdAt);
+  }, [createdAt, setValue]);
+
   const handleAddNewItem = () => {
-    setItemList((prevItems) => [
-      ...prevItems,
-      { name: "", qty: "", price: "", total: "", invoiceId: idd },
+    setItemList((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: "",
+        quantity: 0,
+        price: 0,
+        total: 0,
+        invoiceId: Date.now(),
+      },
     ]);
   };
 
-  const paymentDueDate = addDays(createdAt!, +payment!);
-  const formattedPaymentDueDate = format(paymentDueDate, "yyyy-MM-dd");
+  function handleDeleteItem(id: number) {
+    console.log(getValues().items);
+    console.log(id);
+    setItemList(itemList.filter((_, index) => index !== id));
+    const updatedItemsList = getValues().items.filter(
+      (_, index) => index !== id,
+    );
+    console.log(updatedItemsList);
+    setValue("items", updatedItemsList);
+    console.log(getValues().items);
+  }
 
-  // console.log({
-  //   idd,
-  //   id,
-  //   createdAt,
-  //   paymentDue: formattedPaymentDueDate,
-  //   description: getValues().description,
-  //   clientName: getValues().clientName,
-  //   clientEmail: getValues().clientEmail,
-  //   clientAddress: getValues().clientAddress,
-  //   items: getValues().items,
-  //   paymentTerms: payment,
-  // });
+  console.log({
+    idd,
+    id,
+    createdAt,
+    // paymentDue: formattedPaymentDueDate,
+    description: getValues().description,
+    clientName: getValues().clientName,
+    clientEmail: getValues().clientEmail,
+    clientAddress: getValues().clientAddress,
+    items: getValues().items,
+    paymentTerms: payment,
+  });
   // console.log(getValues());
-  function onSubmit(data: AllInvoiceDataProps) {
+  function onSubmit(data: InvoiceDataProps) {
     console.log(data);
     // console.log(
     //   createItem({
@@ -117,8 +161,10 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
             type="text"
             id="billAddress"
             className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
-            defaultValue="19 Union Terrace"
-            disabled={true}
+            defaultValue={senderStreet}
+            {...register(`senderAdd.${0}.street`, {
+              required: "can’t be empty",
+            })}
           />
         </div>
 
@@ -136,8 +182,10 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
               type="text"
               id="billCity"
               className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
-              defaultValue="London"
-              disabled={true}
+              defaultValue={senderCity}
+              {...register(`senderAdd.${0}.city`, {
+                required: "can’t be empty",
+              })}
             />
           </div>
           <div>
@@ -153,8 +201,10 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
               type="text"
               id="postCode"
               className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
-              defaultValue="E1 3EZ"
-              disabled={true}
+              defaultValue={senderPostCode}
+              {...register(`senderAdd.${0}.postCode`, {
+                required: "can’t be empty",
+              })}
             />
           </div>
           <div>
@@ -170,8 +220,10 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
               type="text"
               id="billCountry"
               className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
-              defaultValue="United Kingdom"
-              disabled={true}
+              defaultValue={senderCountry}
+              {...register(`senderAdd.${0}.country`, {
+                required: "can’t be empty",
+              })}
             />
           </div>
         </div>
@@ -348,7 +400,6 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
               id="clientCity"
               defaultValue={createdAt}
               className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] disabled:bg-slate-200"
-              {...register("createdAt")}
               disabled={true}
             />
           </div>
@@ -449,22 +500,22 @@ function EditInvoice({ type, data }: CreditEditInvoiceProps) {
             </p>
           </div>
 
-          {(itemList &&
+          {itemList &&
             itemList.map((item, index) => (
-              <CreateEditInvoiceItem
-                key={index}
+              <EditInvoiceItem
                 name={item.name}
-                qty={item.quantity}
                 price={item.price}
-                total={String(item.total)}
+                quantity={item.quantity}
+                total={item.total}
+                key={index}
                 register={register}
-                getValues={getValues}
                 index={index}
-                id={idd}
                 errors={errors}
+                onDelete={handleDeleteItem}
+                setValue={setValue}
+                invoiceId={idd}
               />
-            ))) ??
-            []}
+            ))}
           <div
             className="mt-7 flex w-full cursor-pointer items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
             onClick={handleAddNewItem}

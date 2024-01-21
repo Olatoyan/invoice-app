@@ -1,5 +1,5 @@
 // import DeleteInvoice from "../../ui/DeleteInvoice";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import NavBar from "../../ui/NavBar";
 // import CreateEditInvoice from "./CreateEditInvoice";
 import InvoiceSection from "./InvoiceSection";
@@ -9,11 +9,9 @@ import Loader from "../../ui/Loader";
 import EditInvoice from "./EditInvoice";
 
 function InvoiceDetails() {
-  const { id } = useParams();
-
-  const { invoiceId, isLoading } = useInvoiceById(id);
+  const { invoiceId, isLoading } = useInvoiceById();
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  console.log(invoiceId);
+  // console.log(invoiceId);
 
   function handleEdit() {
     setIsEditing(true);
@@ -34,7 +32,7 @@ function InvoiceDetails() {
 
       {isEditing && (
         <>
-          <EditInvoice type="edit" data={invoiceId?.data?.[0] || null} />
+          <EditInvoice data={invoiceId?.data?.[0] || null} />
           <div
             className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"
             onClick={() => setIsEditing(false)}

@@ -109,28 +109,6 @@ export async function createInvoiceRow(invoice: CreateInvoiceProps) {
 
   return { data, error };
 }
-// export async function createInvoiceRow(
-//   invoiceData: InvoiceDataProps,
-//   clientData: ClientAddressProps,
-//   senderData: SenderAddressProps,
-//   itemsData: ItemProps,
-// ) {
-//   const { data: invoiceResult, error: invoiceError } = await supabase
-//     .from("invoice")
-//     .upsert([invoiceData], { onConflict: ["idd"] })
-//     .select();
-
-//   if (invoiceError) {
-//     console.error(invoiceError);
-//     throw new Error(`Could not create Invoice ${invoiceData.clientName}`);
-//   }
-
-//   await supabase.()
-//     .insert("clientAddress", [clientData])
-//     .insert("senderAdd", [senderData])
-//     .insert("items", [itemsData])
-//     .upsert("invoice", [invoiceData], { onConflict: ["idd"] });
-// }
 
 export async function createClientAddressRow(address: ClientAddressProps) {
   const { data, error } = await supabase
