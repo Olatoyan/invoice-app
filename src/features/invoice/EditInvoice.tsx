@@ -9,6 +9,10 @@ import { motion } from "framer-motion";
 import { InvoiceDataProps } from "../../types/Types";
 import EditInvoiceItem from "./EditInvoiceItem";
 import { getPaymentDue } from "../../utils/helpers";
+import { useUpdateInvoiceRow } from "./useUpdateInvoiceRow";
+import { useUpdateSenderAdd } from "./useUpdateSenderAdd";
+import { useUpdateClientAdd } from "./useUpdateClientAdd";
+import { useUpdateItems } from "./useUpdateItems";
 
 type CreditEditInvoiceProps = {
   data: InvoiceDataProps;
@@ -109,19 +113,11 @@ function EditInvoice({ data }: CreditEditInvoiceProps) {
     console.log(getValues().items);
   }
 
-  // console.log({
-  //   idd,
-  //   id,
-  //   createdAt,
-  //   // paymentDue: formattedPaymentDueDate,
-  //   description: getValues().description,
-  //   clientName: getValues().clientName,
-  //   clientEmail: getValues().clientEmail,
-  //   clientAddress: getValues().clientAddress,
-  //   items: getValues().items,
-  //   paymentTerms: payment,
-  // });
-  // console.log(getValues());
+  const { updateInvoice } = useUpdateInvoiceRow();
+  const { updateSeAddress } = useUpdateSenderAdd();
+  const { updateClAddress } = useUpdateClientAdd();
+  const { updateItems } = useUpdateItems();
+
   function onSubmit(data: InvoiceDataProps) {
     console.log(data);
     const paymentDueDate = getPaymentDue(data.createdAt, payment);
@@ -140,20 +136,26 @@ function EditInvoice({ data }: CreditEditInvoiceProps) {
     };
 
     const clientData = {
+      address: {
+        id: clientId,
+        invoiceId: clientInvoiceId,
+        street: getValues().clientAddress[0].street,
+        city: getValues().clientAddress[0].city,
+        postCode: getValues().clientAddress[0].postCode,
+        country: getValues().clientAddress[0].country,
+      },
       id: clientId,
-      invoiceId: clientInvoiceId,
-      street: getValues().clientAddress[0].street,
-      city: getValues().clientAddress[0].city,
-      postCode: getValues().clientAddress[0].postCode,
-      country: getValues().clientAddress[0].country,
     };
     const senderData = {
+      address: {
+        id: senderId,
+        invoiceId: senderInvoiceId,
+        street: getValues().senderAdd[0].street,
+        city: getValues().senderAdd[0].city,
+        postCode: getValues().senderAdd[0].postCode,
+        country: getValues().senderAdd[0].country,
+      },
       id: senderId,
-      invoiceId: senderInvoiceId,
-      street: getValues().senderAdd[0].street,
-      city: getValues().senderAdd[0].city,
-      postCode: getValues().senderAdd[0].postCode,
-      country: getValues().senderAdd[0].country,
     };
 
     // const itemsData = {
@@ -168,34 +170,30 @@ function EditInvoice({ data }: CreditEditInvoiceProps) {
     const itemsList = getValues()?.items;
     console.log(itemsList);
 
+    updateInvoice(invoiceData, {
+      onSuccess: () => {
+        updateSeAddress(senderData);
+        updateClAddress(clientData);
+      },
+    });
+
     itemsList.forEach((item) => {
       const itemsData = {
+        items: {
+          id: item.id,
+          name: item.name,
+          quantity: item.quantity,
+          price: item.price,
+          total: item.total,
+          invoiceId: idd,
+        },
         id: item.id,
-        name: item.name,
-        quantity: item.quantity,
-        price: item.price,
-        total: item.total,
-        invoiceId: idd,
       };
 
       console.log(itemsData);
 
-      // createItems(itemsData);
+      updateItems(itemsData);
     });
-    // console.log(
-    //   createItem({
-    //     idd,
-    //     id,
-    //     createdAt: createdAt,
-    //     paymentDue: formattedPaymentDueDate,
-    //     description: getValues().description,
-    //     clientName: getValues().clientName,
-    //     clientEmail: getValues().clientEmail,
-    //     clientAddress: getValues().clientAddress,
-    //     items: getValues().items,
-    //     paymentTerms: payment,
-    //   }),
-    // );
   }
   return (
     <form
