@@ -576,6 +576,7 @@ function EditInvoice({ data }: CreditEditInvoiceProps) {
                 onDelete={handleDeleteItem}
                 setValue={setValue}
                 invoiceId={idd}
+                id={item.id}
               />
             ))}
           <div

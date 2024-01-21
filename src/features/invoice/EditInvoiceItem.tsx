@@ -9,6 +9,7 @@ type EditInvoiceItemProps = {
   quantity: number;
   total: number;
   invoiceId: number;
+  id: number;
   register: UseFormRegister<InvoiceDataProps>;
   index: number;
   errors: FieldErrors<AllInvoiceDataProps>;
@@ -22,6 +23,7 @@ function EditInvoiceItem({
   quantity,
   total,
   invoiceId,
+  id,
   register,
   index,
   errors,
@@ -55,10 +57,10 @@ function EditInvoiceItem({
 
   useEffect(() => {
     setTotalPriceItem(totalQty * totalPrice);
-    setValue(`items.${index}.id`, Date.now());
+    setValue(`items.${index}.id`, id || Date.now());
     setValue(`items.${index}.total`, totalPriceItem);
     setValue(`items.${index}.invoiceId`, invoiceId);
-  }, [totalQty, totalPrice, index, setValue, invoiceId, total]);
+  }, [totalQty, totalPrice, index, setValue, invoiceId, totalPriceItem, id]);
 
   return (
     <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6">

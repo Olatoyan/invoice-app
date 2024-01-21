@@ -206,7 +206,7 @@ export async function updateSenderAddress(
 export async function updateItemsRow(item: ItemProps, id: number) {
   const { data, error } = await supabase
     .from("items")
-    .update({
+    .upsert({
       id: item.id,
       invoiceId: item.invoiceId,
       name: item.name,
