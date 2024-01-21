@@ -225,6 +225,21 @@ export async function updateItemsRow(item: ItemProps, id: number) {
   return { data, error };
 }
 
+export async function toggleStatus(id: string) {
+  const { data, error } = await supabase
+    .from("invoice")
+    .update({ status: "paid" })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not update status ${id}`);
+  }
+
+  return { data, error };
+}
+
 export function generateRandomId() {
   const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number

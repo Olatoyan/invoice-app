@@ -1,4 +1,5 @@
 import { AllInvoiceDataProps } from "../home/useInvoice";
+import { useUpdateStatus } from "./useUpdateStatus";
 
 type InvoiceStatusBoxProps = {
   data: AllInvoiceDataProps | null;
@@ -6,6 +7,8 @@ type InvoiceStatusBoxProps = {
 };
 
 function InvoiceStatusBox({ data, handleEdit }: InvoiceStatusBoxProps) {
+  const { updateStatus } = useUpdateStatus();
+
   return (
     <div className="mb-10 flex items-center justify-between rounded-[0.8rem] bg-white px-12 py-8 shadow-invoiceSh">
       <div className="flex items-center gap-8">
@@ -40,6 +43,7 @@ function InvoiceStatusBox({ data, handleEdit }: InvoiceStatusBoxProps) {
         <button
           className={`rounded-[2.4rem] bg-[#7c5dfa] px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white ${data?.status === "paid" ? "cursor-not-allowed opacity-35" : "hover:bg-[#9277ff]"}`}
           disabled={data?.status === "paid"}
+          onClick={() => updateStatus()}
         >
           {data?.status === "paid" ? "Has Paid" : "Mark as Paid"}
         </button>
