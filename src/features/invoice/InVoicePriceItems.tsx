@@ -1,8 +1,8 @@
 type InVoicePriceItemsProps = {
   name: string | undefined;
-  qty: string | undefined;
-  price: string | undefined;
-  total: string | undefined | number;
+  qty: number | undefined;
+  price: number | undefined;
+  total: number | undefined;
 };
 
 function InVoicePriceItems({

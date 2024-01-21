@@ -1,8 +1,8 @@
 import { addDays, format } from "date-fns";
-import {
-  AllInvoiceDataProps,
-  // ItemInvoiceProps,
-} from "../features/home/useInvoice";
+// import {
+// AllInvoiceDataProps,
+// ItemInvoiceProps,
+// } from "../features/home/useInvoice";
 import supabase from "../services/supabase";
 import {
   ClientAddressProps,
@@ -12,12 +12,12 @@ import {
   SenderAddressProps,
 } from "../types/Types";
 
-type InvoiceResponse = {
-  data: AllInvoiceDataProps[] | null;
-  error: any;
-};
+// type InvoiceResponse = {
+//   data: AllInvoiceDataProps[] | null;
+//   error: any;
+// };
 type InvoiceResponse2 = {
-  data: InvoiceDataProps[] | null;
+  data: InvoiceDataProps[];
   error: any;
 };
 
@@ -37,9 +37,7 @@ export async function getAllInvoices(): Promise<InvoiceResponse2> {
   return { data, error };
 }
 
-export async function getInvoiceById(
-  id: string | undefined,
-): Promise<InvoiceResponse> {
+export async function getInvoiceById(id: string): Promise<InvoiceResponse2> {
   const { data, error } = await supabase
     .from("invoice")
     .select(

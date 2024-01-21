@@ -24,15 +24,12 @@ function InvoiceDetails() {
       {isLoading ? (
         <Loader />
       ) : (
-        <InvoiceSection
-          data={invoiceId?.data?.[0] || null}
-          handleEdit={handleEdit}
-        />
+        <InvoiceSection data={invoiceId!.data[0]} handleEdit={handleEdit} />
       )}
 
       {isEditing && (
         <>
-          <EditInvoice data={invoiceId?.data?.[0] || null} />
+          <EditInvoice data={invoiceId!.data[0]} />
           <div
             className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"
             onClick={() => setIsEditing(false)}

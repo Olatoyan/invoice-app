@@ -18,7 +18,11 @@ type InitialItems = {
   invoiceId: number;
 };
 
-function CreateInvoice() {
+type CreateInvoiceProps = {
+  setCreateInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
   const [payment, setPayment] = useState(1);
   const [status, setStatus] = useState("pending");
@@ -562,7 +566,13 @@ function CreateInvoice() {
       </div>
 
       <div className="flex items-center justify-between pt-16">
-        <button className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
+        <button
+          className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]"
+          onClick={(e) => {
+            e.preventDefault();
+            setCreateInvoice(false);
+          }}
+        >
           Discard
         </button>
         <div className="flex items-center justify-end gap-6">

@@ -3,11 +3,12 @@ import InvoiceDetailsSection from "./InvoiceDetailsSection";
 import InvoiceStatusBox from "./InvoiceStatusBox";
 // import { useInvoiceById } from "./useInvoiceById";
 // import { useEffect, useState } from "react";
-import { AllInvoiceDataProps } from "../home/useInvoice";
+// import { AllInvoiceDataProps } from "../home/useInvoice";
+import { InvoiceDataProps } from "../../types/Types";
 // import Loader from "../../ui/Loader";
 
 type InvoiceSectionProps = {
-  data: AllInvoiceDataProps | null;
+  data: InvoiceDataProps;
   handleEdit: () => void;
 };
 

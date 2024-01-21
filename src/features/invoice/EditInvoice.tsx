@@ -14,7 +14,7 @@ import { useUpdateSenderAdd } from "./useUpdateSenderAdd";
 import { useUpdateClientAdd } from "./useUpdateClientAdd";
 import { useUpdateItems } from "./useUpdateItems";
 
-type CreditEditInvoiceProps = {
+type EditInvoiceProps = {
   data: InvoiceDataProps;
 };
 
@@ -27,7 +27,7 @@ type InitialItems = {
   invoiceId: number;
 };
 
-function EditInvoice({ data }: CreditEditInvoiceProps) {
+function EditInvoice({ data }: EditInvoiceProps) {
   console.log(data);
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
 

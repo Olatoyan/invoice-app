@@ -1,7 +1,8 @@
 import InVoicePriceItems from "./InVoicePriceItems";
-import { AllInvoiceDataProps } from "../home/useInvoice";
+// import { AllInvoiceDataProps } from "../home/useInvoice";
+import { InvoiceDataProps } from "../../types/Types";
 
-function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
+function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
   // console.log(data);
 
   const {
@@ -12,9 +13,10 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
     clientName,
     clientEmail,
     clientAddress,
+    senderAdd,
     items,
     total,
-  } = data || {};
+  } = data;
 
   // console.log(items);
 
@@ -23,7 +25,13 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
     city: clientCity,
     postCode: clientPostCode,
     country: clientCountry,
-  } = clientAddress?.[0] || {};
+  } = clientAddress[0];
+  const {
+    street: senderStreet,
+    city: senderCity,
+    postCode: senderPostCode,
+    country: senderCountry,
+  } = senderAdd[0];
   return (
     <section className="rounded-[0.8rem] bg-white p-20 pb-[4.8rem] shadow-invoiceSh">
       <div>
@@ -37,10 +45,10 @@ function InvoiceDetailsSection({ data }: { data: AllInvoiceDataProps | null }) {
         </div>
 
         <address className="flex flex-col items-end text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] text-[#7e88ce]">
-          <span>19 Union Terrace</span>
-          <span>London</span>
-          <span>E1 3EZ</span>
-          <span>United Kingdom</span>
+          <span>{senderStreet}</span>
+          <span>{senderCity}</span>
+          <span>{senderPostCode}</span>
+          <span>{senderCountry}</span>
         </address>
       </div>
 

@@ -1,8 +1,9 @@
+import { InvoiceDataProps } from "../../types/Types";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 import { useUpdateStatus } from "./useUpdateStatus";
 
 type InvoiceStatusBoxProps = {
-  data: AllInvoiceDataProps | null;
+  data: InvoiceDataProps;
   handleEdit: () => void;
 };
 

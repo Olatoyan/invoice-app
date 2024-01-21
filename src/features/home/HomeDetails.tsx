@@ -24,7 +24,7 @@ function HomeDetails() {
 
       {createInvoice && (
         <>
-          <CreateInvoice />
+          <CreateInvoice setCreateInvoice={setCreateInvoice} />
           <div
             className="fixed bottom-0 left-0 h-full w-full bg-black bg-opacity-50"
             onClick={() => setCreateInvoice(false)}

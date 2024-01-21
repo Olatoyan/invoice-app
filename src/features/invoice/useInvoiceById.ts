@@ -6,7 +6,7 @@ export function useInvoiceById() {
   const { id } = useParams();
   const { data: invoiceId, isLoading } = useQuery({
     queryKey: ["invoice", id],
-    queryFn: () => getInvoiceById(id),
+    queryFn: () => getInvoiceById(id!),
   });
 
   return { invoiceId, isLoading };
