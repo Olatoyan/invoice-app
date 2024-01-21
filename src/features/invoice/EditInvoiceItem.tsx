@@ -56,8 +56,9 @@ function EditInvoiceItem({
   useEffect(() => {
     setTotalPriceItem(totalQty * totalPrice);
     setValue(`items.${index}.id`, Date.now());
+    setValue(`items.${index}.total`, totalPriceItem);
     setValue(`items.${index}.invoiceId`, invoiceId);
-  }, [totalQty, totalPrice, index, setValue, invoiceId]);
+  }, [totalQty, totalPrice, index, setValue, invoiceId, total]);
 
   return (
     <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6">

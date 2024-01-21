@@ -1,7 +1,7 @@
 import { addDays, format } from "date-fns";
 import {
   AllInvoiceDataProps,
-  ItemInvoiceProps,
+  // ItemInvoiceProps,
 } from "../features/home/useInvoice";
 import supabase from "../services/supabase";
 import {
@@ -60,40 +60,16 @@ export async function getInvoiceById(
   return { data, error };
 }
 
-export async function createItemRow(item: ItemInvoiceProps) {
-  const { data, error } = await supabase.from("items").insert([item]).select();
+// export async function createItemRow(item: ItemProps) {
+//   const { data, error } = await supabase.from("items").insert([item]).select();
 
-  if (error) {
-    console.log(error);
-    throw new Error(`Could not create item ${item.name}`);
-  }
+//   if (error) {
+//     console.log(error);
+//     throw new Error(`Could not create item ${item.name}`);
+//   }
 
-  return { data, error };
-}
-
-export async function updateInvoiceItems(
-  id: string,
-  items: ItemInvoiceProps[],
-) {
-  const { error } = await supabase.from("items").delete().eq("id", id);
-
-  if (error) {
-    console.log(error);
-    throw new Error(`Could not delete item ${id}`);
-  }
-
-  const { data, error: createError } = await supabase
-    .from("items")
-    .insert([items])
-    .select();
-
-  if (error) {
-    console.log(error);
-    throw new Error(`Could not create item ${items}`);
-  }
-
-  return { data, createError };
-}
+//   return { data, error };
+// }
 
 export async function createInvoiceRow(invoice: CreateInvoiceProps) {
   console.log(invoice);
@@ -144,6 +120,106 @@ export async function createItemsRow(items: ItemProps) {
   if (error) {
     console.error(error);
     throw new Error(`Could not create items`);
+  }
+
+  return { data, error };
+}
+
+export async function updateInvoiceRows(
+  invoice: CreateInvoiceProps,
+  invoiceId: string,
+) {
+  console.log(invoice);
+  const { data, error } = await supabase
+    .from("invoice")
+    .update({
+      idd: invoice.idd,
+      id: invoice.id,
+      createdAt: invoice.createdAt,
+      paymentDue: invoice.paymentDue,
+      description: invoice.description,
+      paymentTerms: invoice.paymentTerms,
+      clientName: invoice.clientName,
+      clientEmail: invoice.clientEmail,
+      status: invoice.status,
+      total: invoice.total,
+    })
+    .eq("id", invoiceId)
+    .select();
+
+  if (error) {
+    console.log(error);
+    throw new Error(`Could not update item ${invoice.clientName}`);
+  }
+
+  return { data, error };
+}
+
+export async function updateClientAddress(
+  address: ClientAddressProps,
+  id: number,
+) {
+  const { data, error } = await supabase
+    .from("clientAddress")
+    .update({
+      id: address.id,
+      invoiceId: address.invoiceId,
+      street: address.street,
+      city: address.city,
+      country: address.country,
+      postCode: address.postCode,
+    })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not update clientAddress`);
+  }
+
+  return { data, error };
+}
+export async function updateSenderAddress(
+  address: SenderAddressProps,
+  id: number,
+) {
+  const { data, error } = await supabase
+    .from("senderAdd")
+    .update({
+      id: address.id,
+      invoiceId: address.invoiceId,
+      street: address.street,
+      city: address.city,
+      country: address.country,
+      postCode: address.postCode,
+    })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not update senderAddress`);
+  }
+
+  return { data, error };
+}
+export async function updateItemsRow(item: ItemProps, id: number) {
+  const { data, error } = await supabase
+    .from("items")
+    .update({
+      id: item.id,
+      invoiceId: item.invoiceId,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+      total: item.total,
+    })
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not update senderAddress`);
   }
 
   return { data, error };
