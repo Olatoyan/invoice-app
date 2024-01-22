@@ -8,6 +8,7 @@ import { generateRandomId, getPaymentDue } from "../../utils/helpers";
 import { useCreateSenderAdd } from "./useCreateSenderAdd";
 import { useCreateClientAdd } from "./useCreateClientAdd";
 import { useCreateItems } from "./useCreateItems";
+import { useNavigate } from "react-router-dom";
 
 type InitialItems = {
   id: number;
@@ -41,6 +42,8 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
   const { createSAddress, creatingSAddress } = useCreateSenderAdd();
   const { createClAddress, creatingClAddress } = useCreateClientAdd();
   const { createItems, creatingItems } = useCreateItems();
+
+  const navigate = useNavigate();
 
   function onSubmit(data: InvoiceDataProps) {
     const invoiceId = Date.now();
@@ -120,7 +123,11 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         });
 
         createClAddress(clientData);
-        createSAddress(senderData);
+        createSAddress(senderData, {
+          onSuccess: () => {
+            navigate(`/invoice/${randomId}`);
+          },
+        });
         // createItems(itemsData);
       },
       onError: (error) => {
