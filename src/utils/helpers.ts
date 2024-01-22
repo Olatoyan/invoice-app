@@ -21,17 +21,41 @@ type InvoiceResponse2 = {
   error: any;
 };
 
-export async function getAllInvoices(): Promise<InvoiceResponse2> {
-  const { data, error } = await supabase.from("invoice").select(`
-  *,
-  senderAdd (*),
-  clientAddress (*),
-  items (*)
+// export async function getAllInvoices(): Promise<InvoiceResponse2> {
+//   const { data, error } = await supabase.from("invoice").select(`
+//   *,
+//   senderAdd (*),
+//   clientAddress (*),
+//   items (*)
+//   `);
+
+//   if (error) {
+//     console.log(error);
+//     throw new Error("Could not get all Invoices");
+//   }
+
+//   return { data, error };
+// }
+
+export async function getAllInvoices(
+  status: "all" | "pending" | "draft" | "paid" = "all",
+): Promise<InvoiceResponse2> {
+  let query = supabase.from("invoice").select(`
+    *,
+    senderAdd (*),
+    clientAddress (*),
+    items (*)
   `);
+
+  if (status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.log(error);
-    throw new Error("Could not get all Invoices");
+    throw new Error(`Could not get ${status} Invoices`);
   }
 
   return { data, error };

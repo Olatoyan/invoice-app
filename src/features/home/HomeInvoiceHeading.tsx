@@ -4,15 +4,21 @@ import { Dispatch, useState } from "react";
 function HomeInvoiceHeading({
   numInvoices,
   setCreateInvoice,
+  setSelectedCheckbox,
+  selectedCheckbox,
 }: {
   numInvoices: number | undefined;
   setCreateInvoice: Dispatch<React.SetStateAction<boolean>>;
+  setSelectedCheckbox: React.Dispatch<
+    React.SetStateAction<"all" | "pending" | "paid" | "draft" | undefined>
+  >;
+  selectedCheckbox: "all" | "pending" | "paid" | "draft" | undefined;
 }) {
   const [isBoxOpened, setIsBoxOpened] = useState(false);
-  const [selectedCheckbox, setSelectedCheckbox] = useState("paid");
+  // const [selectedCheckbox, setSelectedCheckbox] = useState("all");
 
-  const handleCheckboxChange = (id: string) => {
-    setSelectedCheckbox(id === selectedCheckbox ? selectedCheckbox : id);
+  const handleCheckboxChange = (id: "all" | "pending" | "paid" | "draft") => {
+    setSelectedCheckbox(id);
     toggleBox();
   };
 
@@ -60,6 +66,21 @@ function HomeInvoiceHeading({
 
         {isBoxOpened && (
           <div className="absolute left-[-4rem] top-[7rem] flex  w-full max-w-[19.2rem] flex-col gap-6 rounded-[0.8rem] bg-white p-10 shadow-bigSh">
+            <div className="flex cursor-pointer items-center gap-5">
+              <input
+                type="checkbox"
+                id="all"
+                checked={selectedCheckbox === "all"}
+                onChange={() => handleCheckboxChange("all")}
+                className="h-[1.6rem] w-[1.6rem] cursor-pointer rounded-[0.2rem] border border-transparent accent-[#7c5dfa] hover:border-[#7c5dfa]"
+              />
+              <label
+                htmlFor="all"
+                className="cursor-pointer text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#1e2139] hover:text-[#0c0e16]"
+              >
+                All
+              </label>
+            </div>
             <div className="flex cursor-pointer items-center gap-5">
               <input
                 type="checkbox"

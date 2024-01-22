@@ -7,7 +7,11 @@ import CreateInvoice from "./CreateInvoice";
 
 function HomeDetails() {
   const [createInvoice, setCreateInvoice] = useState(false);
-  const { allInvoices, isLoading } = useInvoice();
+  const [selectedCheckbox, setSelectedCheckbox] = useState<
+    "all" | "pending" | "draft" | "paid" | undefined
+  >("all");
+
+  const { allInvoices, isLoading } = useInvoice(selectedCheckbox);
 
   return (
     <main className="relative grid min-h-[100dvh] grid-cols-[auto_1fr] bg-[#f8f8f8]">
@@ -19,6 +23,8 @@ function HomeDetails() {
         <HomeInvoiceSection
           allInvoices={allInvoices}
           setCreateInvoice={setCreateInvoice}
+          setSelectedCheckbox={setSelectedCheckbox}
+          selectedCheckbox={selectedCheckbox}
         />
       )}
 

@@ -51,10 +51,12 @@ export type ItemInvoiceProps = {
 //   isLoading: boolean;
 // };
 
-export function useInvoice() {
+export function useInvoice(
+  status: "all" | "pending" | "draft" | "paid" = "all",
+) {
   const { data, isLoading } = useQuery({
-    queryKey: ["invoice"],
-    queryFn: getAllInvoices,
+    queryKey: ["invoice", status],
+    queryFn: () => getAllInvoices(status),
   });
   const allInvoices = data?.data || null;
   return { allInvoices, isLoading };

@@ -6,17 +6,25 @@ import { InvoiceDataProps } from "../../types/Types";
 type HomeInvoiceSectionProps = {
   allInvoices: InvoiceDataProps[] | null;
   setCreateInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedCheckbox: React.Dispatch<
+    React.SetStateAction<"all" | "pending" | "paid" | "draft" | undefined>
+  >;
+  selectedCheckbox: "all" | "pending" | "paid" | "draft" | undefined;
 };
 
 function HomeInvoiceSection({
   allInvoices,
   setCreateInvoice,
+  setSelectedCheckbox,
+  selectedCheckbox,
 }: HomeInvoiceSectionProps) {
   return (
     <section className="mx-auto w-full max-w-[80rem]">
       <HomeInvoiceHeading
         numInvoices={allInvoices?.length}
         setCreateInvoice={setCreateInvoice}
+        setSelectedCheckbox={setSelectedCheckbox}
+        selectedCheckbox={selectedCheckbox}
       />
 
       {allInvoices?.length === 0 ? (
