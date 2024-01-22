@@ -6,6 +6,9 @@ export function useDeleteClientAdd() {
   // const { id } = useParams();
   const { mutate: deleteClient, isSuccess: isDeletingClient } = useMutation({
     mutationFn: (id: number) => deleteClientRow(id),
+    onSuccess: () => {
+      console.log("client has been deleted");
+    },
   });
 
   return { deleteClient, isDeletingClient };

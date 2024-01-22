@@ -30,20 +30,20 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
     deleteSender(
       data.senderAdd[0].id,
 
-      {
-        onSuccess: () => {
-          if (
-            data.clientAddress.length === 0 &&
-            data.items.length === 0 &&
-            data.senderAdd.length === 0
-          ) {
-            console.log("all data has been deleted");
-          } else {
-            deleteInvoice(data.idd);
-            console.log("there are still data to be deleted");
-          }
-        },
-      },
+      // {
+      //   onSuccess: () => {
+      //     if (
+      //       data.clientAddress.length === 0 &&
+      //       data.items.length === 0 &&
+      //       data.senderAdd.length === 0
+      //     ) {
+      //       console.log("all data has been deleted");
+      //     } else {
+      //       deleteInvoice(data.idd);
+      //       console.log("there are still data to be deleted");
+      //     }
+      //   },
+      // },
     );
 
     // Delete client
@@ -64,20 +64,7 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
 
     // Delete items
     data.items.forEach((item) => {
-      deleteItems(item.id, {
-        onSuccess: () => {
-          if (
-            data.senderAdd.length === 0 &&
-            data.clientAddress.length === 0 &&
-            data.items.length === 0
-          ) {
-            console.log("all data has been deleted");
-          } else {
-            deleteInvoice(data.idd);
-            console.log("there are still data to be deleted");
-          }
-        },
-      });
+      deleteItems(item.id);
     });
   }
 

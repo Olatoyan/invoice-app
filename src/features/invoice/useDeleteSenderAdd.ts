@@ -8,6 +8,7 @@ export function useDeleteSenderAdd() {
     mutationFn: (id: number) => deleteSenderRow(id),
     onSuccess: () => {
       toast.success("Sender Address has been deleted");
+      console.log("sender has been deleted");
     },
   });
 
