@@ -26,29 +26,54 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
   function deleteInvoiceData() {
     console.log(data);
 
-    const totalDeletions = 2 + data.items.length;
-    let successfulDeletions = 0;
-
-    const handleSuccess = () => {
-      successfulDeletions++;
-
-      // Check if all necessary deletions are complete
-      // Check if all necessary deletions are complete
-      if (successfulDeletions === totalDeletions) {
-        deleteInvoice(data.idd);
-        console.log("delete now");
-      }
-    };
-
     // Delete sender
-    deleteSender(data.senderAdd[0].id, { onSuccess: handleSuccess });
+    deleteSender(data.senderAdd[0].id, {
+      onSuccess: () => {
+        if (
+          data.clientAddress.length === 0 &&
+          data.items.length === 0 &&
+          data.senderAdd.length === 0
+        ) {
+          deleteInvoice(data.idd);
+          console.log("all data has been deleted");
+        } else {
+          console.log("there are still data to be deleted");
+        }
+      },
+    });
 
     // Delete client
-    deleteClient(data.clientAddress[0].id, { onSuccess: handleSuccess });
+    deleteClient(data.clientAddress[0].id, {
+      onSuccess: () => {
+        if (
+          data.senderAdd.length === 0 &&
+          data.items.length === 0 &&
+          data.clientAddress.length === 0
+        ) {
+          deleteInvoice(data.idd);
+          console.log("all data has been deleted");
+        } else {
+          console.log("there are still data to be deleted");
+        }
+      },
+    });
 
     // Delete items
     data.items.forEach((item) => {
-      deleteItems(item.id, { onSuccess: handleSuccess });
+      deleteItems(item.id, {
+        onSuccess: () => {
+          if (
+            data.senderAdd.length === 0 &&
+            data.clientAddress.length === 0 &&
+            data.items.length === 0
+          ) {
+            deleteInvoice(data.idd);
+            console.log("all data has been deleted");
+          } else {
+            console.log("there are still data to be deleted");
+          }
+        },
+      });
     });
   }
 

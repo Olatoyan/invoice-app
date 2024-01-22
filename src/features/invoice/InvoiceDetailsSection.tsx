@@ -25,13 +25,13 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
     city: clientCity,
     postCode: clientPostCode,
     country: clientCountry,
-  } = clientAddress[0];
+  } = clientAddress?.[0] || {};
   const {
     street: senderStreet,
     city: senderCity,
     postCode: senderPostCode,
     country: senderCountry,
-  } = senderAdd[0];
+  } = senderAdd?.[0] || {};
   return (
     <section className="rounded-[0.8rem] bg-white p-20 pb-[4.8rem] shadow-invoiceSh">
       <div>

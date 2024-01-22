@@ -4,7 +4,7 @@ import { SenderAddressProps } from "../../types/Types";
 import toast from "react-hot-toast";
 
 export function useCreateSenderAdd() {
-  const { mutate: createSAddress } = useMutation({
+  const { mutate: createSAddress,isPending: creatingSAddress } = useMutation({
     mutationFn: (address: SenderAddressProps) =>
       createSenderAddressRow(address),
     onSuccess: () => {
@@ -12,5 +12,5 @@ export function useCreateSenderAdd() {
     },
     onError: (error) => toast.error(error.message),
   });
-  return { createSAddress };
+  return { createSAddress,creatingSAddress };
 }

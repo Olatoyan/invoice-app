@@ -11,10 +11,11 @@ export function useCreateInvoice() {
   const { mutate: createInvoice } = useMutation({
     mutationFn: (newInvoice: CreateInvoiceProps) =>
       createInvoiceRow(newInvoice),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data);
       toast.success("New Invoice created");
       queryClient.invalidateQueries({ queryKey: ["invoice"] });
-      navigate("/");
+      navigate(`/invoice/${data.data[0].id}`);
     },
     onError: (error) => toast.error(error.message),
   });

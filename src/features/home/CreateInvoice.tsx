@@ -38,7 +38,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
   const { errors } = formState;
 
   const { createInvoice } = useCreateInvoice();
-  const { createSAddress } = useCreateSenderAdd();
+  const { createSAddress, creatingSAddress } = useCreateSenderAdd();
   const { createClAddress } = useCreateClientAdd();
   const { createItems } = useCreateItems();
 
@@ -195,6 +195,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             {...register(`senderAdd.${0}.street`, {
               required: "can’t be empty",
             })}
+            disabled={creatingSAddress}
           />
         </div>
 
@@ -221,6 +222,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
               {...register(`senderAdd.${0}.city`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingSAddress}
             />
           </div>
           <div>
@@ -244,6 +246,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
               {...register(`senderAdd.${0}.postCode`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingSAddress}
             />
           </div>
           <div>
@@ -259,6 +262,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
                   {errors.senderAdd?.[0]?.country.message}
                 </p>
               )}
+              disabled={creatingSAddress}
             </div>
             <input
               type="text"
