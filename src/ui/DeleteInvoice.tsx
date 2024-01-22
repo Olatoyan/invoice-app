@@ -27,20 +27,24 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
     console.log(data);
 
     // Delete sender
-    deleteSender(data.senderAdd[0].id, {
-      onSuccess: () => {
-        if (
-          data.clientAddress.length === 0 &&
-          data.items.length === 0 &&
-          data.senderAdd.length === 0
-        ) {
-          console.log("all data has been deleted");
-        } else {
-          deleteInvoice(data.idd);
-          console.log("there are still data to be deleted");
-        }
+    deleteSender(
+      data.senderAdd[0].id,
+
+      {
+        onSuccess: () => {
+          if (
+            data.clientAddress.length === 0 &&
+            data.items.length === 0 &&
+            data.senderAdd.length === 0
+          ) {
+            console.log("all data has been deleted");
+          } else {
+            deleteInvoice(data.idd);
+            console.log("there are still data to be deleted");
+          }
+        },
       },
-    });
+    );
 
     // Delete client
     deleteClient(data.clientAddress[0].id, {

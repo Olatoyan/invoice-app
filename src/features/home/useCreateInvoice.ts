@@ -16,6 +16,7 @@ export function useCreateInvoice() {
       toast.success("New Invoice created");
       queryClient.invalidateQueries({ queryKey: ["invoice"] });
       navigate(`/invoice/${data.data[0].id}`);
+      // location.reload();
     },
     onError: (error) => toast.error(error.message),
   });

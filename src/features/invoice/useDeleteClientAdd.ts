@@ -4,9 +4,9 @@ import { deleteClientRow } from "../../utils/helpers";
 
 export function useDeleteClientAdd() {
   // const { id } = useParams();
-  const { mutate: deleteClient } = useMutation({
+  const { mutate: deleteClient, isSuccess: isDeletingClient } = useMutation({
     mutationFn: (id: number) => deleteClientRow(id),
   });
 
-  return { deleteClient };
+  return { deleteClient, isDeletingClient };
 }

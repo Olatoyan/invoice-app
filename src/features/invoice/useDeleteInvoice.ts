@@ -4,14 +4,12 @@ import { deleteInvoiceRow } from "../../utils/helpers";
 import toast from "react-hot-toast";
 
 export function useDeleteInvoice() {
-  // const { id } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const { mutate: deleteInvoice } = useMutation({
     mutationFn: (id: number) => deleteInvoiceRow(id),
-    onSuccess: (data) => {
-      console.log(data);
-      // const dataId = data.id;
-      toast.success(`Invoice  has been deleted`);
+    onSuccess: () => {
+      toast.success(`Invoice ${id} has been deleted`);
       navigate("/");
     },
   });
