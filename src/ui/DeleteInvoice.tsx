@@ -34,9 +34,9 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
           data.items.length === 0 &&
           data.senderAdd.length === 0
         ) {
-          deleteInvoice(data.idd);
           console.log("all data has been deleted");
         } else {
+          deleteInvoice(data.idd);
           console.log("there are still data to be deleted");
         }
       },
@@ -50,9 +50,9 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
           data.items.length === 0 &&
           data.clientAddress.length === 0
         ) {
-          deleteInvoice(data.idd);
           console.log("all data has been deleted");
         } else {
+          deleteInvoice(data.idd);
           console.log("there are still data to be deleted");
         }
       },
@@ -67,9 +67,9 @@ function DeleteInvoice({ handleUndoDelete, data }: DeleteInvoiceProps) {
             data.clientAddress.length === 0 &&
             data.items.length === 0
           ) {
-            deleteInvoice(data.idd);
             console.log("all data has been deleted");
           } else {
+            deleteInvoice(data.idd);
             console.log("there are still data to be deleted");
           }
         },

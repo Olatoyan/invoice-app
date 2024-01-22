@@ -8,7 +8,7 @@ export function useCreateInvoice() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { mutate: createInvoice } = useMutation({
+  const { mutate: createInvoice, isPending: creatingInvoice } = useMutation({
     mutationFn: (newInvoice: CreateInvoiceProps) =>
       createInvoiceRow(newInvoice),
     onSuccess: (data) => {
@@ -20,5 +20,5 @@ export function useCreateInvoice() {
     onError: (error) => toast.error(error.message),
   });
 
-  return { createInvoice };
+  return { createInvoice, creatingInvoice };
 }

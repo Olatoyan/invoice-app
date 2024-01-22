@@ -3,9 +3,9 @@ import { ItemProps } from "../../types/Types";
 import { createItemsRow } from "../../utils/helpers";
 
 export function useCreateItems() {
-  const { mutate: createItems } = useMutation({
+  const { mutate: createItems, isPending: creatingItems } = useMutation({
     mutationFn: (item: ItemProps) => createItemsRow(item),
   });
 
-  return { createItems };
+  return { createItems, creatingItems };
 }

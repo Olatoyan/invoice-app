@@ -37,10 +37,10 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
 
   const { errors } = formState;
 
-  const { createInvoice } = useCreateInvoice();
+  const { createInvoice, creatingInvoice } = useCreateInvoice();
   const { createSAddress, creatingSAddress } = useCreateSenderAdd();
-  const { createClAddress } = useCreateClientAdd();
-  const { createItems } = useCreateItems();
+  const { createClAddress, creatingClAddress } = useCreateClientAdd();
+  const { createItems, creatingItems } = useCreateItems();
 
   function onSubmit(data: InvoiceDataProps) {
     const invoiceId = Date.now();
@@ -262,7 +262,6 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
                   {errors.senderAdd?.[0]?.country.message}
                 </p>
               )}
-              disabled={creatingSAddress}
             </div>
             <input
               type="text"
@@ -271,6 +270,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
               {...register(`senderAdd.${0}.country`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingSAddress}
             />
           </div>
         </div>
@@ -299,8 +299,9 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientName"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none ${errors?.clientName?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientName?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
               {...register("clientName", { required: "can’t be empty" })}
+              disabled={creatingInvoice}
             />
           </div>
           <div>
@@ -320,7 +321,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="email"
               id="clientMail"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none ${errors?.clientEmail?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientEmail?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
               {...register("clientEmail", {
                 required: "can’t be empty",
                 pattern: {
@@ -328,6 +329,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
                   message: "Please provide a valid email address",
                 },
               })}
+              disabled={creatingInvoice}
             />
           </div>
           <div>
@@ -347,10 +349,11 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientAddress"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none ${errors?.clientAddress?.[0]?.street?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.street?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
               {...register(`clientAddress.${0}.street`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingClAddress}
             />
           </div>
         </div>
@@ -372,10 +375,11 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientCity"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none ${errors?.clientAddress?.[0]?.city?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.city?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
               {...register(`clientAddress.${0}.city`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingClAddress}
             />
           </div>
           <div>
@@ -395,10 +399,11 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientPostCode"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none ${errors?.clientAddress?.[0]?.postCode?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.postCode?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
               {...register(`clientAddress.${0}.postCode`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingClAddress}
             />
           </div>
           <div>
@@ -418,10 +423,11 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientCountry"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none ${errors?.clientAddress?.[0]?.country?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.country?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
               {...register(`clientAddress.${0}.country`, {
                 required: "can’t be empty",
               })}
+              disabled={creatingClAddress}
             />
           </div>
         </div>
@@ -448,6 +454,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
               id="clientCity"
               className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] disabled:bg-slate-200"
               {...register("createdAt", { required: "can’t be empty" })}
+              disabled={creatingInvoice}
             />
           </div>
           <div>
@@ -519,8 +526,9 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <input
             type="text"
             id="projectDescription"
-            className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none ${errors?.description?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+            className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.description?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
             {...register("description", { required: "can't be empty" })}
+            disabled={creatingInvoice}
           />
         </div>
       </div>
@@ -555,6 +563,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
                 errors={errors}
                 onDelete={handleDeleteItem}
                 setValue={setValue}
+                creatingItems={creatingItems}
               />
             ))}
           <div

@@ -9,6 +9,7 @@ type CreateInvoiceItemProps = {
   errors: FieldErrors<AllInvoiceDataProps>;
   onDelete: (id: number) => void;
   setValue: UseFormSetValue<InvoiceDataProps>;
+  creatingItems: boolean;
 };
 
 function CreateInvoiceItem({
@@ -17,6 +18,7 @@ function CreateInvoiceItem({
   errors,
   onDelete,
   setValue,
+  creatingItems,
 }: CreateInvoiceItemProps) {
   const [totalQty, setTotalQty] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -53,7 +55,7 @@ function CreateInvoiceItem({
       <input
         type="text"
         id="itemName"
-        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none ${
+        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${
           errors.items?.[index!]?.name
             ? "border-[#ff6363]"
             : "focus:border-[#9277ff]"
@@ -61,11 +63,12 @@ function CreateInvoiceItem({
         placeholder="Item name"
         // defaultValue={name}
         {...register(`items.${index}.name`, { required: "can't be empty" })}
+        disabled={creatingItems}
       />
       <input
         type="number"
         id="qty"
-        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-4 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none ${
+        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-4 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${
           errors.items?.[index!]?.quantity
             ? "border-[#ff6363]"
             : "focus:border-[#9277ff]"
@@ -76,11 +79,12 @@ function CreateInvoiceItem({
           required: "can't be empty",
         })}
         onChange={(e) => handleQtyChange(e)}
+        disabled={creatingItems}
       />
       <input
         type="number"
         id="price"
-        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-5 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none ${
+        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-5 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${
           errors.items?.[index!]?.price
             ? "border-[#ff6363]"
             : "focus:border-[#9277ff]"
@@ -91,6 +95,7 @@ function CreateInvoiceItem({
           required: "can't be empty",
         })}
         onChange={(e) => handlePriceChange(e)}
+        disabled={creatingItems}
       />
       <p
         className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]"
