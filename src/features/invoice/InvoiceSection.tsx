@@ -5,6 +5,7 @@ import InvoiceStatusBox from "./InvoiceStatusBox";
 // import { useEffect, useState } from "react";
 // import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
+import { useDarkMode } from "../../context/DarkModeContext";
 // import Loader from "../../ui/Loader";
 
 type InvoiceSectionProps = {
@@ -19,6 +20,7 @@ function InvoiceSection({
   handleDelete,
 }: InvoiceSectionProps) {
   const navigate = useNavigate();
+  const { isDarkMode } = useDarkMode();
 
   function handleMoveBack() {
     navigate(-1);
@@ -31,7 +33,9 @@ function InvoiceSection({
         className="flex cursor-pointer items-center gap-12 pb-12"
       >
         <img src="/icon-arrow-left.svg" alt="arrow left" />
-        <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]">
+        <p
+          className={`text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] ${isDarkMode ? "text-white hover:text-[#888eb0]" : "text-[#0c0e16] hover:text-[#7e88c3]"}`}
+        >
           Go back
         </p>
       </div>

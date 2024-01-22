@@ -1,6 +1,7 @@
 import InVoicePriceItems from "./InVoicePriceItems";
 // import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
   // console.log(data);
@@ -32,19 +33,30 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
     postCode: senderPostCode,
     country: senderCountry,
   } = senderAdd?.[0] || {};
+
+  const { isDarkMode } = useDarkMode();
   return (
-    <section className="rounded-[0.8rem] bg-white p-20 pb-[4.8rem] shadow-invoiceSh">
+    <section
+      className={`rounded-[0.8rem] bg-white p-20 pb-[4.8rem] shadow-invoiceSh ${isDarkMode ? "bg-[#1e2139]" : "bg-white"}`}
+    >
       <div>
         <div>
           <h2 className="pb-3 text-[1.5rem] font-bold leading-[2.4rem] tracking-[-0.025rem] text-[#888eb0]">
-            #<span className="text-[#0c0e16]">{id}</span>
+            #
+            <span className={`${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}>
+              {id}
+            </span>
           </h2>
-          <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+          <p
+            className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+          >
             {description}
           </p>
         </div>
 
-        <address className="flex flex-col items-end text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] text-[#7e88ce]">
+        <address
+          className={`flex flex-col items-end text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+        >
           <span>{senderStreet}</span>
           <span>{senderCity}</span>
           <span>{senderPostCode}</span>
@@ -53,33 +65,47 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
       </div>
 
       <div className="grid grid-cols-4 gap-12 pb-20 pt-8">
-        <div>
+        <div className="flex flex-col justify-between">
           <div>
-            <h3 className="text-[1.4rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <h3
+              className={`text-[1.4rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Invoice Date
             </h3>
-            <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
+            <p
+              className={`pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+            >
               {createdAt}
             </p>
           </div>
           <div>
-            <h3 className="text-[1.4rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <h3
+              className={`text-[1.4rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Payment Due
             </h3>
-            <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
+            <p
+              className={`pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+            >
               {paymentDue}
             </p>
           </div>
         </div>
 
         <div>
-          <h3 className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+          <h3
+            className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+          >
             Bill To
           </h3>
-          <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
+          <p
+            className={`pb-3 pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+          >
             {clientName}
           </p>
-          <address className="flex flex-col items-start text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] text-[#7e88ce]">
+          <address
+            className={`flex flex-col items-start text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+          >
             <span>{clientStreet}</span>
             <span>{clientCity}</span>
             <span>{clientPostCode}</span>
@@ -88,31 +114,45 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
         </div>
 
         <div className="col-start-3 col-end-5">
-          <h3 className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+          <h3
+            className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+          >
             Send to
           </h3>
-          <p className="pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] text-[#0c0e16]">
+          <p
+            className={`pt-6 text-[1.5rem] font-bold leading-[2rem] tracking-[-0.025rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+          >
             {clientEmail}
           </p>
         </div>
       </div>
 
       <div>
-        <div className="rounded-[0.8rem_0.8rem_0_0] bg-[#f9fafe] p-[3.3rem] pb-0">
+        <div
+          className={`rounded-[0.8rem_0.8rem_0_0] p-[3.3rem] pb-0 ${isDarkMode ? "bg-[#252945]" : "bg-[#f9fafe]"}`}
+        >
           <div className="grid grid-cols-[3fr_2.6rem_1fr_1fr] gap-28 pb-12">
-            <h3 className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <h3
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Item Name
             </h3>
 
-            <h3 className="justify-self-center text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <h3
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               QTY.
             </h3>
 
-            <h3 className="justify-self-end text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <h3
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Price
             </h3>
 
-            <h3 className="justify-self-end text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <h3
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Total
             </h3>
           </div>
@@ -128,7 +168,9 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
           ))}
         </div>
 
-        <div className="flex items-center justify-between rounded-[0_0_0.8rem_0.8rem] bg-[#373b53] p-[3.3rem] pb-10">
+        <div
+          className={`flex items-center justify-between rounded-[0_0_0.8rem_0.8rem] p-[3.3rem] pb-10 ${isDarkMode ? "bg-[#0c0e16]" : "bg-[#373b53]"}`}
+        >
           <p className="text-[1.3rem] font-medium leading-[1.8rem] tracking-[-0.01rem] text-white">
             Amount Due
           </p>

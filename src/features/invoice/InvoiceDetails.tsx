@@ -8,11 +8,13 @@ import { useState } from "react";
 import Loader from "../../ui/Loader";
 import EditInvoice from "./EditInvoice";
 import DeleteInvoice from "../../ui/DeleteInvoice";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function InvoiceDetails() {
   const { invoiceId, isLoading } = useInvoiceById();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const { isDarkMode } = useDarkMode();
   // console.log(invoiceId);
 
   function handleEdit() {
@@ -28,7 +30,9 @@ function InvoiceDetails() {
   }
 
   return (
-    <main className="relative grid min-h-[100dvh] grid-cols-[auto_1fr] bg-[#f8f8f8]">
+    <main
+      className={`relative grid min-h-[100dvh] grid-cols-[auto_1fr] ${isDarkMode ? "bg-[#141625]" : "bg-[#f8f8f8]"}`}
+    >
       <NavBar />
 
       {isLoading ? (
