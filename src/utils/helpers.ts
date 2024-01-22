@@ -231,6 +231,33 @@ export async function deleteItemsRow(id: number) {
     throw new Error(`Could not delete item`);
   }
 }
+export async function deleteSenderRow(id: number) {
+  const { error } = await supabase.from("senderAdd").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not delete item`);
+  }
+}
+export async function deleteClientRow(id: number) {
+  console.log(id);
+
+  const { error } = await supabase.from("clientAddress").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not delete item`);
+  }
+}
+export async function deleteInvoiceRow(id: number) {
+  console.log(id);
+  const { error } = await supabase.from("invoice").delete().eq("idd", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not delete item`);
+  }
+}
 
 export async function toggleStatus(id: string) {
   const { data, error } = await supabase

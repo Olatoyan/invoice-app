@@ -9,7 +9,7 @@ export function useUpdateStatus() {
   const { mutate: updateStatus } = useMutation({
     mutationFn: () => toggleStatus(id!),
     onSuccess: () => {
-      toast.success(`Invoice ${id} status has been updated`);
+      toast.success(`Invoice ${id} has been paid`);
       queryClient.invalidateQueries({ queryKey: ["invoice", id] });
     },
   });

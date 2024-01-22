@@ -10,9 +10,14 @@ import { InvoiceDataProps } from "../../types/Types";
 type InvoiceSectionProps = {
   data: InvoiceDataProps;
   handleEdit: () => void;
+  handleDelete: () => void;
 };
 
-function InvoiceSection({ data, handleEdit }: InvoiceSectionProps) {
+function InvoiceSection({
+  data,
+  handleEdit,
+  handleDelete,
+}: InvoiceSectionProps) {
   const navigate = useNavigate();
 
   function handleMoveBack() {
@@ -30,7 +35,11 @@ function InvoiceSection({ data, handleEdit }: InvoiceSectionProps) {
           Go back
         </p>
       </div>
-      <InvoiceStatusBox data={data} handleEdit={handleEdit} />
+      <InvoiceStatusBox
+        data={data}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
       <InvoiceDetailsSection data={data} />
     </section>
   );

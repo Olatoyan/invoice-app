@@ -5,9 +5,14 @@ import { useUpdateStatus } from "./useUpdateStatus";
 type InvoiceStatusBoxProps = {
   data: InvoiceDataProps;
   handleEdit: () => void;
+  handleDelete: () => void;
 };
 
-function InvoiceStatusBox({ data, handleEdit }: InvoiceStatusBoxProps) {
+function InvoiceStatusBox({
+  data,
+  handleEdit,
+  handleDelete,
+}: InvoiceStatusBoxProps) {
   const { updateStatus } = useUpdateStatus();
 
   return (
@@ -38,7 +43,10 @@ function InvoiceStatusBox({ data, handleEdit }: InvoiceStatusBoxProps) {
         >
           Edit
         </button>
-        <button className="rounded-[2.4rem] bg-[#ec5757] px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#ff9797]">
+        <button
+          className="rounded-[2.4rem] bg-[#ec5757] px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#ff9797]"
+          onClick={handleDelete}
+        >
           Delete
         </button>
         <button
