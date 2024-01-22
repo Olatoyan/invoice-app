@@ -14,7 +14,7 @@ export function useUpdateInvoiceRow() {
       console.log(data);
       const dataId = data.data[0].id;
       toast.success(`Invoice ${dataId} has been updated`);
-      navigate("/");
+      navigate(`/`);
     },
   });
 

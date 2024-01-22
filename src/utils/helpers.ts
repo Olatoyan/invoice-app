@@ -223,6 +223,15 @@ export async function updateItemsRow(item: ItemProps, id: number) {
   return { data, error };
 }
 
+export async function deleteItemsRow(id: number) {
+  const { error } = await supabase.from("items").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error(`Could not delete item`);
+  }
+}
+
 export async function toggleStatus(id: string) {
   const { data, error } = await supabase
     .from("invoice")

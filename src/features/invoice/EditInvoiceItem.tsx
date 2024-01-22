@@ -1,4 +1,9 @@
-import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { AllInvoiceDataProps } from "../home/useInvoice";
 import { useEffect, useState } from "react";
 import { InvoiceDataProps } from "../../types/Types";
@@ -15,6 +20,7 @@ type EditInvoiceItemProps = {
   errors: FieldErrors<AllInvoiceDataProps>;
   onDelete: (id: number) => void;
   setValue: UseFormSetValue<InvoiceDataProps>;
+  getValues: UseFormGetValues<InvoiceDataProps>;
 };
 
 function EditInvoiceItem({
@@ -29,10 +35,13 @@ function EditInvoiceItem({
   errors,
   onDelete,
   setValue,
+  getValues,
 }: EditInvoiceItemProps) {
   const [totalQty, setTotalQty] = useState(quantity);
   const [totalPrice, setTotalPrice] = useState(price);
   const [totalPriceItem, setTotalPriceItem] = useState(total);
+  console.log(getValues().items);
+  console.log(totalQty, totalPrice, totalPriceItem);
 
   function handleQtyChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newQty = Number(e.target.value);
@@ -55,12 +64,26 @@ function EditInvoiceItem({
     setValue(`items.${index}.total`, newTotal);
   }
 
+  // useEffect(() => {
+  //   // const totall
+  //   setTotalPriceItem(totalQty * totalPrice);
+  //   // setTotalPriceItem((prevTotalQty) => prevTotalQty * totalPrice);
+
+  //   setValue(`items.${index}.id`, id || Date.now());
+  //   setValue(`items.${index}.total`, totalPriceItem);
+  //   setValue(`items.${index}.invoiceId`, invoiceId);
+  // }, [totalQty, totalPrice, index, setValue, invoiceId, totalPriceItem, id]);
+
   useEffect(() => {
-    setTotalPriceItem(totalQty * totalPrice);
-    setValue(`items.${index}.id`, id || Date.now());
+    // Update the form values after totalPriceItem has been updated
     setValue(`items.${index}.total`, totalPriceItem);
+  }, [totalPriceItem, setValue, index]);
+
+  useEffect(() => {
+    // Update the form values when other dependencies change
+    setValue(`items.${index}.id`, id || Date.now());
     setValue(`items.${index}.invoiceId`, invoiceId);
-  }, [totalQty, totalPrice, index, setValue, invoiceId, totalPriceItem, id]);
+  }, [id, invoiceId, setValue, index]);
 
   return (
     <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6">
@@ -110,7 +133,9 @@ function EditInvoiceItem({
         className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]"
         // {...setValue(`items.${index}.total`, totalPriceItem)}
       >
-        {totalPriceItem.toFixed(2)}
+        {/* {totalPriceItem.toFixed(2)} */}
+        {getValues?.(`items.${index}.total`)?.toFixed(2) ||
+          totalPriceItem.toFixed(2)}
       </p>
       {/* <input
         className="border-none text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0] outline-none"
@@ -123,7 +148,7 @@ function EditInvoiceItem({
 
       <svg
         className="h-[1.6rem] w-[1.3rem] cursor-pointer fill-[#888EB0] hover:fill-[#ec5757]"
-        onClick={() => onDelete(index)}
+        onClick={() => onDelete(getValues(`items.${index}.id`))}
       >
         <use xlinkHref="/icon-delete.svg#delete" />
       </svg>

@@ -13,6 +13,7 @@ import { useUpdateInvoiceRow } from "./useUpdateInvoiceRow";
 import { useUpdateSenderAdd } from "./useUpdateSenderAdd";
 import { useUpdateClientAdd } from "./useUpdateClientAdd";
 import { useUpdateItems } from "./useUpdateItems";
+import { useDeleteItems } from "./useDeleteItems";
 
 type EditInvoiceProps = {
   data: InvoiceDataProps;
@@ -101,23 +102,26 @@ function EditInvoice({ data }: EditInvoiceProps) {
     ]);
   };
 
-  function handleDeleteItem(id: number) {
+  const { updateInvoice } = useUpdateInvoiceRow();
+  const { updateSeAddress } = useUpdateSenderAdd();
+  const { updateClAddress } = useUpdateClientAdd();
+  const { updateItems } = useUpdateItems();
+  const { deleteItems } = useDeleteItems();
+
+  function handleDeleteItem(deleteId: number) {
     console.log(getValues().items);
-    console.log(id);
-    setItemList(itemList.filter((_, index) => index !== id));
+    console.log(deleteId);
+    deleteItems(deleteId);
+    setItemList(itemList.filter((item) => item.id !== deleteId));
     const updatedItemsList = getValues().items.filter(
-      (_, index) => index !== id,
+      (item) => item.id !== deleteId,
     );
     console.log(updatedItemsList);
     setValue("items", updatedItemsList);
     console.log(getValues().items);
   }
 
-  const { updateInvoice } = useUpdateInvoiceRow();
-  const { updateSeAddress } = useUpdateSenderAdd();
-  const { updateClAddress } = useUpdateClientAdd();
-  const { updateItems } = useUpdateItems();
-
+  console.log(getValues());
   function onSubmit(data: InvoiceDataProps) {
     console.log(data);
     const paymentDueDate = getPaymentDue(data.createdAt, payment);
@@ -132,7 +136,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
       clientName: data.clientName,
       clientEmail: data.clientEmail,
       status: status,
-      total: data?.items?.reduce((acc, item) => acc + item.total, 0),
+      total: getValues()?.items?.reduce((acc, item) => acc + item.total, 0),
     };
 
     const clientData = {
@@ -575,6 +579,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
                 errors={errors}
                 onDelete={handleDeleteItem}
                 setValue={setValue}
+                getValues={getValues}
                 invoiceId={idd}
                 id={item.id}
               />
