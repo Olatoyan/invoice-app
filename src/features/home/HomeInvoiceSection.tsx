@@ -19,7 +19,7 @@ function HomeInvoiceSection({
   selectedCheckbox,
 }: HomeInvoiceSectionProps) {
   return (
-    <section className="mx-auto w-full max-w-[80rem]">
+    <section className="mx-auto w-full max-w-[88rem] px-8">
       <HomeInvoiceHeading
         numInvoices={allInvoices?.length}
         setCreateInvoice={setCreateInvoice}

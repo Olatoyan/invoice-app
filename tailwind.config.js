@@ -10,6 +10,11 @@ export default {
       fontFamily: {
         spartan: ["League Spartan", "sans-serif"],
       },
+      screens: {
+        laptop: { max: "56.25em" },
+        tablet: { max: "48.75em" },
+        mobile: { max: "37.5em" },
+      },
     },
   },
   plugins: [],

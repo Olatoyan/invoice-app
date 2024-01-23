@@ -31,27 +31,31 @@ function HomeInvoiceHeading({
 
   const { isDarkMode } = useDarkMode();
 
+  const isSmallScreen = window.innerWidth < 780;
+
   return (
     <section className="flex justify-between pb-28 pt-32">
       <div className="">
         <h1
-          className={`text-[3.6rem] font-bold tracking-[0.1125rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+          className={`mobile:text-[2.4rem] mobile:tracking-[-0.075rem] text-[3.6rem] font-bold tracking-[-0.1125rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
         >
           Invoices
         </h1>
         <p
           className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#888eb0]"}`}
         >
-          There are {numInvoices} total invoices
+          {isSmallScreen
+            ? `${numInvoices} invoices`
+            : `There are ${numInvoices} total invoices`}
         </p>
       </div>
 
-      <div className="relative flex items-center gap-16">
+      <div className="mobile:gap-6 relative flex items-center gap-16">
         <button className="flex items-center gap-5" onClick={toggleBox}>
           <span
             className={`text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]  ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
           >
-            Filter by status
+            {isSmallScreen ? "Filter" : "Filter by status"}
           </span>
           <motion.img
             src="./icon-arrow-down.svg"
@@ -62,14 +66,14 @@ function HomeInvoiceHeading({
           />
         </button>
         <motion.button
-          className="flex items-center gap-8 rounded-[2.4rem] bg-[#7c5dfa] px-4 py-3 hover:bg-[#9277ff]"
+          className="tablet:gap-4 flex items-center gap-8 rounded-[2.4rem] bg-[#7c5dfa] px-4 py-3 hover:bg-[#9277ff]"
           onClick={() => setCreateInvoice(true)}
         >
           <div className="flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full bg-white">
             <img src="./icon-plus.svg" alt="plus icon" />
           </div>
           <span className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white">
-            New Invoice
+            {isSmallScreen ? "New" : "New Invoice"}
           </span>
         </motion.button>
 
