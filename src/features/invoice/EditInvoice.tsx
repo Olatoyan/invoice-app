@@ -14,6 +14,7 @@ import { useUpdateSenderAdd } from "./useUpdateSenderAdd";
 import { useUpdateClientAdd } from "./useUpdateClientAdd";
 import { useUpdateItems } from "./useUpdateItems";
 import { useDeleteItems } from "./useDeleteItems";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 type EditInvoiceProps = {
   data: InvoiceDataProps;
@@ -101,6 +102,8 @@ function EditInvoice({ data }: EditInvoiceProps) {
       },
     ]);
   };
+
+  const { isDarkMode } = useDarkMode();
 
   const { updateInvoice } = useUpdateInvoiceRow();
   const { updateSeAddress } = useUpdateSenderAdd();
@@ -201,10 +204,14 @@ function EditInvoice({ data }: EditInvoiceProps) {
   }
   return (
     <form
-      className="absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto bg-white py-20 pl-28 pr-20"
+      className={`absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
+        isDarkMode ? "bg-[#141625]" : "bg-white"
+      }`}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className="pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] text-[#0c0e16]">
+      <h2
+        className={`pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+      >
         Edit <span className="text-[#888eb0]">#</span>
         <span>{id}</span>
       </h2>
@@ -217,7 +224,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
         <div>
           <div className="flex items-center justify-between">
             <label
-              className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
               htmlFor="billAddress"
             >
               Street Address
@@ -226,7 +233,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <input
             type="text"
             id="billAddress"
-            className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
+            className={`w-full rounded-[0.4rem] border border-solid  bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${isDarkMode ? "border-[#1e2139] bg-[#252945] text-white" : "border-[#dfe3fa] bg-white text-[#0c0e16]"}`}
             defaultValue={senderStreet}
             {...register(`senderAdd.${0}.street`, {
               required: "can’t be empty",
@@ -238,7 +245,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="billCity"
               >
                 City
@@ -247,7 +254,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
             <input
               type="text"
               id="billCity"
-              className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
+              className={`w-full rounded-[0.4rem] border border-solid  bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${isDarkMode ? "border-[#1e2139] bg-[#252945] text-white" : "border-[#dfe3fa] bg-white text-[#0c0e16]"}`}
               defaultValue={senderCity}
               {...register(`senderAdd.${0}.city`, {
                 required: "can’t be empty",
@@ -257,7 +264,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="postCode"
               >
                 Post Code
@@ -266,7 +273,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
             <input
               type="text"
               id="postCode"
-              className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
+              className={`w-full rounded-[0.4rem] border border-solid  bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${isDarkMode ? "border-[#1e2139] bg-[#252945] text-white" : "border-[#dfe3fa] bg-white text-[#0c0e16]"}`}
               defaultValue={senderPostCode}
               {...register(`senderAdd.${0}.postCode`, {
                 required: "can’t be empty",
@@ -276,7 +283,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="billCountry"
               >
                 Country
@@ -285,7 +292,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
             <input
               type="text"
               id="billCountry"
-              className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500"
+              className={`w-full rounded-[0.4rem] border border-solid  bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${isDarkMode ? "border-[#1e2139] bg-[#252945] text-white" : "border-[#dfe3fa] bg-white text-[#0c0e16]"}`}
               defaultValue={senderCountry}
               {...register(`senderAdd.${0}.country`, {
                 required: "can’t be empty",
@@ -326,7 +333,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientMail"
               >
                 Client's Mail
@@ -354,7 +361,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientAddress"
               >
                 Street Address
@@ -380,7 +387,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientCity"
               >
                 City
@@ -404,7 +411,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientPostCode"
               >
                 Post Code
@@ -428,7 +435,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientCountry"
               >
                 Country
@@ -456,7 +463,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
         <div className="grid grid-cols-2 gap-10 pb-10 pt-20">
           <div>
             <label
-              className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
               htmlFor="clientCity"
             >
               Invoice Date
@@ -471,7 +478,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           </div>
           <div>
             <label
-              className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
               htmlFor="paymentTerms"
             >
               Payment Terms
@@ -481,7 +488,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
               onClick={togglePaymentDisplay}
             >
               <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]">
-                Next {payment} {payment === "1" ? "Day" : "Days"}
+                Next {payment} {payment === 1 ? "Day" : "Days"}
               </p>
               <motion.img
                 src="/icon-arrow-down.svg"
@@ -493,25 +500,25 @@ function EditInvoice({ data }: EditInvoiceProps) {
                 <div className="absolute left-0 top-[5rem] w-full divide-y-[1px] divide-solid divide-[#dfe3fa] rounded-[0.8rem] bg-white py-[1.6rem] shadow-bigSh">
                   <p
                     className="px-[2.4rem] pb-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
-                    onClick={() => setPayment("1")}
+                    onClick={() => setPayment(1)}
                   >
                     Next 1 Day
                   </p>
                   <p
                     className="px-[2.4rem] py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
-                    onClick={() => setPayment("7")}
+                    onClick={() => setPayment(7)}
                   >
                     Next 7 Days
                   </p>
                   <p
                     className="px-[2.4rem] py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
-                    onClick={() => setPayment("14")}
+                    onClick={() => setPayment(14)}
                   >
                     Next 14 Days
                   </p>
                   <p
                     className="px-[2.4rem] pt-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
-                    onClick={() => setPayment("30")}
+                    onClick={() => setPayment(30)}
                   >
                     Next 30 Days
                   </p>
@@ -524,7 +531,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
         <div>
           <div className="flex items-center justify-between">
             <label
-              className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
               htmlFor="projectDescription"
             >
               Project Description
@@ -552,16 +559,24 @@ function EditInvoice({ data }: EditInvoiceProps) {
 
         <div>
           <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Item Name
             </p>
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               QTY.
             </p>
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Price
             </p>
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Total
             </p>
           </div>

@@ -9,6 +9,7 @@ import { useCreateSenderAdd } from "./useCreateSenderAdd";
 import { useCreateClientAdd } from "./useCreateClientAdd";
 import { useCreateItems } from "./useCreateItems";
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 type InitialItems = {
   id: number;
@@ -167,12 +168,18 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
     console.log(getValues().items);
   }
 
+  const { isDarkMode } = useDarkMode();
+
   return (
     <form
-      className="absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto bg-white py-20 pl-28 pr-20"
+      className={`absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
+        isDarkMode ? "bg-[#141625]" : "bg-white"
+      }`}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className="pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] text-[#0c0e16]">
+      <h2
+        className={`pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+      >
         New Invoice
       </h2>
 
@@ -184,7 +191,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         <div>
           <div className="flex items-center justify-between">
             <label
-              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.street?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.street?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"} `}
               htmlFor="billAddress"
             >
               Street Address
@@ -198,7 +205,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <input
             type="text"
             id="billAddress"
-            className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.street?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+            className={`w-full rounded-[0.4rem] border border-solid bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.street?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
             {...register(`senderAdd.${0}.street`, {
               required: "can’t be empty",
             })}
@@ -210,7 +217,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.city?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.city?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="billCity"
               >
                 City
@@ -225,7 +232,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="billCity"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.city?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.senderAdd?.[0]?.city?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`senderAdd.${0}.city`, {
                 required: "can’t be empty",
               })}
@@ -235,7 +242,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.postCode?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.postCode?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="postCode"
               >
                 Post Code
@@ -249,7 +256,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="postCode"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.postCode?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.senderAdd?.[0]?.postCode?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`senderAdd.${0}.postCode`, {
                 required: "can’t be empty",
               })}
@@ -259,7 +266,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.country?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.country?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="billCountry"
               >
                 Country
@@ -273,7 +280,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="billCountry"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.country?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.country?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`senderAdd.${0}.country`, {
                 required: "can’t be empty",
               })}
@@ -292,7 +299,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientName?.message ? "text-[#ec5757]" : "text-[#7e88c3]"} `}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientName?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"} `}
                 htmlFor="clientName"
               >
                 Client's Name
@@ -306,7 +313,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientName"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientName?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.clientName?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register("clientName", { required: "can’t be empty" })}
               disabled={creatingInvoice}
             />
@@ -314,7 +321,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientEmail?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientEmail?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientMail"
               >
                 Client's Mail
@@ -328,7 +335,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="email"
               id="clientMail"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientEmail?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientEmail?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register("clientEmail", {
                 required: "can’t be empty",
                 pattern: {
@@ -342,7 +349,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.street?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.street?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientAddress"
               >
                 Street Address
@@ -356,7 +363,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientAddress"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.street?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.street?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`clientAddress.${0}.street`, {
                 required: "can’t be empty",
               })}
@@ -368,7 +375,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.city?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.city?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientCity"
               >
                 City
@@ -382,7 +389,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientCity"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.city?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.city?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`clientAddress.${0}.city`, {
                 required: "can’t be empty",
               })}
@@ -392,7 +399,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.postCode?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.postCode?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientPostCode"
               >
                 Post Code
@@ -406,7 +413,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientPostCode"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.postCode?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.postCode?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`clientAddress.${0}.postCode`, {
                 required: "can’t be empty",
               })}
@@ -416,7 +423,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.country?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.country?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientCountry"
               >
                 Country
@@ -430,7 +437,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientCountry"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.country?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.country?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`clientAddress.${0}.country`, {
                 required: "can’t be empty",
               })}
@@ -445,7 +452,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <div>
             <div className="flex items-center justify-between">
               <label
-                className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+                className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.createdAt?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
                 htmlFor="clientCity"
               >
                 Invoice Date
@@ -459,23 +466,25 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="date"
               id="clientCity"
-              className="w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] disabled:bg-slate-200"
+              className={`w-full rounded-[0.4rem] border border-solid  px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] disabled:bg-slate-200 ${errors?.createdAt?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register("createdAt", { required: "can’t be empty" })}
               disabled={creatingInvoice}
             />
           </div>
           <div>
             <label
-              className="block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]"
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
               htmlFor="paymentTerms"
             >
               Payment Terms
             </label>
             <div
-              className="relative flex cursor-pointer items-center justify-between rounded-[0.4rem] border border-solid border-[#dfe3fa] px-8 py-6"
+              className={`relative flex cursor-pointer items-center justify-between rounded-[0.4rem] border border-solid  px-8 py-6 ${isDarkMode ? "border-[#252945] bg-[#1e2139]" : "border-[#dfe3fa] bg-white"}`}
               onClick={togglePaymentDisplay}
             >
-              <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]">
+              <p
+                className={`text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+              >
                 Next {payment} {payment === 1 ? "Day" : "Days"}
               </p>
               <motion.img
@@ -485,27 +494,29 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
                 animate={{ rotate: isPaymentDisplayed ? 180 : 0 }}
               />
               {isPaymentDisplayed && (
-                <div className="absolute left-0 top-[5rem] w-full divide-y-[1px] divide-solid divide-[#dfe3fa] rounded-[0.8rem] bg-white py-[1.6rem] shadow-bigSh">
+                <div
+                  className={`absolute left-0 top-[5rem] w-full divide-y-[1px] divide-solid  rounded-[0.8rem]  py-[1.6rem] shadow-bigSh ${isDarkMode ? "divide-[#1e2139] bg-[#252945] text-white" : "divide-[#dfe3fa] bg-white text-[#0c0e16]"}`}
+                >
                   <p
-                    className="px-[2.4rem] pb-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
+                    className="px-[2.4rem] pb-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] hover:text-[#9277ff]"
                     onClick={() => setPayment(1)}
                   >
                     Next 1 Day
                   </p>
                   <p
-                    className="px-[2.4rem] py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
+                    className="px-[2.4rem] py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] hover:text-[#9277ff]"
                     onClick={() => setPayment(7)}
                   >
                     Next 7 Days
                   </p>
                   <p
-                    className="px-[2.4rem] py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
+                    className="px-[2.4rem] py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] hover:text-[#9277ff]"
                     onClick={() => setPayment(14)}
                   >
                     Next 14 Days
                   </p>
                   <p
-                    className="px-[2.4rem] pt-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16]"
+                    className="px-[2.4rem] pt-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] hover:text-[#9277ff]"
                     onClick={() => setPayment(30)}
                   >
                     Next 30 Days
@@ -519,7 +530,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         <div>
           <div className="flex items-center justify-between">
             <label
-              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.description?.message ? "text-[#ec5757]" : "text-[#7e88c3]"}`}
+              className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.description?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
               htmlFor="projectDescription"
             >
               Project Description
@@ -533,7 +544,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <input
             type="text"
             id="projectDescription"
-            className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.description?.message ? "border-[#ec5757]" : "focus:border-[#9277ff]"}`}
+            className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.description?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
             {...register("description", { required: "can't be empty" })}
             disabled={creatingInvoice}
           />
@@ -547,16 +558,24 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
 
         <div>
           <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Item Name
             </p>
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               QTY.
             </p>
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Price
             </p>
-            <p className="text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#7e88c3]">
+            <p
+              className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+            >
               Total
             </p>
           </div>
@@ -571,14 +590,15 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
                 onDelete={handleDeleteItem}
                 setValue={setValue}
                 creatingItems={creatingItems}
+                isDarkMode={isDarkMode}
               />
             ))}
           <div
-            className="mt-7 flex w-full cursor-pointer items-center justify-center gap-6 rounded-[2.4rem] bg-[#f9fafe] py-7 hover:bg-[#dfe3fa]"
+            className={`mt-7 flex w-full cursor-pointer items-center justify-center gap-6 rounded-[2.4rem] py-7 ${isDarkMode ? "bg-[#252945] text-white" : "bg-[#f9fafe] text-[#7e88c3] hover:bg-[#dfe3fa]"}`}
             onClick={toggleItemsList}
           >
             <img src="/icon-plus.svg" alt="plus icon" />
-            <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
+            <p className="text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]">
               Add New Item
             </p>
           </div>
