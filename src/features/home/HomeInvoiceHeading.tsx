@@ -2,33 +2,33 @@ import { motion } from "framer-motion";
 import { Dispatch, useState } from "react";
 import { useDarkMode } from "../../context/DarkModeContext";
 
-function HomeInvoiceHeading({
-  numInvoices,
-  setCreateInvoice,
-  setSelectedCheckbox,
-  selectedCheckbox,
-}: {
+type HomeInvoiceHeadingProps = {
   numInvoices: number | undefined;
   setCreateInvoice: Dispatch<React.SetStateAction<boolean>>;
   setSelectedCheckbox: React.Dispatch<
     React.SetStateAction<"all" | "pending" | "paid" | "draft" | undefined>
   >;
   selectedCheckbox: "all" | "pending" | "paid" | "draft" | undefined;
-}) {
+};
+
+function HomeInvoiceHeading({
+  numInvoices,
+  setCreateInvoice,
+  setSelectedCheckbox,
+  selectedCheckbox,
+}: HomeInvoiceHeadingProps) {
   const [isBoxOpened, setIsBoxOpened] = useState(false);
 
+  const { isDarkMode } = useDarkMode();
 
-  const handleCheckboxChange = (id: "all" | "pending" | "paid" | "draft") => {
+  function handleCheckboxChange(id: "all" | "pending" | "paid" | "draft") {
     setSelectedCheckbox(id);
     toggleBox();
-  };
-
+  }
 
   function toggleBox() {
     setIsBoxOpened((prev) => !prev);
   }
-
-  const { isDarkMode } = useDarkMode();
 
   const isSmallScreen = window.innerWidth < 780;
 
@@ -36,7 +36,7 @@ function HomeInvoiceHeading({
     <section className="flex justify-between pb-28 pt-32">
       <div className="">
         <h1
-          className={`mobile:text-[2.4rem] mobile:tracking-[-0.075rem] text-[3.6rem] font-bold tracking-[-0.1125rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+          className={`text-[3.6rem] font-bold tracking-[-0.1125rem] mobile:text-[2.4rem] mobile:tracking-[-0.075rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
         >
           Invoices
         </h1>
@@ -49,7 +49,7 @@ function HomeInvoiceHeading({
         </p>
       </div>
 
-      <div className="mobile:gap-6 relative flex items-center gap-16">
+      <div className="relative flex items-center gap-16 mobile:gap-6">
         <button className="flex items-center gap-5" onClick={toggleBox}>
           <span
             className={`text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]  ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
@@ -65,7 +65,7 @@ function HomeInvoiceHeading({
           />
         </button>
         <motion.button
-          className="tablet:gap-4 flex items-center gap-8 rounded-[2.4rem] bg-[#7c5dfa] px-4 py-3 hover:bg-[#9277ff]"
+          className="flex items-center gap-8 rounded-[2.4rem] bg-[#7c5dfa] px-4 py-3 hover:bg-[#9277ff] tablet:gap-4"
           onClick={() => setCreateInvoice(true)}
         >
           <div className="flex h-[3.2rem] w-[3.2rem] items-center justify-center rounded-full bg-white">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { InvoiceDataProps } from "../../types/Types";
 import { motion } from "framer-motion";
@@ -30,20 +30,35 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
   const [status, setStatus] = useState("pending");
   const [itemsList, setItemsList] = useState<InitialItems[]>([]);
 
+  const navigate = useNavigate();
+
   const { register, handleSubmit, formState, getValues, setValue } =
     useForm<InvoiceDataProps>();
-
   const { errors } = formState;
-  useEffect(() => {
-    console.log("itemsList changed:", itemsList);
-  }, [itemsList]);
 
   const { createInvoice, creatingInvoice } = useCreateInvoice();
   const { createSAddress, creatingSAddress } = useCreateSenderAdd();
   const { createClAddress, creatingClAddress } = useCreateClientAdd();
   const { createItems, creatingItems } = useCreateItems();
+  const { isDarkMode } = useDarkMode();
 
-  const navigate = useNavigate();
+  function togglePaymentDisplay() {
+    setIsPaymentDisplayed((prev) => !prev);
+  }
+
+  function toggleItemsList() {
+    setItemsList((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: "",
+        quantity: 0,
+        price: 0,
+        total: 0,
+        invoiceId: Date.now(),
+      },
+    ]);
+  }
 
   function onSubmit(data: InvoiceDataProps) {
     const invoiceId = Date.now();
@@ -53,7 +68,6 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
     setValue(`senderAdd.${0}.invoiceId`, invoiceId);
     const randomId = generateRandomId();
     const paymentDueDate = getPaymentDue(data.createdAt, payment);
-    // Set invoiceId on clientAddress
 
     const invoiceData = {
       idd: invoiceId,
@@ -67,8 +81,6 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
       status: status,
       total: getValues()?.items?.reduce((acc, item) => acc + item.total, 0),
     };
-    // const itemsList = getValues()?.items;
-    // console.log(itemsList);
 
     const clientData = {
       id: Date.now(),
@@ -87,22 +99,6 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
       country: getValues().senderAdd[0].country,
       invoiceId: invoiceId,
     };
-
-    // const itemsData = {
-    //   id: Date.now(),
-    //   name: getValues()?.items?.[0]?.name,
-    //   quantity: getValues()?.items?.[0]?.quantity,
-    //   price: getValues()?.items?.[0]?.price,
-    //   total: getValues()?.items?.[0]?.total,
-    //   invoiceId: invoiceId,
-    // };
-
-    // console.log(data);
-    console.log(invoiceData);
-    console.log(clientData);
-    console.log(senderData);
-    // console.log(itemsData);
-    // console.log(getValues());
 
     createInvoice(invoiceData, {
       onSuccess: () => {
@@ -128,46 +124,18 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             navigate(`/invoice/${randomId}`);
           },
         });
-        // createItems(itemsData);
-      },
-      onError: (error) => {
-        console.error("Error creating invoice:", error);
-        // Handle error if needed
       },
     });
   }
 
-  function togglePaymentDisplay() {
-    setIsPaymentDisplayed((prev) => !prev);
-  }
-
-  function toggleItemsList() {
-    setItemsList((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        name: "",
-        quantity: 0,
-        price: 0,
-        total: 0,
-        invoiceId: Date.now(),
-      },
-    ]);
-  }
-
   function handleDeleteItem(id: number) {
-    console.log(getValues().items);
-    console.log(id);
     setItemsList(itemsList.filter((_, index) => index !== id));
     const updatedItemsList = getValues().items.filter(
       (_, index) => index !== id,
     );
-    console.log(updatedItemsList);
-    setValue("items", updatedItemsList);
-    console.log(getValues().items);
-  }
 
-  const { isDarkMode } = useDarkMode();
+    setValue("items", updatedItemsList);
+  }
 
   return (
     <form

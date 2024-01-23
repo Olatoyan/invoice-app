@@ -2,7 +2,6 @@ import { InvoiceDataProps } from "../../types/Types";
 import HomeInvoiceItem from "./HomeInvoiceItem";
 
 function HomeInvoicesBox({ data }: { data: InvoiceDataProps[] | null }) {
-  console.log(data);
   return (
     <section className="flex flex-col gap-[1.6rem]">
       {data?.map((info) => (

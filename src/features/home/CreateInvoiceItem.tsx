@@ -25,6 +25,11 @@ function CreateInvoiceItem({
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalPriceItem, setTotalPriceItem] = useState(0);
 
+  useEffect(() => {
+    setTotalPriceItem(totalQty * totalPrice);
+    setValue(`items.${index}.id`, Date.now());
+  }, [totalQty, totalPrice, index, setValue]);
+
   function handleQtyChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newQty = Number(e.target.value);
     setTotalQty(newQty);
@@ -43,11 +48,6 @@ function CreateInvoiceItem({
     setTotalPriceItem(newTotal);
     setValue(`items.${index}.total`, newTotal);
   }
-
-  useEffect(() => {
-    setTotalPriceItem(totalQty * totalPrice);
-    setValue(`items.${index}.id`, Date.now());
-  }, [totalQty, totalPrice, index, setValue]);
 
   return (
     <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6 mobile:grid-cols-[1fr_1fr_1fr_6rem] mobile:pb-20">
@@ -104,9 +104,7 @@ function CreateInvoiceItem({
         <p className="hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0] mobile:block">
           Total
         </p>
-        <p
-          className="py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]"
-        >
+        <p className="py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]">
           {totalPriceItem.toFixed(2)}
         </p>
       </div>
