@@ -7,9 +7,6 @@ export function useUpdateItems() {
   const { mutate: updateItems } = useMutation({
     mutationFn: (data: { items: ItemProps; id: number }) =>
       updateItemsRow(data.items, data.id),
-    onSuccess: () => {
-      toast.success("Item has been updated");
-    },
   });
 
   return { updateItems };

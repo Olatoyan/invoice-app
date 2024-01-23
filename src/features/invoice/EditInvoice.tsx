@@ -204,7 +204,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
   }
   return (
     <form
-      className={`laptop:left-0 laptop:top-[10rem] mobile:px-0 absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
+      className={`laptop:left-0 laptop:top-[6rem] mobile:px-0 absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto pb-20 pl-28 pr-20 pt-28 ${
         isDarkMode ? "bg-[#141625]" : "bg-white"
       }`}
       onSubmit={handleSubmit(onSubmit)}
