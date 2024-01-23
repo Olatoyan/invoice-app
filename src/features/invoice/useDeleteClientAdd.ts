@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { deleteClientRow } from "../../utils/helpers";
 
 export function useDeleteClientAdd() {
