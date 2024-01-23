@@ -16,14 +16,13 @@ function HomeInvoiceHeading({
   selectedCheckbox: "all" | "pending" | "paid" | "draft" | undefined;
 }) {
   const [isBoxOpened, setIsBoxOpened] = useState(false);
-  // const [selectedCheckbox, setSelectedCheckbox] = useState("all");
+
 
   const handleCheckboxChange = (id: "all" | "pending" | "paid" | "draft") => {
     setSelectedCheckbox(id);
     toggleBox();
   };
 
-  // function filterStatus() {}
 
   function toggleBox() {
     setIsBoxOpened((prev) => !prev);

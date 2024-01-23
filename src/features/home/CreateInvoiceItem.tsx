@@ -29,7 +29,6 @@ function CreateInvoiceItem({
     const newQty = Number(e.target.value);
     setTotalQty(newQty);
 
-    // Calculate and set the total value
     const newTotal = newQty * totalPrice;
     setTotalPriceItem(newTotal);
     setValue(`items.${index}.total`, newTotal);
@@ -40,7 +39,6 @@ function CreateInvoiceItem({
 
     setTotalPrice(newPrice);
 
-    // Calculate and set the total value
     const newTotal = totalQty * newPrice;
     setTotalPriceItem(newTotal);
     setValue(`items.${index}.total`, newTotal);
@@ -62,7 +60,6 @@ function CreateInvoiceItem({
           id="itemName"
           className={`w-full rounded-[0.4rem] border border-solid  px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.items?.[index!]?.name ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
           placeholder="Item name"
-          // defaultValue={name}
           {...register(`items.${index}.name`, { required: "can't be empty" })}
           disabled={creatingItems}
         />
@@ -76,7 +73,6 @@ function CreateInvoiceItem({
           id="qty"
           className={`w-full rounded-[0.4rem] border border-solid px-4 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]  focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.items?.[index!]?.quantity ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
           placeholder="Qty."
-          // defaultValue={qty}
           {...register(`items.${index}.quantity`, {
             required: "can't be empty",
             min: { value: 1, message: "quantity must be at least 1" },
@@ -94,7 +90,6 @@ function CreateInvoiceItem({
           type="number"
           id="price"
           className={`w-full rounded-[0.4rem] border border-solid  px-5 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.items?.[index!]?.price ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
-          // defaultValue={!price ? "" : (+price!).toFixed(2)}
           placeholder="Price"
           {...register(`items.${index}.price`, {
             required: "can't be empty",
@@ -111,20 +106,10 @@ function CreateInvoiceItem({
         </p>
         <p
           className="py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]"
-          // {...setValue(`items.${index}.total`, totalPriceItem)}
         >
           {totalPriceItem.toFixed(2)}
         </p>
       </div>
-      {/* <input
-        className="border-none text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0] outline-none"
-        // {...register(`items.${index}.total`)}
-        {...setValue(`items.${index}.total`, totalPriceItem)}
-        // defaultValue={total}
-        defaultValue={totalPriceItem}
-        readOnly
-      /> */}
-
       <svg
         className="h-[1.6rem] w-[1.3rem] cursor-pointer fill-[#888EB0] hover:fill-[#ec5757]"
         onClick={() => onDelete(index)}

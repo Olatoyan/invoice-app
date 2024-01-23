@@ -33,11 +33,10 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
   const { register, handleSubmit, formState, getValues, setValue } =
     useForm<InvoiceDataProps>();
 
+  const { errors } = formState;
   useEffect(() => {
     console.log("itemsList changed:", itemsList);
   }, [itemsList]);
-
-  const { errors } = formState;
 
   const { createInvoice, creatingInvoice } = useCreateInvoice();
   const { createSAddress, creatingSAddress } = useCreateSenderAdd();
@@ -172,14 +171,14 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
 
   return (
     <form
-      className={`laptop:left-0 laptop:top-[6rem] mobile:px-0 absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto pb-20 pt-28 pl-28 pr-20 ${
+      className={`absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto pb-20 pl-28 pr-20 pt-28 laptop:left-0 laptop:top-[6rem] mobile:px-0 ${
         isDarkMode ? "bg-[#141625]" : "bg-white"
       }`}
       onSubmit={handleSubmit(onSubmit)}
     >
       <div
         onClick={() => setCreateInvoice(false)}
-        className="laptop:flex mobile:px-8 hidden cursor-pointer items-center gap-12 pb-12"
+        className="hidden cursor-pointer items-center gap-12 pb-12 laptop:flex mobile:px-8"
       >
         <img src="/icon-arrow-left.svg" alt="arrow left" />
         <p
@@ -190,7 +189,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
       </div>
 
       <h2
-        className={`mobile:px-8 pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+        className={`pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] mobile:px-8 ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
       >
         New Invoice
       </h2>
@@ -225,7 +224,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           />
         </div>
 
-        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pb-20 pt-10">
+        <div className="grid grid-cols-3 gap-10 pb-20 pt-10 mobile:grid-cols-2">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -383,7 +382,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             />
           </div>
         </div>
-        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pt-10">
+        <div className="grid grid-cols-3 gap-10 pt-10 mobile:grid-cols-2">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -460,7 +459,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
       </div>
 
       <div className="mobile:px-8">
-        <div className="mobile:grid-cols-1 grid grid-cols-2 gap-10 pb-10 pt-20">
+        <div className="grid grid-cols-2 gap-10 pb-10 pt-20 mobile:grid-cols-1">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -563,13 +562,13 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         </div>
       </div>
 
-      <div className="mobile:px-8 pt-[3.5rem]">
+      <div className="pt-[3.5rem] mobile:px-8">
         <h3 className="pb-6 text-[1.8rem] font-bold leading-[3.2rem] tracking-[-0.0375rem] text-[#777f98]">
           Item List
         </h3>
 
         <div>
-          <div className="mobile:hidden grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
+          <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6 mobile:hidden">
             <p
               className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
             >
@@ -616,10 +615,10 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           </div>
         </div>
       </div>
-      <div className="bg-linear-grad mobile:block mt-10 hidden h-[8.4rem]"></div>
-      <div className="mobile:px-6 flex items-center justify-between pt-16">
+      <div className="mt-10 hidden h-[8.4rem] bg-linear-grad mobile:block"></div>
+      <div className="flex items-center justify-between pt-16 mobile:px-6">
         <button
-          className="mobile:px-6 mobile:py-5 rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]"
+          className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3] mobile:px-6 mobile:py-5"
           onClick={(e) => {
             e.preventDefault();
             setCreateInvoice(false);
@@ -627,9 +626,9 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         >
           Discard
         </button>
-        <div className="mobile:gap-3 flex items-center justify-end gap-6">
+        <div className="flex items-center justify-end gap-6 mobile:gap-3">
           <button
-            className={`] mobile:px-6 mobile:py-5 rounded-[2.4rem] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3] ${status === "draft" ? "bg-[#080911]" : "hover:bg-[#0c0e16 bg-[#7388c380]"}`}
+            className={`] rounded-[2.4rem] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3] mobile:px-6 mobile:py-5 ${status === "draft" ? "bg-[#080911]" : "hover:bg-[#0c0e16 bg-[#7388c380]"}`}
             onClick={(e) => {
               e.preventDefault();
               setStatus("draft");
@@ -637,7 +636,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           >
             {status === "pending" ? "Save as draft" : "Saved as draft"}
           </button>
-          <button className="mobile:px-6 mobile:py-5 rounded-[2.4rem] bg-[#7c5dfa] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#9277ff]">
+          <button className="rounded-[2.4rem] bg-[#7c5dfa] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#9277ff] mobile:px-6 mobile:py-5">
             Save & Send
           </button>
         </div>

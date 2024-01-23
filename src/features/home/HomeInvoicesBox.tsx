@@ -1,6 +1,5 @@
 import { InvoiceDataProps } from "../../types/Types";
 import HomeInvoiceItem from "./HomeInvoiceItem";
-// import { AllInvoiceDataProps } from "./useInvoice";
 
 function HomeInvoicesBox({ data }: { data: InvoiceDataProps[] | null }) {
   console.log(data);
