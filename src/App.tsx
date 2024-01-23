@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import HomeDetails from "./features/home/HomeDetails";
 import InvoiceDetails from "./features/invoice/InvoiceDetails";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -22,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeDetails />} />
           <Route path="invoice/:id" element={<InvoiceDetails />} />
+          <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </DarkModeProvider>
 

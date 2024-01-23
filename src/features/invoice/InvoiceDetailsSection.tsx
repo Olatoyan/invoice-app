@@ -1,9 +1,12 @@
 import InVoicePriceItems from "./InVoicePriceItems";
 import { InvoiceDataProps } from "../../types/Types";
 import { useDarkMode } from "../../context/DarkModeContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
   const { isDarkMode } = useDarkMode();
+  const navigate = useNavigate();
 
   const {
     id,
@@ -16,7 +19,7 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
     senderAdd,
     items,
     total,
-  } = data;
+  } = data || {};
 
   const {
     street: clientStreet,
@@ -32,6 +35,11 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
   } = senderAdd?.[0] || {};
 
   const isSmallScreen = window.innerWidth < 600;
+
+  useEffect(() => {
+    if (data === undefined) navigate("/");
+  }, [data, navigate]);
+
   return (
     <section
       className={`rounded-[0.8rem] p-20 pb-[4.8rem] shadow-invoiceSh mobile:p-8 ${isDarkMode ? "bg-[#1e2139]" : "bg-white"}`}
