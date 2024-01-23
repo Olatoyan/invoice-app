@@ -41,8 +41,18 @@ function EditInvoiceItem({
   const [totalQty, setTotalQty] = useState(quantity);
   const [totalPrice, setTotalPrice] = useState(price);
   const [totalPriceItem, setTotalPriceItem] = useState(total);
-  console.log(getValues().items);
-  console.log(totalQty, totalPrice, totalPriceItem);
+
+
+  useEffect(() => {
+    setValue(`items.${index}.total`, totalPriceItem);
+  }, [totalPriceItem, setValue, index]);
+
+  useEffect(() => {
+   setValue(`items.${index}.id`, id || Date.now());
+    setValue(`items.${index}.invoiceId`, invoiceId);
+  }, [id, invoiceId, setValue, index]);
+
+
 
   function handleQtyChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newQty = Number(e.target.value);
@@ -64,14 +74,6 @@ function EditInvoiceItem({
   }
 
 
-  useEffect(() => {
-    setValue(`items.${index}.total`, totalPriceItem);
-  }, [totalPriceItem, setValue, index]);
-
-  useEffect(() => {
-   setValue(`items.${index}.id`, id || Date.now());
-    setValue(`items.${index}.invoiceId`, invoiceId);
-  }, [id, invoiceId, setValue, index]);
 
   return (
     <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6 mobile:grid-cols-[1fr_1fr_1fr_6rem] mobile:pb-20">

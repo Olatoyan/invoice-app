@@ -3,7 +3,8 @@ import { InvoiceDataProps } from "../../types/Types";
 import { useDarkMode } from "../../context/DarkModeContext";
 
 function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
- 
+  const { isDarkMode } = useDarkMode();
+
   const {
     id,
     createdAt,
@@ -16,7 +17,6 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
     items,
     total,
   } = data;
-
 
   const {
     street: clientStreet,
@@ -31,13 +31,12 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
     country: senderCountry,
   } = senderAdd?.[0] || {};
 
-  const { isDarkMode } = useDarkMode();
   const isSmallScreen = window.innerWidth < 600;
   return (
     <section
-      className={`mobile:p-8 rounded-[0.8rem] p-20 pb-[4.8rem] shadow-invoiceSh ${isDarkMode ? "bg-[#1e2139]" : "bg-white"}`}
+      className={`rounded-[0.8rem] p-20 pb-[4.8rem] shadow-invoiceSh mobile:p-8 ${isDarkMode ? "bg-[#1e2139]" : "bg-white"}`}
     >
-      <div className="mobile:flex-col mobile:gap-12 flex justify-between">
+      <div className="flex justify-between mobile:flex-col mobile:gap-12">
         <div>
           <h2 className="pb-3 text-[1.5rem] font-bold leading-[2.4rem] tracking-[-0.025rem] text-[#888eb0]">
             #
@@ -53,7 +52,7 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
         </div>
 
         <address
-          className={`mobile:items-start flex flex-col items-end text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
+          className={`flex flex-col items-end text-[1.3rem] font-medium not-italic leading-[1.8rem] tracking-[-0.01rem] mobile:items-start ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
         >
           <span>{senderStreet}</span>
           <span>{senderCity}</span>
@@ -62,7 +61,7 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
         </address>
       </div>
 
-      <div className="mobile:grid-cols-2 mobile:pt-12 grid grid-cols-4 gap-12 pb-20 pt-8">
+      <div className="grid grid-cols-4 gap-12 pb-20 pt-8 mobile:grid-cols-2 mobile:pt-12">
         <div className="flex flex-col justify-between">
           <div>
             <h3
@@ -111,7 +110,7 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
           </address>
         </div>
 
-        <div className="mobile:col-span-full mobile:row-start-2 col-start-3 col-end-5">
+        <div className="col-start-3 col-end-5 mobile:col-span-full mobile:row-start-2">
           <h3
             className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
           >
@@ -127,9 +126,9 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
 
       <div>
         <div
-          className={`mobile:p-7 mobile:pb-0 rounded-[0.8rem_0.8rem_0_0] p-[3.3rem] pb-0 ${isDarkMode ? "bg-[#252945]" : "bg-[#f9fafe]"}`}
+          className={`rounded-[0.8rem_0.8rem_0_0] p-[3.3rem] pb-0 mobile:p-7 mobile:pb-0 ${isDarkMode ? "bg-[#252945]" : "bg-[#f9fafe]"}`}
         >
-          <div className="mobile:hidden grid grid-cols-[3fr_2.6rem_1fr_1fr] gap-28 pb-12">
+          <div className="grid grid-cols-[3fr_2.6rem_1fr_1fr] gap-28 pb-12 mobile:hidden">
             <h3
               className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
             >

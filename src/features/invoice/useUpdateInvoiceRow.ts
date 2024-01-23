@@ -11,7 +11,6 @@ export function useUpdateInvoiceRow() {
     mutationFn: (invoice: CreateInvoiceProps) =>
       updateInvoiceRows(invoice, id!),
     onSuccess: (data) => {
-      console.log(data);
       const dataId = data.data[0].id;
       toast.success(`Invoice ${dataId} has been updated`);
       navigate(`/`);

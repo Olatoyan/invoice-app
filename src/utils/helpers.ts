@@ -71,7 +71,6 @@ export async function createItemRow(item: ItemProps) {
 }
 
 export async function createInvoiceRow(invoice: CreateInvoiceProps) {
-  console.log(invoice);
   const { data, error } = await supabase
     .from("invoice")
     .insert([invoice])
@@ -128,7 +127,6 @@ export async function updateInvoiceRows(
   invoice: CreateInvoiceProps,
   invoiceId: string,
 ) {
-  console.log(invoice);
   const { data, error } = await supabase
     .from("invoice")
     .update({
@@ -241,8 +239,6 @@ export async function deleteSenderRow(id: number) {
   }
 }
 export async function deleteClientRow(id: number) {
-  console.log(id);
-
   const { error } = await supabase.from("clientAddress").delete().eq("id", id);
 
   if (error) {
@@ -251,7 +247,6 @@ export async function deleteClientRow(id: number) {
   }
 }
 export async function deleteInvoiceRow(id: number) {
-  console.log(id);
   const { error } = await supabase.from("invoice").delete().eq("idd", id);
 
   if (error) {
@@ -287,7 +282,6 @@ export function generateRandomId() {
 
   const randomId = `${randomUppercaseLetter1}${randomUppercaseLetter2}${randomNumber}`;
 
-  console.log(randomId);
   return randomId;
 }
 

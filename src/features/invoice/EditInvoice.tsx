@@ -26,8 +26,20 @@ type InitialItems = {
 };
 
 function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
-  console.log(data);
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
+
+  const { register, handleSubmit, formState, getValues, setValue } =
+    useForm<InvoiceDataProps>();
+
+  const { errors } = formState;
+
+  const { isDarkMode } = useDarkMode();
+
+  const { updateInvoice } = useUpdateInvoiceRow();
+  const { updateSeAddress } = useUpdateSenderAdd();
+  const { updateClAddress } = useUpdateClientAdd();
+  const { updateItems } = useUpdateItems();
+  const { deleteItems } = useDeleteItems();
 
   function togglePaymentDisplay() {
     setIsPaymentDisplayed((prev) => !prev);
@@ -64,24 +76,18 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
     postCode: clientPostCode,
     country: clientCountry,
   } = clientAddress[0];
-  console.log(items);
+
   const [payment, setPayment] = useState(paymentTerms);
-
- 
-  const { register, handleSubmit, formState, getValues, setValue } =
-    useForm<InvoiceDataProps>();
-
-  const { errors } = formState;
-
-  const [itemList, setItemList] = useState<InitialItems[]>(
-    getValues()?.items || items,
-  );
 
   useEffect(() => {
     setValue("createdAt", createdAt);
   }, [createdAt, setValue]);
 
-  const handleAddNewItem = () => {
+  const [itemList, setItemList] = useState<InitialItems[]>(
+    getValues()?.items || items,
+  );
+
+  function handleAddNewItem() {
     setItemList((prev) => [
       ...prev,
       {
@@ -93,32 +99,18 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
         invoiceId: Date.now(),
       },
     ]);
-  };
-
-  const { isDarkMode } = useDarkMode();
-
-  const { updateInvoice } = useUpdateInvoiceRow();
-  const { updateSeAddress } = useUpdateSenderAdd();
-  const { updateClAddress } = useUpdateClientAdd();
-  const { updateItems } = useUpdateItems();
-  const { deleteItems } = useDeleteItems();
+  }
 
   function handleDeleteItem(deleteId: number) {
-    console.log(getValues().items);
-    console.log(deleteId);
     deleteItems(deleteId);
     setItemList(itemList.filter((item) => item.id !== deleteId));
     const updatedItemsList = getValues().items.filter(
       (item) => item.id !== deleteId,
     );
-    console.log(updatedItemsList);
     setValue("items", updatedItemsList);
-    console.log(getValues().items);
   }
 
-  console.log(getValues());
   function onSubmit(data: InvoiceDataProps) {
-    console.log(data);
     const paymentDueDate = getPaymentDue(data.createdAt, payment);
 
     const invoiceData = {
@@ -157,14 +149,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
       id: senderId,
     };
 
-   
-    console.log("invoice:", invoiceData);
-    console.log("client:", clientData);
-    console.log("sender:", senderData);
-   console.log("getValues():", getValues());
-
     const itemsList = getValues()?.items;
-    console.log(itemsList);
 
     updateInvoice(invoiceData, {
       onSuccess: () => {
@@ -186,21 +171,19 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
         id: item.id,
       };
 
-      console.log(itemsData);
-
       updateItems(itemsData);
     });
   }
   return (
     <form
-      className={`laptop:left-0 laptop:top-[6rem] mobile:px-0 absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto pb-20 pl-28 pr-20 pt-28 ${
+      className={`absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto pb-20 pl-28 pr-20 pt-28 laptop:left-0 laptop:top-[6rem] mobile:px-0 ${
         isDarkMode ? "bg-[#141625]" : "bg-white"
       }`}
       onSubmit={handleSubmit(onSubmit)}
     >
       <div
         onClick={handleUndoEdit}
-        className="laptop:flex mobile:px-8 hidden cursor-pointer items-center gap-12 pb-12"
+        className="hidden cursor-pointer items-center gap-12 pb-12 laptop:flex mobile:px-8"
       >
         <img src="/icon-arrow-left.svg" alt="arrow left" />
         <p
@@ -211,7 +194,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
       </div>
 
       <h2
-        className={`mobile:px-8 pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+        className={`pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] mobile:px-8 ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
       >
         Edit <span className="text-[#888eb0]">#</span>
         <span>{id}</span>
@@ -247,7 +230,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
           />
         </div>
 
-        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pb-20 pt-10">
+        <div className="grid grid-cols-3 gap-10 pb-20 pt-10 mobile:grid-cols-2">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -404,7 +387,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
             />
           </div>
         </div>
-        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pt-10">
+        <div className="grid grid-cols-3 gap-10 pt-10 mobile:grid-cols-2">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -481,7 +464,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
       </div>
 
       <div className="mobile:px-8">
-        <div className="mobile:grid-cols-1 grid grid-cols-2 gap-10 pb-10 pt-20">
+        <div className="grid grid-cols-2 gap-10 pb-10 pt-20 mobile:grid-cols-1">
           <div>
             <label
               className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.createdAt?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
@@ -577,13 +560,13 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
         </div>
       </div>
 
-      <div className="mobile:px-8 pt-[3.5rem]">
+      <div className="pt-[3.5rem] mobile:px-8">
         <h3 className="pb-6 text-[1.8rem] font-bold leading-[3.2rem] tracking-[-0.0375rem] text-[#777f98]">
           Item List
         </h3>
 
         <div>
-          <div className="mobile:hidden grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
+          <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6 mobile:hidden">
             <p
               className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
             >
@@ -637,9 +620,9 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
         </div>
       </div>
 
-      <div className="bg-linear-grad mobile:block mt-10 hidden h-[8.4rem]"></div>
+      <div className="mt-10 hidden h-[8.4rem] bg-linear-grad mobile:block"></div>
 
-      <div className="mobile:px-8 flex items-center justify-end gap-6 pt-16">
+      <div className="flex items-center justify-end gap-6 pt-16 mobile:px-8">
         <button className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
           Cancel
         </button>

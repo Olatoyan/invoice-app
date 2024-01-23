@@ -2,15 +2,17 @@ import { useDarkMode } from "../../context/DarkModeContext";
 import { InvoiceDataProps } from "../../types/Types";
 import { useUpdateStatus } from "./useUpdateStatus";
 
+type FooterStatusBoxProps = {
+  data: InvoiceDataProps;
+  handleEdit: () => void;
+  handleDelete: () => void;
+}
+
 function FooterStatusBox({
   data,
   handleEdit,
   handleDelete,
-}: {
-  data: InvoiceDataProps;
-  handleEdit: () => void;
-  handleDelete: () => void;
-}) {
+}: FooterStatusBoxProps) {
   const { updateStatus } = useUpdateStatus();
   const { isDarkMode } = useDarkMode();
 
