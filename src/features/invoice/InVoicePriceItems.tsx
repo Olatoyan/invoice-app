@@ -7,6 +7,7 @@ type InVoicePriceItemsProps = {
   total: number | undefined;
 };
 
+
 function InVoicePriceItems({
   name,
   qty,

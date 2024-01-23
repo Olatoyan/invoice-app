@@ -48,8 +48,7 @@ function EditInvoiceItem({
     const newQty = Number(e.target.value);
     setTotalQty(newQty);
 
-    // Calculate and set the total value
-    const newTotal = newQty * totalPrice;
+   const newTotal = newQty * totalPrice;
     setTotalPriceItem(newTotal);
     setValue(`items.${index}.total`, newTotal);
   }
@@ -59,30 +58,18 @@ function EditInvoiceItem({
 
     setTotalPrice(newPrice);
 
-    // Calculate and set the total value
-    const newTotal = totalQty * newPrice;
+   const newTotal = totalQty * newPrice;
     setTotalPriceItem(newTotal);
     setValue(`items.${index}.total`, newTotal);
   }
 
-  // useEffect(() => {
-  //   // const totall
-  //   setTotalPriceItem(totalQty * totalPrice);
-  //   // setTotalPriceItem((prevTotalQty) => prevTotalQty * totalPrice);
-
-  //   setValue(`items.${index}.id`, id || Date.now());
-  //   setValue(`items.${index}.total`, totalPriceItem);
-  //   setValue(`items.${index}.invoiceId`, invoiceId);
-  // }, [totalQty, totalPrice, index, setValue, invoiceId, totalPriceItem, id]);
 
   useEffect(() => {
-    // Update the form values after totalPriceItem has been updated
     setValue(`items.${index}.total`, totalPriceItem);
   }, [totalPriceItem, setValue, index]);
 
   useEffect(() => {
-    // Update the form values when other dependencies change
-    setValue(`items.${index}.id`, id || Date.now());
+   setValue(`items.${index}.id`, id || Date.now());
     setValue(`items.${index}.invoiceId`, invoiceId);
   }, [id, invoiceId, setValue, index]);
 
@@ -143,21 +130,11 @@ function EditInvoiceItem({
         </p>
         <p
           className="py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0]"
-          // {...setValue(`items.${index}.total`, totalPriceItem)}
         >
-          {/* {totalPriceItem.toFixed(2)} */}
           {getValues?.(`items.${index}.total`)?.toFixed(2) ||
             totalPriceItem.toFixed(2)}
         </p>
       </div>
-      {/* <input
-        className="border-none text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#888eb0] outline-none"
-        // {...register(`items.${index}.total`)}
-        {...setValue(`items.${index}.total`, totalPriceItem)}
-        // defaultValue={total}
-        defaultValue={totalPriceItem}
-        readOnly
-      /> */}
 
       <svg
         className="h-[1.6rem] w-[1.3rem] cursor-pointer fill-[#888EB0] hover:fill-[#ec5757]"

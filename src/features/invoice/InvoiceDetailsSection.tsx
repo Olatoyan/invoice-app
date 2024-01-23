@@ -1,11 +1,9 @@
 import InVoicePriceItems from "./InVoicePriceItems";
-// import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
 import { useDarkMode } from "../../context/DarkModeContext";
 
 function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
-  // console.log(data);
-
+ 
   const {
     id,
     createdAt,
@@ -19,7 +17,6 @@ function InvoiceDetailsSection({ data }: { data: InvoiceDataProps }) {
     total,
   } = data;
 
-  // console.log(items);
 
   const {
     street: clientStreet,

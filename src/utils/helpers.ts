@@ -1,8 +1,5 @@
 import { addDays, format } from "date-fns";
-// import {
-// AllInvoiceDataProps,
-// ItemInvoiceProps,
-// } from "../features/home/useInvoice";
+
 import supabase from "../services/supabase";
 import {
   ClientAddressProps,
@@ -12,30 +9,10 @@ import {
   SenderAddressProps,
 } from "../types/Types";
 
-// type InvoiceResponse = {
-//   data: AllInvoiceDataProps[] | null;
-//   error: any;
-// };
 type InvoiceResponse2 = {
   data: InvoiceDataProps[];
   error: any;
 };
-
-// export async function getAllInvoices(): Promise<InvoiceResponse2> {
-//   const { data, error } = await supabase.from("invoice").select(`
-//   *,
-//   senderAdd (*),
-//   clientAddress (*),
-//   items (*)
-//   `);
-
-//   if (error) {
-//     console.log(error);
-//     throw new Error("Could not get all Invoices");
-//   }
-
-//   return { data, error };
-// }
 
 export async function getAllInvoices(
   status: "all" | "pending" | "draft" | "paid" = "all",
@@ -300,7 +277,7 @@ export async function toggleStatus(id: string) {
 
 export function generateRandomId() {
   const uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generates a random 4-digit number
+  const randomNumber = Math.floor(1000 + Math.random() * 9000);
   const randomUppercaseLetter1 = uppercaseLetters.charAt(
     Math.floor(Math.random() * uppercaseLetters.length),
   );

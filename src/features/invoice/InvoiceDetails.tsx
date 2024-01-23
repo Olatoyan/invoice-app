@@ -1,7 +1,4 @@
-// import DeleteInvoice from "../../ui/DeleteInvoice";
-// import { useParams } from "react-router-dom";
 import NavBar from "../../ui/NavBar";
-// import CreateEditInvoice from "./CreateEditInvoice";
 import InvoiceSection from "./InvoiceSection";
 import { useInvoiceById } from "./useInvoiceById";
 import { useState } from "react";
@@ -15,7 +12,7 @@ function InvoiceDetails() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const { isDarkMode } = useDarkMode();
-  // console.log(invoiceId);
+ 
 
   function handleEdit() {
     setIsEditing(true);
@@ -59,7 +56,6 @@ function InvoiceDetails() {
             className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"
             onClick={handleUndoEdit}
           ></div>
-          {/* <DeleteInvoice /> */}
         </>
       )}
 

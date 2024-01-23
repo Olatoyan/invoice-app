@@ -1,11 +1,6 @@
-// import NavBar from "../../ui/NavBar";
 import { useForm } from "react-hook-form";
-// import { AllInvoiceDataProps, ItemInvoiceProps } from "../home/useInvoice";
-// import CreateEditInvoiceItem from "./CreateEditInvoiceItem";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-// import { addDays, format } from "date-fns";
-// import { useCreateItemRow } from "./useCreateItemRow";
 import { InvoiceDataProps } from "../../types/Types";
 import EditInvoiceItem from "./EditInvoiceItem";
 import { getPaymentDue } from "../../utils/helpers";
@@ -72,10 +67,7 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
   console.log(items);
   const [payment, setPayment] = useState(paymentTerms);
 
-  // console.log(itemList);
-
-  // const { createItem } = useCreateItemRow(idd);
-
+ 
   const { register, handleSubmit, formState, getValues, setValue } =
     useForm<InvoiceDataProps>();
 
@@ -165,14 +157,11 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
       id: senderId,
     };
 
-    // const itemsData = {
-
-    // }
+   
     console.log("invoice:", invoiceData);
     console.log("client:", clientData);
     console.log("sender:", senderData);
-    // console.log("items:", itemsData);
-    console.log("getValues():", getValues());
+   console.log("getValues():", getValues());
 
     const itemsList = getValues()?.items;
     console.log(itemsList);

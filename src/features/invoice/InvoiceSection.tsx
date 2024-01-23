@@ -1,13 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import InvoiceDetailsSection from "./InvoiceDetailsSection";
 import InvoiceStatusBox from "./InvoiceStatusBox";
-// import { useInvoiceById } from "./useInvoiceById";
-// import { useEffect, useState } from "react";
-// import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
 import { useDarkMode } from "../../context/DarkModeContext";
 import FooterStatusBox from "./FooterStatusBox";
-// import Loader from "../../ui/Loader";
 
 type InvoiceSectionProps = {
   data: InvoiceDataProps;
