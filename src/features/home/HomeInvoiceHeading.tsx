@@ -79,7 +79,7 @@ function HomeInvoiceHeading({
 
         {isBoxOpened && (
           <div
-            className={`absolute left-[-4rem] top-[7rem] flex  w-full max-w-[19.2rem] flex-col gap-6 rounded-[0.8rem] bg-white p-10 shadow-bigSh ${isDarkMode ? "bg-[#252945]" : "bg-white"}`}
+            className={`absolute left-[-4rem] top-[7rem] flex  w-full max-w-[19.2rem] flex-col gap-6 rounded-[0.8rem] p-10 shadow-bigSh ${isDarkMode ? "bg-[#252945]" : "bg-white"}`}
           >
             <div className="flex cursor-pointer items-center gap-5">
               <input
