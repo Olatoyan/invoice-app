@@ -82,16 +82,16 @@ export async function getInvoiceById(id: string): Promise<InvoiceResponse2> {
   return { data, error };
 }
 
-// export async function createItemRow(item: ItemProps) {
-//   const { data, error } = await supabase.from("items").insert([item]).select();
+export async function createItemRow(item: ItemProps) {
+  const { data, error } = await supabase.from("items").insert([item]).select();
 
-//   if (error) {
-//     console.log(error);
-//     throw new Error(`Could not create item ${item.name}`);
-//   }
+  if (error) {
+    console.log(error);
+    throw new Error(`Could not create item ${item.name}`);
+  }
 
-//   return { data, error };
-// }
+  return { data, error };
+}
 
 export async function createInvoiceRow(invoice: CreateInvoiceProps) {
   console.log(invoice);

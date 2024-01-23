@@ -42,7 +42,6 @@ function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
     idd,
     id,
     createdAt,
-    paymentDue,
     description,
     clientName,
     clientEmail,

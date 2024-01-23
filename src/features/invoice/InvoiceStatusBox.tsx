@@ -1,6 +1,6 @@
 import { useDarkMode } from "../../context/DarkModeContext";
 import { InvoiceDataProps } from "../../types/Types";
-import { AllInvoiceDataProps } from "../home/useInvoice";
+// import { AllInvoiceDataProps } from "../home/useInvoice";
 import { useUpdateStatus } from "./useUpdateStatus";
 
 type InvoiceStatusBoxProps = {
