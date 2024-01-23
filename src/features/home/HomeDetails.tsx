@@ -18,7 +18,7 @@ function HomeDetails() {
 
   return (
     <main
-      className={`relative grid min-h-[100dvh] grid-cols-[auto_1fr] ${isDarkMode ? "bg-[#141625]" : "bg-[#f8f8f8]"} laptop:grid-cols-1`}
+      className={`laptop:grid-cols-1 laptop:grid-rows-[auto_1fr] relative grid min-h-[100dvh] grid-cols-[auto_1fr] ${isDarkMode ? "bg-[#141625]" : "bg-[#f8f8f8]"} `}
     >
       <NavBar />
 

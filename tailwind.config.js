@@ -7,6 +7,10 @@ export default {
         invoiceSh: "0px 10px 10px -10px rgba(72, 84, 159, 0.10)",
         bigSh: " 0px 10px 20px 0px rgba(72, 84, 159, 0.25);",
       },
+      backgroundImage: {
+        "linear-grad":
+          "linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.10) 100%)",
+      },
       fontFamily: {
         spartan: ["League Spartan", "sans-serif"],
       },

@@ -172,18 +172,30 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
 
   return (
     <form
-      className={`absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
+      className={`laptop:left-0 laptop:top-[10rem] mobile:px-0 absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
         isDarkMode ? "bg-[#141625]" : "bg-white"
       }`}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <div
+        onClick={() => setCreateInvoice(false)}
+        className="laptop:flex mobile:px-8 hidden cursor-pointer items-center gap-12 pb-12"
+      >
+        <img src="/icon-arrow-left.svg" alt="arrow left" />
+        <p
+          className={`text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] ${isDarkMode ? "text-white hover:text-[#888eb0]" : "text-[#0c0e16] hover:text-[#7e88c3]"}`}
+        >
+          Go back
+        </p>
+      </div>
+
       <h2
-        className={`pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+        className={`mobile:px-8 pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
       >
         New Invoice
       </h2>
 
-      <div>
+      <div className="mobile:px-8">
         <h3 className="pb-[2.4rem] text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7c5dfa]">
           Bill From
         </h3>
@@ -205,7 +217,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           <input
             type="text"
             id="billAddress"
-            className={`w-full rounded-[0.4rem] border border-solid bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.street?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
+            className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.street?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
             {...register(`senderAdd.${0}.street`, {
               required: "can’t be empty",
             })}
@@ -213,7 +225,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-10 pb-20 pt-10">
+        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pb-20 pt-10">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -232,7 +244,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="billCity"
-              className={`w-full rounded-[0.4rem] border border-solid bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.senderAdd?.[0]?.city?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.senderAdd?.[0]?.city?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`senderAdd.${0}.city`, {
                 required: "can’t be empty",
               })}
@@ -263,7 +275,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
               disabled={creatingSAddress}
             />
           </div>
-          <div>
+          <div className="mobile:col-span-full">
             <div className="flex items-center justify-between">
               <label
                 className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.country?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
@@ -290,7 +302,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         </div>
       </div>
 
-      <div>
+      <div className="mobile:px-8">
         <h3 className="pb-[2.4rem] text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7c5dfa]">
           Bill To
         </h3>
@@ -371,7 +383,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-10 pt-10">
+        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pt-10">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -420,7 +432,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
               disabled={creatingClAddress}
             />
           </div>
-          <div>
+          <div className="mobile:col-span-full">
             <div className="flex items-center justify-between">
               <label
                 className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.country?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
@@ -447,8 +459,8 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         </div>
       </div>
 
-      <div>
-        <div className="grid grid-cols-2 gap-10 pb-10 pt-20">
+      <div className="mobile:px-8">
+        <div className="mobile:grid-cols-1 grid grid-cols-2 gap-10 pb-10 pt-20">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -551,13 +563,13 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         </div>
       </div>
 
-      <div className="pt-[3.5rem]">
+      <div className="mobile:px-8 pt-[3.5rem]">
         <h3 className="pb-6 text-[1.8rem] font-bold leading-[3.2rem] tracking-[-0.0375rem] text-[#777f98]">
           Item List
         </h3>
 
         <div>
-          <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
+          <div className="mobile:hidden grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
             <p
               className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
             >
@@ -604,10 +616,10 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           </div>
         </div>
       </div>
-
-      <div className="flex items-center justify-between pt-16">
+      <div className="bg-linear-grad mobile:block mt-10 hidden h-[8.4rem]"></div>
+      <div className="mobile:px-6 flex items-center justify-between pt-16">
         <button
-          className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]"
+          className="mobile:px-6 mobile:py-5 rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]"
           onClick={(e) => {
             e.preventDefault();
             setCreateInvoice(false);
@@ -615,9 +627,9 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
         >
           Discard
         </button>
-        <div className="flex items-center justify-end gap-6">
+        <div className="mobile:gap-3 flex items-center justify-end gap-6">
           <button
-            className={`] rounded-[2.4rem] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3] ${status === "draft" ? "bg-[#080911]" : "hover:bg-[#0c0e16 bg-[#7388c380]"}`}
+            className={`] mobile:px-6 mobile:py-5 rounded-[2.4rem] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3] ${status === "draft" ? "bg-[#080911]" : "hover:bg-[#0c0e16 bg-[#7388c380]"}`}
             onClick={(e) => {
               e.preventDefault();
               setStatus("draft");
@@ -625,7 +637,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
           >
             {status === "pending" ? "Save as draft" : "Saved as draft"}
           </button>
-          <button className="rounded-[2.4rem] bg-[#7c5dfa] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#9277ff]">
+          <button className="mobile:px-6 mobile:py-5 rounded-[2.4rem] bg-[#7c5dfa] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-white hover:bg-[#9277ff]">
             Save & Send
           </button>
         </div>

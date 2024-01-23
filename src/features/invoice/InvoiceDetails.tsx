@@ -21,6 +21,10 @@ function InvoiceDetails() {
     setIsEditing(true);
   }
 
+  function handleUndoEdit() {
+    setIsEditing(false);
+  }
+
   function handleDelete() {
     setIsDeleting(true);
   }
@@ -31,7 +35,7 @@ function InvoiceDetails() {
 
   return (
     <main
-      className={`relative grid min-h-[100dvh] grid-cols-[auto_1fr] ${isDarkMode ? "bg-[#141625]" : "bg-[#f8f8f8]"}`}
+      className={`laptop:grid-cols-1 laptop:grid-rows-[auto_1fr] relative grid min-h-[100dvh] grid-cols-[auto_1fr] ${isDarkMode ? "bg-[#141625]" : "bg-[#f8f8f8]"}`}
     >
       <NavBar />
 
@@ -47,10 +51,13 @@ function InvoiceDetails() {
 
       {isEditing && (
         <>
-          <EditInvoice data={invoiceId!.data[0]} />
+          <EditInvoice
+            data={invoiceId!.data[0]}
+            handleUndoEdit={handleUndoEdit}
+          />
           <div
             className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"
-            onClick={() => setIsEditing(false)}
+            onClick={handleUndoEdit}
           ></div>
           {/* <DeleteInvoice /> */}
         </>
@@ -64,7 +71,7 @@ function InvoiceDetails() {
           />
           <div
             className="fixed bottom-0 h-full w-full bg-black bg-opacity-50"
-            onClick={() => setIsEditing(false)}
+            onClick={handleUndoEdit}
           ></div>
         </>
       )}

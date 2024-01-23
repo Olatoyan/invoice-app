@@ -21,7 +21,7 @@ function InvoiceStatusBox({
     <div
       className={`mb-10 flex items-center justify-between rounded-[0.8rem] px-12 py-8 shadow-invoiceSh ${isDarkMode ? "bg-[#1e2139]" : "bg-white"}`}
     >
-      <div className="flex items-center gap-8">
+      <div className="mobile:w-full mobile:justify-between flex items-center gap-8">
         <h3
           className={`text-[1.5rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#858bb2]"}`}
         >
@@ -42,7 +42,7 @@ function InvoiceStatusBox({
         </div>
       </div>
 
-      <div className="flex items-center gap-7">
+      <div className="mobile:hidden flex items-center gap-7">
         <button
           className={`rounded-[2.4rem]  px-10 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] ${isDarkMode ? "bg-[#252945] text-[#dfe3fa] hover:bg-white hover:text-[#7e8cc3]" : "bg-[#f9fafe] text-[#7e88c3] hover:bg-[#dfe3fa]"}`}
           onClick={handleEdit}

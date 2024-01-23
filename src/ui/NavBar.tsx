@@ -5,7 +5,7 @@ function NavBar() {
 
   return (
     <aside
-      className={`z-10 flex w-[10rem] flex-col justify-between rounded-r-[2rem] ${isDarkMode ? "bg-[#1e2139]" : "bg-[#373b53]"} laptop:w-full laptop:flex-row laptop:pb-0 laptop:pr-8 laptop:rounded-none pb-8`}
+      className={`laptop:h-[10rem] mobile:h-[7rem] z-10 flex w-[10rem] flex-col justify-between rounded-r-[2rem] ${isDarkMode ? "bg-[#1e2139]" : "bg-[#373b53]"} laptop:w-full laptop:flex-row laptop:pb-0 laptop:pr-8 laptop:rounded-none pb-8`}
     >
       <div className="mobile:h-[7rem] mobile:w-[7rem] flex h-[10rem] w-[10rem] items-center justify-center rounded-r-[2rem] bg-[#7c5dfa]">
         <img

@@ -6,6 +6,7 @@ import InvoiceStatusBox from "./InvoiceStatusBox";
 // import { AllInvoiceDataProps } from "../home/useInvoice";
 import { InvoiceDataProps } from "../../types/Types";
 import { useDarkMode } from "../../context/DarkModeContext";
+import FooterStatusBox from "./FooterStatusBox";
 // import Loader from "../../ui/Loader";
 
 type InvoiceSectionProps = {
@@ -27,7 +28,7 @@ function InvoiceSection({
   }
 
   return (
-    <section className="mx-auto w-full max-w-[80rem] pt-24">
+    <section className="mx-auto w-full max-w-[88rem] px-8 pt-24">
       <div
         onClick={handleMoveBack}
         className="flex cursor-pointer items-center gap-12 pb-12"
@@ -45,6 +46,12 @@ function InvoiceSection({
         handleDelete={handleDelete}
       />
       <InvoiceDetailsSection data={data} />
+
+      <FooterStatusBox
+        data={data}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
     </section>
   );
 }

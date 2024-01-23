@@ -18,6 +18,7 @@ import { useDarkMode } from "../../context/DarkModeContext";
 
 type EditInvoiceProps = {
   data: InvoiceDataProps;
+  handleUndoEdit: () => void;
 };
 
 type InitialItems = {
@@ -29,7 +30,7 @@ type InitialItems = {
   invoiceId: number;
 };
 
-function EditInvoice({ data }: EditInvoiceProps) {
+function EditInvoice({ data, handleUndoEdit }: EditInvoiceProps) {
   console.log(data);
   const [isPaymentDisplayed, setIsPaymentDisplayed] = useState(false);
 
@@ -204,19 +205,31 @@ function EditInvoice({ data }: EditInvoiceProps) {
   }
   return (
     <form
-      className={`absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
+      className={`laptop:left-0 laptop:top-[10rem] mobile:px-0 absolute left-[8rem] top-0 z-[9] h-full max-w-[80rem] overflow-y-auto py-20 pl-28 pr-20 ${
         isDarkMode ? "bg-[#141625]" : "bg-white"
       }`}
       onSubmit={handleSubmit(onSubmit)}
     >
+      <div
+        onClick={handleUndoEdit}
+        className="laptop:flex mobile:px-8 hidden cursor-pointer items-center gap-12 pb-12"
+      >
+        <img src="/icon-arrow-left.svg" alt="arrow left" />
+        <p
+          className={`text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] ${isDarkMode ? "text-white hover:text-[#888eb0]" : "text-[#0c0e16] hover:text-[#7e88c3]"}`}
+        >
+          Go back
+        </p>
+      </div>
+
       <h2
-        className={`pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
+        className={`mobile:px-8 pb-[4.6rem] text-[2.4rem] font-bold leading-[3.2rem] tracking-[-0.05rem] ${isDarkMode ? "text-white" : "text-[#0c0e16]"}`}
       >
         Edit <span className="text-[#888eb0]">#</span>
         <span>{id}</span>
       </h2>
 
-      <div>
+      <div className="mobile:px-8">
         <h3 className="pb-[2.4rem] text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7c5dfa]">
           Bill From
         </h3>
@@ -246,7 +259,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
           />
         </div>
 
-        <div className="grid grid-cols-3 gap-10 pb-20 pt-10">
+        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pb-20 pt-10">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -295,7 +308,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
               })}
             />
           </div>
-          <div>
+          <div className="mobile:col-span-full">
             <div className="flex items-center justify-between">
               <label
                 className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.senderAdd?.[0]?.country?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
@@ -322,7 +335,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
         </div>
       </div>
 
-      <div>
+      <div className="mobile:px-8">
         <h3 className="pb-[2.4rem] text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7c5dfa]">
           Bill To
         </h3>
@@ -403,7 +416,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
             />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-10 pt-10">
+        <div className="mobile:grid-cols-2 grid grid-cols-3 gap-10 pt-10">
           <div>
             <div className="flex items-center justify-between">
               <label
@@ -452,7 +465,7 @@ function EditInvoice({ data }: EditInvoiceProps) {
               })}
             />
           </div>
-          <div>
+          <div className="mobile:col-span-full">
             <div className="flex items-center justify-between">
               <label
                 className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.clientAddress?.[0]?.country?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
@@ -479,8 +492,8 @@ function EditInvoice({ data }: EditInvoiceProps) {
         </div>
       </div>
 
-      <div>
-        <div className="grid grid-cols-2 gap-10 pb-10 pt-20">
+      <div className="mobile:px-8">
+        <div className="mobile:grid-cols-1 grid grid-cols-2 gap-10 pb-10 pt-20">
           <div>
             <label
               className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.createdAt?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
@@ -576,13 +589,13 @@ function EditInvoice({ data }: EditInvoiceProps) {
         </div>
       </div>
 
-      <div className="pt-[3.5rem]">
+      <div className="mobile:px-8 pt-[3.5rem]">
         <h3 className="pb-6 text-[1.8rem] font-bold leading-[3.2rem] tracking-[-0.0375rem] text-[#777f98]">
           Item List
         </h3>
 
         <div>
-          <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
+          <div className="mobile:hidden grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-start gap-6 pb-6">
             <p
               className={`text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
             >
@@ -636,7 +649,9 @@ function EditInvoice({ data }: EditInvoiceProps) {
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-6 pt-16">
+      <div className="bg-linear-grad mobile:block mt-10 hidden h-[8.4rem]"></div>
+
+      <div className="mobile:px-8 flex items-center justify-end gap-6 pt-16">
         <button className="rounded-[2.4rem] bg-[#f9fafe] px-11 py-7 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#7e88c3]">
           Cancel
         </button>
