@@ -4,7 +4,6 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from "react-hook-form";
-import { AllInvoiceDataProps } from "../home/useInvoice";
 import { useEffect, useState } from "react";
 import { InvoiceDataProps } from "../../types/Types";
 
@@ -17,7 +16,7 @@ type EditInvoiceItemProps = {
   id: number;
   register: UseFormRegister<InvoiceDataProps>;
   index: number;
-  errors: FieldErrors<AllInvoiceDataProps>;
+  errors: FieldErrors<InvoiceDataProps>;
   onDelete: (id: number) => void;
   setValue: UseFormSetValue<InvoiceDataProps>;
   getValues: UseFormGetValues<InvoiceDataProps>;
@@ -88,9 +87,9 @@ function EditInvoiceItem({
   }, [id, invoiceId, setValue, index]);
 
   return (
-    <div className="mobile:grid-cols-[1fr_1fr_1fr_6rem] mobile:pb-20 grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6">
+    <div className="grid grid-cols-[4fr_6rem_2fr_2fr_1fr] items-center gap-6 pb-6 mobile:grid-cols-[1fr_1fr_1fr_6rem] mobile:pb-20">
       <div className="mobile:col-span-full mobile:pb-8">
-        <p className="mobile:block hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0]">
+        <p className="hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0] mobile:block">
           Item Name
         </p>
         <input
@@ -103,7 +102,7 @@ function EditInvoiceItem({
         />
       </div>
       <div>
-        <p className="mobile:block hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0]">
+        <p className="hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0] mobile:block">
           Qty.
         </p>
         <input
@@ -121,7 +120,7 @@ function EditInvoiceItem({
       </div>
 
       <div>
-        <p className="mobile:block hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0]">
+        <p className="hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0] mobile:block">
           Price
         </p>
         <input
@@ -139,7 +138,7 @@ function EditInvoiceItem({
       </div>
 
       <div>
-        <p className="mobile:block hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0]">
+        <p className="hidden pb-6 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] text-[#888eb0] mobile:block">
           Total
         </p>
         <p

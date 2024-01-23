@@ -9,12 +9,9 @@ export function useCreateInvoice() {
   const { mutate: createInvoice, isPending: creatingInvoice } = useMutation({
     mutationFn: (newInvoice: CreateInvoiceProps) =>
       createInvoiceRow(newInvoice),
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       toast.success("New Invoice created");
       queryClient.invalidateQueries({ queryKey: ["invoice"] });
-      // navigate(`/invoice/${data.data[0].id}`);
-      // location.reload();
     },
     onError: (error) => toast.error(error.message),
   });

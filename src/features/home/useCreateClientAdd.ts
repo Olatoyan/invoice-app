@@ -7,9 +7,6 @@ export function useCreateClientAdd() {
     {
       mutationFn: (address: ClientAddressProps) =>
         createClientAddressRow(address),
-      onSuccess: (data) => {
-        console.log('client:', data);
-      },
     },
   );
 
