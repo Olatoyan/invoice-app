@@ -256,7 +256,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="postCode"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.senderAdd?.[0]?.postCode?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid  px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500  ${errors?.senderAdd?.[0]?.postCode?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`senderAdd.${0}.postCode`, {
                 required: "can’t be empty",
               })}
@@ -280,7 +280,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="billCountry"
-              className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.country?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.senderAdd?.[0]?.country?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`senderAdd.${0}.country`, {
                 required: "can’t be empty",
               })}
@@ -389,7 +389,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <input
               type="text"
               id="clientCity"
-              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border  focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.city?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
+              className={`w-full rounded-[0.4rem] border border-solid px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.clientAddress?.[0]?.city?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register(`clientAddress.${0}.city`, {
                 required: "can’t be empty",
               })}
@@ -453,7 +453,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             <div className="flex items-center justify-between">
               <label
                 className={`block pb-4 text-[1.3rem] font-medium leading-[1.5rem] tracking-[-0.01rem] ${errors?.createdAt?.message ? "text-[#ec5757]" : isDarkMode ? "text-[#dfe3fa]" : "text-[#7e88c3]"}`}
-                htmlFor="clientCity"
+                htmlFor="clientDate"
               >
                 Invoice Date
               </label>
@@ -465,7 +465,7 @@ function CreateInvoice({ setCreateInvoice }: CreateInvoiceProps) {
             </div>
             <input
               type="date"
-              id="clientCity"
+              id="clientDate"
               className={`w-full rounded-[0.4rem] border border-solid  px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] disabled:bg-slate-200 ${errors?.createdAt?.message ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
               {...register("createdAt", { required: "can’t be empty" })}
               disabled={creatingInvoice}

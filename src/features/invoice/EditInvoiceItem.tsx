@@ -21,6 +21,7 @@ type EditInvoiceItemProps = {
   onDelete: (id: number) => void;
   setValue: UseFormSetValue<InvoiceDataProps>;
   getValues: UseFormGetValues<InvoiceDataProps>;
+  isDarkMode: boolean;
 };
 
 function EditInvoiceItem({
@@ -36,6 +37,7 @@ function EditInvoiceItem({
   onDelete,
   setValue,
   getValues,
+  isDarkMode,
 }: EditInvoiceItemProps) {
   const [totalQty, setTotalQty] = useState(quantity);
   const [totalPrice, setTotalPrice] = useState(price);
@@ -90,11 +92,7 @@ function EditInvoiceItem({
       <input
         type="text"
         id="itemName"
-        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none ${
-          errors.items?.[index!]?.name
-            ? "border-[#ff6363]"
-            : "focus:border-[#9277ff]"
-        }`}
+        className={`w-full rounded-[0.4rem] border border-solid  px-8 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.items?.[index!]?.name ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
         placeholder="Item name"
         defaultValue={name}
         {...register(`items.${index}.name`, { required: "can't be empty" })}
@@ -102,11 +100,7 @@ function EditInvoiceItem({
       <input
         type="number"
         id="qty"
-        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-4 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:outline-none ${
-          errors.items?.[index!]?.quantity
-            ? "border-[#ff6363]"
-            : "focus:border-[#9277ff]"
-        }`}
+        className={`w-full rounded-[0.4rem] border border-solid px-4 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem]  focus:border focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.items?.[index!]?.quantity ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
         placeholder="Qty."
         defaultValue={totalQty}
         {...register(`items.${index}.quantity`, {
@@ -117,11 +111,7 @@ function EditInvoiceItem({
       <input
         type="number"
         id="price"
-        className={`w-full rounded-[0.4rem] border border-solid border-[#dfe3fa] bg-transparent px-5 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] text-[#0c0e16] focus:border focus:border-[#9277ff] focus:outline-none ${
-          errors.items?.[index!]?.price
-            ? "border-[#ff6363]"
-            : "focus:border-[#9277ff]"
-        }`}
+        className={`w-full rounded-[0.4rem] border border-solid  px-5 py-6 text-[1.5rem] font-bold leading-[1.5rem] tracking-[-0.025rem] focus:border focus:border-[#9277ff] focus:outline-none disabled:bg-slate-200 disabled:text-zinc-500 ${errors?.items?.[index!]?.price ? "border-[#ec5757]" : isDarkMode ? "border-[#252945] focus:border-[#9277ff]" : "border-[#dfe3fa] focus:border-[#9277ff]"} ${isDarkMode ? "bg-[#1e2139] text-white" : "bg-white text-[#0c0e16]"}`}
         defaultValue={totalPrice}
         placeholder="Price"
         {...register(`items.${index}.price`, {
